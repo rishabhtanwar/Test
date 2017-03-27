@@ -1,0 +1,62 @@
+<resources>
+  <!-- Default screen margins, per the Android Design guidelines. -->
+  <!-- Default screen margins, per the Android Design guidelines. -->
+  <dimen name="activity_horizontal_margin">16dp</dimen>
+  <dimen name="activity_vertical_margin">16dp</dimen>
+
+  <dimen name="activity_horizontal_margin_medium">8dp</dimen>
+  <dimen name="activity_vertical_margin_medium">8dp</dimen>
+
+  <dimen name="fab_margin">16dp</dimen>
+  <dimen name="appbar_padding_top">8dp</dimen>
+
+  <!-- Search Dialog box-->
+  <dimen name="cp_dialog_width">200dp</dimen>
+  <dimen name="cp_dialog_height">300dp</dimen>
+
+  <!--Padding for bg_vitals-->
+  <dimen name="bg_vital_padding">12dp</dimen>
+  <dimen name="bg_diet_padding">6dp</dimen>
+
+  <!--margin for list_item_meals-->
+  <dimen name="meals_list_margin_top">10dp</dimen>
+  <dimen name="meals_list_margin_child">5dp</dimen>
+  <dimen name="meals_list_right_layout_height">150dp</dimen>
+
+  <!--text sizes for meals module-->
+  <dimen name="food_text_size_eighteen">18sp</dimen>
+  <dimen name="food_action_margin">56dp</dimen>
+  <dimen name="food_text_size_card">12sp</dimen>
+  <dimen name="food_text_button_size">15sp</dimen>
+  <dimen name="food_text_size_headline">20sp</dimen>
+  <dimen name="food_regular_size">15sp</dimen>
+  <dimen name="food_search_size">16sp</dimen>
+
+  <dimen name="toolbar_height">56dp</dimen>
+  <dimen name="record_menu_row_height">72dp</dimen>
+  <dimen name="record_menu_row_margin">16dp</dimen>
+  <dimen name="record_menu_row_text_margin_left">10dp</dimen>
+
+  <dimen name="skip_gift_margin_top">40dp</dimen>
+  <dimen name="onboard_sign_up_margin_top">55dp</dimen>
+  <dimen name="onboard_list_diease_margin_bottom">80dp</dimen>
+  <dimen name="show_sign_in_manage_tv">40dp</dimen>
+  <dimen name="onboard_pager_sign_up_margin_top">78dp</dimen>
+  <dimen name="onboard_image_sign_up_margin_top">280dp</dimen>
+  <dimen name="onboard_image_sign_up_margin_top_grid">48dp</dimen>
+  <dimen name="goals_onboarding_goal_text_size">16sp</dimen>
+  <dimen name="sign_up_margin_top">25dp</dimen>
+  <dimen name="goals_onboarding_heading_text_size">31sp</dimen>
+
+  <dimen name="goals_onboarding_daily_goal">48dp</dimen>
+  <dimen name="goals_onboarding_daily_goals_primary_text_size">22sp</dimen>
+  <dimen name="goals_onboarding_daily_goals_secondary_text_size">15sp</dimen>
+  <dimen name="goals_onboarding_bottom_margin">32dp</dimen>
+  <dimen name="tracking_goals_onboarding_image_placeholder">96dp</dimen>
+  <dimen name="onboard_icon_top_margin">55dp</dimen>
+  <dimen name="onboard_text_top_margin">40dp</dimen>
+  <dimen name="onboard_text_textsize">22sp</dimen>
+  <dimen name="daily_goals_top_text_size">17dp</dimen>
+
+  <dimen name="width_cm_ft">51dp</dimen>
+</resources>

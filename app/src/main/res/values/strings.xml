@@ -1,0 +1,1090 @@
+<resources>
+  <string name="facebook_app_id">902660419833197</string>
+  <string name="navigation_drawer_open">Open navigation drawer</string>
+  <string name="navigation_drawer_close">Close navigation drawer</string>
+
+  <string name="action_settings">Settings</string>
+  <string name="app_name">Curo Test</string>
+  <string name="error_invalid_mobile">Please provide a valid phone number</string>
+  <string name="error_confirm_password">Passwords do not match. Please try again.</string>
+  <string name="error_password_length_msg">Minimum password length is eight characters.</string>
+  <string name="prompt_otp">Enter OTP</string>
+  <string name="btn_resend_label"><u>Resend OTP</u></string>
+  <string name="hide">Hide</string>
+  <string name="show">Show</string>
+
+  <string name="error_height">Please enter height</string>
+  <string name="msg_profile_success">Profile updated successfully.</string>
+  <string name="msg_password_success">Password changed successfully.</string>
+  <string name="msg_password_invalid_password">Reset Password token is invalid.</string>
+
+  <!-- Strings related to login -->
+
+  <string name="prompt_email_mobile">Enter Your Mobile Number</string>
+  <string name="prompt_email">Email</string>
+  <string name="prompt_email_phone">Email/Phone</string>
+  <string name="prompt_password">Password</string>
+  <string name="prompt_set_password">Set Password</string>
+  <string name="error_invalid_email">This email is invalid. Please try again.</string>
+  <string name="error_field_required">This field is required.</string>
+  <string name="error_name_required">Please enter name.</string>
+  <string name="error_age_required">Please enter age.</string>
+  <string name="error_mobile_required">Mobile Number is a required field.</string>
+  <string name="error_email_required">Email is a required field.</string>
+  <string name="error_password_old_required">Current Password is a required field.</string>
+  <string name="error_password_required">Password is a required field.</string>
+  <string name="error_password_new_required">New password is a required field.</string>
+  <string name="error_password_confirm_required">Confirm Password is a required field.</string>
+
+  <string name="msg_otp_required">Enter One Time Password.</string>
+  <string name="error_first_required">Please enter first name.</string>
+  <string name="error_last_required">Please enter last name.</string>
+  <string name="error_dob_required">Please enter date of birth.</string>
+  <string name="error_height_required">Please enter height.</string>
+  <string name="error_weight_required">Please enter weight.</string>
+  <string name="error_hba1c_required">Please enter HbA1c.</string>
+  <string name="error_years_of_diabetes_required">Please enter years of diabetes.</string>
+
+  <string name="section_format">Today\'s</string>
+  <string name="prompt_lab_test_name">Please provide lab test name.</string>
+  <string name="prompt_meal_test_name">Please provide meals.</string>
+  <!--Strings realted to Sign up -->
+  <string name="prompt_signupname">Name</string>
+  <string name="prompt_signupmobile">Phone</string>
+  <string name="prompt_signupemail">Email</string>
+  <string name="prompt_signupconfirmpassword">Confirm Password</string>
+  <string name="prompt_forgotpassword"><u>Forgot Password?</u></string>
+
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="title_activity_new_goal">Manage Goals</string>
+  <string name="search_medicine_label">Select Medicine</string>
+
+  <string name="title_activity_vitals">VitalsActivity</string>
+
+  <!-- Strings related to Meals Activity -->
+  <!-- Created by Nithin Kande-->
+  <string name="unit_cals">cal</string>
+
+  <string name="done">Done</string>
+  <string name="done_big">DONE</string>
+  <string name="food_activity_title">Add Food</string>
+  <string name="food_activity_suggested">Add To Meal</string>
+  <string name="title_activity_trends">Trends</string>
+  <string name="title_activity_trend_detail">TrendDetailActivity</string>
+
+  <string name="title_activity_vital_fasting">Are you fasting?</string>
+  <string name="title_activity_food_choice">Record your breakfast</string>
+  <string name="title_activity_food_previous">Recent Meals</string>
+  <string name="title_activity_lab_test_previous">Pick a picture from the gallery or take a new
+    photo.
+  </string>
+  <string name="search_food">Search Food</string>
+
+  <!-- String related to Edit Acivity -->
+  <string name="title_activity_edit_activity">Activity</string>
+  <string name="search_activity_label">Select Activity</string>
+  <string name="intensity_label">Intensity</string>
+  <string name="easy_label">Easy</string>
+  <string name="medium_label">Medium</string>
+  <string name="hard_label">Hard</string>
+  <string name="duration_label">Duration (minutes)</string>
+  <string name="title_activity_medicine">Medicine</string>
+
+  <!--string related to Edit Medicine -->
+  <string name="name_label">Name</string>
+  <string name="search_insulin_label">Select Insulin</string>
+  <string name="search_tablet_label">Select Tablet</string>
+  <string name="search_syrup_label">Select Syrup</string>
+  <string name="dosage_insulin_label">Dosage</string>
+  <string name="dosage_tablet_label">Dosage</string>
+  <string name="dosage_tablet_label_nos">(number)</string>
+  <string name="units_label">Units</string>
+  <string name="teaspoons_label">Teaspoons</string>
+  <string name="tablespoons_label">Tablespoons</string>
+  <string name="ml_label">ml</string>
+  <string name="dosage_syrup_label">Dosage</string>
+  <string name="title_activity_sign_up">SIGN UP</string>
+  <string name="weight_label">Weight (Kg)</string>
+  <string name="appointment_type">Type</string>
+  <string name="label_eventname">Name</string>
+  <string name="label_location">Location</string>
+  <string name="label_details">Details</string>
+  <string name="btn_delete">Delete Appointment</string>
+  <string name="title_activity_in_app_notifications">InAppNotificationsActivity</string>
+  <string name="title_activity_appointment_form">Add Appointment</string>
+
+
+  <!-- string to reminder -->
+  <string name="title_activity_reminder_save">Notifications</string>
+  <string name="reminder_text_heading_label">What time do you typically have your meals?</string>
+  <string name="premeal_text_heading_label">How early do you want your pre-meal task reminders?
+  </string>
+  <string name="postmeal_text_heading_label">How late do you want your post-meal task reminders?
+  </string>
+
+  <!-- string to reminders -->
+
+  <string name="title_activity_switch_user">SwitchUserActivity</string>
+  <string name="title_activity_food_graph">FoodGraphActivity</string>
+
+  <!--Strings for Goals - Trends-->
+
+  <!--Food List fragment-->
+  <!--<string name="food_list_add_button">There are no suggested meals for you</string>-->
+  <!-- <string name="food_list_add_button">No suggested meals.</string>-->
+  <string name="food_list_add_button">A Life in Control professional will be in touch with you to
+    get your dietitian consultation scheduled and finalize your diet plan. Meanwhile please log your
+    meal intake using YOUR CHOICE.
+  </string>
+  <string name="title_activity_tip">Tip of the Day</string>
+  <string name="title_activity_diet_plan">DietPlanActivity</string>
+  <string name="title_activity_suggested_meal">SuggestedMealActivity</string>
+  <string name="title_activity_meals_day">MealsDayActivity</string>
+
+  <string name="title_activity_share_health_dashboard">Share Health Dashboard</string>
+  <string name="title_activity_add_profile">Add Profile</string>
+
+  <string name="error_phone_number">Phone Number is a required field.</string>
+  <string name="title_activity_notification_save">Reminder Timings</string>
+
+  <!-- Today's tasks -->
+  <string name="no_today_Tasks_message">No scheduled tasks available for today. Please record tasks
+    that you have done by tapping on +.
+  </string>
+  <string name="title_activity_profile_settings">Profile Settings</string>
+  <string name="title_activity_change_password">Change Password</string>
+  <string name="title_activity_personal_info">Personal Information</string>
+  <string name="title_activity_contact_info">Contact Info</string>
+  <string name="title_activity_more_info">More Info</string>
+
+  <!-- Medication -->
+  <string name="title_activity_list_medication">Medication</string>
+  <string name="title_activity_add_medication">Add Medicine</string>
+  <string name="button_tablet_label">Tablet</string>
+  <string name="button_syrup_label">Syrup</string>
+  <string name="button_Injection_label">Injection</string>
+  <string name="medicine_name_label">Acetaminophen</string>
+  <string name="enter_medicine_label">Enter Medicine</string>
+  <string name="type_label">Type</string>
+  <string name="when_label">When</string>
+  <string name="morining_label">Morning</string>
+  <string name="afternoon_label">Afternoon</string>
+  <string name="evening_label">Evening</string>
+  <string name="night_label">Night</string>
+  <string name="mealtag_label">Meal Tag</string>
+  <string name="beforemeal_label">Before Meal</string>
+  <string name="aftermeal_label">After Meal</string>
+  <string name="reminder_label">Reminder</string>
+  <string name="reoccurring_label">Recurring</string>
+  <string name="conditional_label">Conditional</string>
+  <string name="till_label">Till</string>
+  <string name="remarks_label">Remarks</string>
+  <string name="enter_remarks_label">Enter Remarks</string>
+  <string name="no_medication_message">No prescribed medications. Please add medication reminders using the ADD button above.
+  </string>
+
+  <string name="title_activity_forgot_password">Forgot Password</string>
+  <string name="title_activity_forgot_change_password">Set Password</string>
+  <string name="title_activity_privacy_terms">Privacy &amp; Terms</string>
+
+  <string name="title_activity_help">Help</string>
+  <string name="title_activity_goal_meal_trends">Calories Consumed</string>
+
+  <!-- TODO: Remove or change this placeholder text -->
+
+  <!--Constant Names for Mix panel-->
+  <string name="suggested_meal_activity">Suggested Meals Activity</string>
+  <string name="food_list_fragment">Suggested Meals Fragment</string>
+
+  <string name="task_done_button">Task Done Clicked</string>
+  <string name="title_activity_food_task_done_image">FoodTaskDoneImageActivity</string>
+
+  //On Boarding strings
+  <string name="manage_diabetes"><i>Life in Control</i> helps you manage and control your diabetes.</string>
+  <string name="want_to_see">Want to know how?</string>
+  <string name="yes">Yes, why not!</string>
+  <string name="string_yes">YES</string>
+  <string name="not_interested"><u>Skip</u></string>
+  <string name="skip"><u>Skip</u></string>
+  <string name="got_it">GOT IT</string>
+  <string name="got_it_small">Got it</string>
+  <string name="collaborative_care">Collaborative Care</string>
+  <string name="diet_tips">Diet and Activity Tips</string>
+  <string name="expert_advice">Get personalized lifestyle coaching from experts</string>
+  <string name="manage_with_family">Manage your condition together with your family</string>
+  <string name="user_information">Let\'s get started...</string>
+  <string name="any_problem">Any associated problems?</string>
+  <string name="user_detailed_information">Tell us some more...</string>
+  <string name="diabetes_information">How long have you had diabetes?</string>
+  <string name="save_next">SAVE AND NEXT</string>
+  <string name="hello">Hello ,</string>
+  <string name="hello_name">Hello %1$s!</string>
+  <string name="welcome">Welcome to Life In Control.</string>
+  <string name="welcome_detail">We understand that living with diabetes can be tough. However,
+    you are not alone in your endeavors. Our experts will help you better manage your diabetes to
+    live a happy and healthy life.
+  </string>
+  <string name="need_support">All we need is your active involvement.
+  </string>
+  <string name="looking_forward">Together we can conquer your diabetes.</string>
+  <string name="log_and_track">Log &amp; track your health data to take better control of your diabetes</string>
+  <string name="lets_start">LET\'S START</string>
+  <string name="done_well">\"%1$s, we appreciate the sincerity you show towards your health.
+    Let’s try to improve it further now.\"
+  </string>
+  <string name="recent_diabetes">\"%1$s, You have done a commendable job in controlling your
+    diabetes. Let’s try to improve it further now.\"</string>
+  <string name="enter_invite_code">Enter your invite code</string>
+  <string name="invite_code">Invite code</string>
+  <string name="invite_code_text">I have an Invite Code</string>
+  <string name="explore_only"><u>No, I am here to explore</u></string>
+  <string name="skip_gift">
+    <u>I\'ll skip my gift</u>
+  </string>
+  <string name="new_user"> Not a user already?</string>
+  <string name="wait_message"> Please wait while we setup your account.</string>
+  //user information strings
+  <string name="dob">Date of Birth</string>
+  <string name="hba1c">Last HbA1c</string>
+  <string name="blood_sugar">Last Fasting Blood Sugar</string>
+  <string name="blood_sugar_normal">Blood Glucose</string>
+  <string name="gender">Gender</string>
+  <string name="height">Height</string>
+  <string name="weight">Weight</string>
+  <string name="feet">ft</string>
+  <string name="inches">in</string>
+  <string name="bmi">BMI</string>
+  <string name="blood_pressure">Blood Pressure</string>
+  <string name="cholestrol">Cholesterol (LDL)</string>
+
+  <string name="internet_check_alert">It seems are you are currently offline. \nPlease check your internet connectivity
+  </string>
+  <string name="internet_check_alert_lab_schedule">Please connect to internet to get lab schedule.
+  </string>
+  <string name="alert_log_out">Are you sure you want to logout?
+  </string>
+  <string name="invite_code_not_found"> Sorry, we can\'t find invite code. Please enter it by yourself or sign up
+  </string>
+  <string name="registration_details">Please set a password.</string>
+  <string name="found_you">Found you,  %1$s!</string>
+  <string name="free_user_welcome_string">Check out the goals that suit you best
+  </string>
+  <string name="paid_user_welcome_string">Check out the goals we agreed upon depending on your health profile
+  </string>
+  <string name="diabetes_not_in_control">\"%1$s, your sugar level has been out of control.
+    Let us improve your lifestyle together.\”
+  </string>
+    <string name="free_user_welcome_string_daily">Here are your personalised daily goals
+  </string>
+    <string name="paid_user_welcome_string_daily">Check out the daily goals we agreed upon depending on your health profile
+  </string>
+  <string name="invalid_invite_code">Invalid invite code. Please check and retry.</string>
+  <string name="title_activity_in_app_notification_pop_up">InAppNotificationPopUp</string>
+  <string name="missed_task_Reminders">%1$s missed task reminders</string>
+  <string name="plus_Reminders">+ %1$s more</string>
+  <string name="congrats_weight_text">Your weight is not perfectly normal. Try to maintain it in the future.</string>
+
+  <string name="bmi_message">Note - BMI Range of 18.5 - 25 is considered as healthy weight.</string>
+  <string name="log_your_meal">No time for meal logging?\nJust tell us what you had in 2 steps.</string>
+  <string name="no_reading">No readings this %1$s</string>
+  <string name="no_entries">No entries this %1$s</string>
+  <string name="coming_soon">Coming soon...stay tuned!</string>
+  <string name="sign_up_facebook">Continue with Facebook</string>
+  <string name="sign_up_google">Continue with Google</string>
+  <string name="hba1c_new_user_message">HbA1c is the three-months normalized score of your blood
+    sugar levels and is the best value to optimize for diabetes control. Getting your HbA1c values
+    less than 6% is the ultimate
+    destination in mastering your diabetes.</string>
+  <string name="hba1c_not_known"><u>I don\'t know my HbA1c</u></string>
+  <string name="wright_height_new_user_message">Your weight and height help us determine your BMI
+    and set appropriate goals for you.</string>
+  <string name="height_weight_not_known"><u>I don\'t know my weight and height</u></string>
+  <string name="gender_new_user_message">To automatically set daily goals for you we need to know
+    your gender.</string>
+  <string name="gender_not_known"><u>I don\'t know my gender</u></string>
+  <string name="recommend_hba1c_goal">We recommend the following HbA1c goal for you to be hit in
+    <b> 90 days </b></string>
+  <string name="recommend_bmi_goal">Your BMI is <b>%1$s</b>. We recommend the following weight goal for you to be hit in
+    <b>90 days</b>.</string>
+  <string name="change_goal">You can change this goal anytime you like.</string>
+  <string name="good_hba1c">With a HbA1c of %1$s, your control over your diabetes is great! Keep up the
+    good work!</string>
+  <string name="good_bmi">With a BMI of %1$s,  you are in the right weight range already! Keep up the
+    good work!</string>
+  <string name="thanks_message">Thanks for using the <i>Life in Control</i> app to manage your diabetes.</string>
+  <string name="help_us">Please help us with three simple questions to personalize your experience.</string>
+  <string name="current_health">Based on your current health profile here are your recommended daily goals.</string>
+  <string name="title_activity_lab_schedule_data">LabScheduleData</string>
+  <string name="upload_photo_meal">Please upload a picture of the meal you had from the Gallery or click an image using the Camera.</string>
+  <string name="error_fetching_data">Some error in fetching data. Please try again.</string>
+  <string name="getting_contact_information">getting contact information.</string>
+  <string name="enter_email">Please enter email</string>
+  <string name="enter_phone">Please enter mobile number</string>
+  <string name="email_changed_successfully">Email changed successfully.</string>
+  <string name="phone_changed_successfully">Phone number changed successfully</string>
+  <string name="otp_not_correct">OTP is not correct. Please check again.</string>
+  <string name="title_activity_blood_sugar_logging_settings">Blood Glucose Settings</string>
+  <string name="blood_glucose_logging_type">Blood Glucose Logging Type</string>
+  <string name="title_activity_logging_tabbed">Logging Tabbed Activity</string>
+  <string name="enter_value_glucose">Enter value (mg/dL)</string>
+  <string name="time">Time</string>
+  <string name="tab_name_blood_glucose">Blood Glucose</string>
+  <string name="tab_name_activity">Activity</string>
+  <string name="tab_name_meal">Meal</string>
+  <string name="tab_name_medicine">Medicine</string>
+  <string name="tab_name_weight">Vitals</string>
+  <string name="title_activity_blood_sugar_trend">BloodSugarTrendActivity</string>
+  <string name="title_activity_activity_logging_settings">ActivityLoggingSettings</string>
+  <string name="title_activity_activity__trends">Activity_Trends</string>
+  <string name="calories_eaten">Calories Eaten (cal)</string>
+  <string name="carbs_eaten">Carbs Eaten (g)</string>
+  <string name="title_activity_my_plate">MyPlate</string>
+  <string name="title_activity_edit_recommended_meal">EditRecommendedMeal</string>
+  <string name="food_tab_recommended">SUGGESTED</string>
+  <string name="food_tab_search">SEARCH</string>
+  <string name="food_tab_favourites">FAVOURITES</string>
+  <string name="title_activity_vital_trends">VitalTrends</string>
+  <string name="title_edit_meal_activity">Edit Meal</string>
+  <string name="title_activity_trends_full">TrendsFullActivity</string>
+  <string name="title_activity_add_medicine">AddMedicineActivity</string>
+  <string name="title_activity_medicine_trends">Medicine</string>
+  <string name="frequency_of_medicine">Frequency</string>
+  <string name="avg_blood_sugar">Average Blood Glucose (mg/dL)</string>
+  <string name="avg_blood_sugar_mmol">Average Blood Glucose (mmol)</string>
+  <string name="customize_activity">Click on the plus button [img src=customize_red/] to add</string>
+  <string name="customize_meal">Search food item in the search bar to log</string>
+  <string name="title_activity_trends_log_book">Trends</string>
+  <string name="title_activity_trends_log_book_medicine">Trends Medicine</string>
+  <string name="title_activity_trends_log_book_vitals">VitalTrends</string>
+  <string name="title_activity_trends_log_book_blood_sugar">Blood Glucose Trends</string>
+  <string name="attribute_name_with_less_than">&lt; %1$s</string>
+  <string name="attribute_name_with_greater_than">%1$s &gt;</string>
+  <string name="no_readings_recorded">No readings recorded</string>
+  <string name="disclaimer">Estimated HbA1c will be calculated only if you take 2 or more readings a day consistently for a week. For better accuracy include both fasting and post-postprandial values.\nEstimated HbA1c is a helpful approximation calculated from your blood glucose values. It may vary from your actual lab test.</string>
+  <string name="tab_name_blood_glucose_trends">Blood Glucose Trends</string>
+  <string name="tab_name_activity_trends">Activity Trends</string>
+  <string name="trend_name_meal_trends">Diet Trends</string>
+  <string name="medicine_trends_label">Medicine Trends</string>
+  <string name="vital_trends_label">Vital Trends</string>
+  <string name="title_activity_on_boarding">OnBoardingActivity</string>
+  <string name="real_time_trends">Medical Trackers with detailed report sharing</string>
+  <string name="daily_coaching">Get daily support from diabetes coaches</string>
+  <string name="have_an_account">Login</string>
+  <string name="new_user_onboard">Signup</string>
+  <string name="title_activity_new_sign_up">Sign up</string>
+  <string name="title_activity_sign_in">Login</string>
+  <string name="permission_rationale">"Contacts permissions are needed for providing email
+    completions."
+  </string>
+  <string name="set_up_account">How would you like to set up your account?</string>
+  <string name="see_you">Nice to see you again!</string>
+  <string name="how_log_in">How would you like to log in?</string>
+  <string name="welcome_user">%1$s in association with Life In Control welcome you to his care plan. Through this app we will ensure that you always stay on top of your condition.</string>
+  <string name="setting_up_account">While you\'re waiting, here are a few interesting facts about Diabetes</string>
+  <string name="eat_sweets">Diabetes patients can eat sweets and chocolates in small portions, as long as these fit into the required calories intake</string>
+  <string name="eat_fruit">For people with Diabetes, it may be better to eat fruit rather than drinking packaged fruit juice</string>
+  <string name="eat_bakd_parantha">Baked paranthas are a tasty and healthy substitute for fried paranthas</string>
+  <string name="access_app">Access the Life in Control App</string>
+  <string name="hi">Hi</string>
+  <string name="hello_user">Hello</string>
+  <string name="welcome_text">Welcome to Life in Control!</string>
+  <string name="welcome_only">Welcome</string>
+  <string name="care_plan">Thank you for trusting us with your health. As your care team, we shall do everything we can to keep you fit and healthy! But always remember, the most important member in your care team is you!</string>
+  <string name="looking_forward_to">Please confirm your mobile number to get started</string>
+  <string name="get_started">Let\'s get started</string>
+  <string name="starting_today">Starting today, our Diabetes Coach will hold your hand and guide you to a healthier lifestyle. They will constantly monitor your health and set daily goals to meet your long-term health targets. But most importantly, they will always be available for support, as a guide and a friend.</string>
+  <string name="at_lifeincontrol">At Life in Control, We consider every patient with diabetes a hero for the courage with which they face the daily challenges of the condition. But even heroes need some support.</string>
+  <string name="alert_log_out_internet_connect">Please connect to internet to sync your data with server otherwise your data can be lost.</string>
+  <string name="male">Male</string>
+  <string name="female">Female</string>
+  <string name="cm">cm</string>
+  <string name="ft">ft</string>
+  <string name="name_string">My name is \u0020</string>
+  <string name="age_string">. I am \u0020</string>
+  <string name="a_string">a \u0020</string>
+  <string name="years_old_string">\u0020 years old \u0020</string>
+  <string name="height_string">. My Height</string>
+  <string name="is_string">is \u0020</string>
+  <string name="ft_string">ft \u0020</string>
+  <string name="weight_string">. My weight is \u0020</string>
+  <string name="kg_string">\u0020 kg.</string>
+  <string name="retry">Retry</string>
+  <string name="update">Update</string>
+  <string name="cancel">Cancel</string>
+  <string name="ok">Ok</string>
+  <string name="no">NO</string>
+  <string name="save">SAVE</string>
+  <string name="saved">SAVED</string>
+  <string name="remind_later">Remind Later</string>
+  <string name="please_wait_while_data_is_loading">Please wait while data loading</string>
+  <string name="msg_hard_update">We\'re super excited to show you the latest version of our app! Unfortunately, the current one is no longer supported :-(</string>
+  <string name="msg_soft_update">Small updates can make a huge difference!</string>
+  <string name="update_app_title">Update is available</string>
+
+  <string name="msg_daily_goals_updated">Your daily goals have been updated. You can edit them in the manage goals section</string>
+  <string name="congratulations">Congratulations!</string>
+  <string name="goal_achieved">Goal Achieved!</string>
+
+  <string name="msg_weight_goal_achieved">You did it, your weight is now in ideal range.</string>
+  <string name="msg_hba1c_goal_achieved">Your HbA1c is now in control</string>
+  <string name="msg_waist_goal_achieved">You have achieved your waist goal</string>
+
+  <string name="title_goal_not_achieved">\"You can do better than this!\"</string>
+  <string name="msg_setup_weight_goal">Your daily goals have been updated. We recommend you to set up a weight goal.\n\nDo you want to set it up now?</string>
+  <string name="msg_setup_hba1c_goal">We recommend you to set up a HbA1c goal.\n\nDo you want to set it up now?</string>
+  <string name="msg_setup_waist_goal">We recommend you to set up a waist goal.\n\nDo you want to set it up now?</string>
+
+  <string name="msg_weight_step_goal_achieved">You have achieved your milestone. Do you want to set up the next goal to bring your weight in the ideal range?</string>
+  <string name="msg_weight_goal_not_achieved">You were close to your target. Do you want to set up the next goal to bring your weight in the ideal range?</string>
+  <string name="msg_hba1c_goal_not_achieved">You were close to your target. Do you want to set up the next goal to control your HbA1c?</string>
+  <string name="msg_waist_goal_not_achieved">You were close to your target. Do you want to set up the next goal to bring your waist in the ideal range?</string>
+
+  <string name="msg_log_hba1c">Please log your current HbA1c before setting up your goal.</string>
+  <string name="msg_log_height">Please log your current Height before setting up your goal.</string>
+  <string name="msg_log_waist">Please log your current waist before setting up your goal.</string>
+  <string name="msg_log_weight">Please log your current weight before setting up your goal.</string>
+
+  <string name="target_waist">Your target Waist in the next 90 days:</string>
+  <string name="set_goal_text">We need some more information for our new, intelligent health goals!\n\nIt won\'t take very long.</string>
+
+  <string name="goal_weight_set_doc">Your weight goal and daily goals have been set by your doctor. You can view them in the manage goals section.</string>
+  <string name="goal_weight_set_user">Your weight goal and daily goals have been set. You can edit them in the manage goals section.</string>
+  <string name="daily_goal_doc">Your daily goals have been set by your doctor. You can edit them in the manage goals section.</string>
+  <string name="daily_goal_user">Your daily goals have been set. You can edit them in the manage goals section.</string>
+
+  <string name="msg_current_n_target_weight_same">Your target weight cannot be same as your current weight!</string>
+  <string name="msg_current_n_target_waist_same">Your target waist cannot be same as your current waist!</string>
+  <string name="msg_current_n_target_hba1c_same">Your target HbA1c cannot be same as your current HbA1c!</string>
+
+  <string name="msg_token_expired">You have been logged out. Please login again to continue.</string>
+  <string name="msg_version_mismatch">You are using an older version. Pleade update the app to latest version</string>
+  <string name="msg_about">We are a digital diabetes management program on a mission to empower people to manage their diabetes and lifestyle through technology enabled coaching.</string>
+  <string name="title_activity_country_code">Select Country Code</string>
+  <string name="string_send_otp">We will send you the <b>OTP</b> number on your registered mobile number</string>
+  <string name="string_send_otp_email">We will send you the <b>OTP</b> number on your registered email</string>
+  <string name="tracker_id">UA-89059421-1</string>
+
+  <string-array name="CountryCodes">
+    <item>93,Afghanistan</item>
+
+    <item>355,Albania</item>
+
+    <item>213,Algeria</item>
+
+    <item>1684,American Samoa</item>
+
+    <item>376,Andorra</item>
+
+    <item>244,Angola</item>
+
+    <item>1264,Anguilla</item>
+
+    <item>672,Antarctica</item>
+
+    <item>1268,Antigua and Barbuda</item>
+
+    <item>54,Argentina</item>
+
+    <item>374,Armenia</item>
+
+    <item>297,Aruba</item>
+
+    <item>61,Australia</item>
+
+    <item>43,Austria</item>
+
+    <item>994,Azerbaijan</item>
+
+    <item>1242,Bahamas</item>
+
+    <item>973,Bahrain</item>
+
+    <item>880,Bangladesh</item>
+
+    <item>1246,Barbados</item>
+
+    <item>375,Belarus</item>
+
+    <item>32,Belgium</item>
+
+    <item>501,Belize</item>
+
+    <item>229,Benin</item>
+
+    <item>1441,Bermuda</item>
+
+    <item>975,Bhutan</item>
+
+    <item>591,Bolivia</item>
+
+    <item>599,Bonaire</item>
+
+    <item>387,Bosnia and Herzegovina</item>
+
+    <item>267,Botswana</item>
+
+    <item>47,Bouvet Island</item>
+
+    <item>55,Brazil</item>
+
+    <item>246,British Indian Ocean Territory</item>
+
+    <item>673,Brunei Darussalam</item>
+
+    <item>359,Bulgaria</item>
+
+    <item>226,Burkina Faso</item>
+
+    <item>257,Burundi</item>
+
+    <item>855,Cambodia</item>
+
+    <item>237,Cameroon</item>
+
+    <item>1,Canada</item>
+
+    <item>238,Cape Verde</item>
+
+    <item>1345,Cayman Islands</item>
+
+    <item>236,Central African Republic</item>
+
+    <item>235,Chad</item>
+
+    <item>56,Chile</item>
+
+    <item>86,China</item>
+
+    <item>61,Christmas Island</item>
+
+    <item>61,Cocos (Keeling) Islands</item>
+
+    <item>57,Colombia</item>
+
+    <item>269,Comoros</item>
+
+    <item>242,Congo</item>
+
+    <item>243,Democratic Republic of the Congo</item>
+
+    <item>682,Cook Islands</item>
+
+    <item>506,Costa Rica</item>
+
+    <item>385,Croatia</item>
+
+    <item>53,Cuba</item>
+
+    <item>599,Curaçao</item>
+
+    <item>357,Cyprus</item>
+
+    <item>420,Czech Republic</item>
+
+    <item>225,Ivory Coast</item>
+
+    <item>45,Denmark</item>
+
+    <item>253,Djibouti</item>
+
+    <item>1767,Dominica</item>
+
+    <item>1809,Dominican Republic</item>
+
+    <item>1829,Dominican Republic</item>
+
+    <item>1849,Dominican Republic</item>
+
+    <item>593,Ecuador</item>
+
+    <item>20,Egypt</item>
+
+    <item>503,El Salvador</item>
+
+    <item>240,Equatorial Guinea</item>
+
+    <item>291,Eritrea</item>
+
+    <item>372,Estonia</item>
+
+    <item>251,Ethiopia</item>
+
+    <item>500,Falkland Islands (Malvinas)</item>
+
+    <item>298,Faroe Islands</item>
+
+    <item>679,Fiji</item>
+
+    <item>358,Finland</item>
+
+    <item>33,France</item>
+
+    <item>594,French Guiana</item>
+
+    <item>689,French Polynesia</item>
+
+    <item>262,French Southern Territories</item>
+
+    <item>241,Gabon</item>
+
+    <item>220,Gambia</item>
+
+    <item>995,Georgia</item>
+
+    <item>49,Germany</item>
+
+    <item>233,Ghana</item>
+
+    <item>350,Gibraltar</item>
+
+    <item>30,Greece</item>
+
+    <item>299,Greenland</item>
+
+    <item>1473,Grenada</item>
+
+    <item>590,Guadeloupe</item>
+
+    <item>1671,Guam</item>
+
+    <item>502,Guatemala</item>
+
+    <item>44,Guernsey</item>
+
+    <item>224,Guinea</item>
+
+    <item>245,Guinea-Bissau</item>
+
+    <item>592,Guyana</item>
+
+    <item>509,Haiti</item>
+
+    <item>672,Heard Island and McDonald Mcdonald
+
+    Islands</item>
+
+    <item>379,Holy See (Vatican City State)</item>
+
+    <item>504,Honduras</item>
+
+    <item>852,Hong Kong</item>
+
+    <item>36,Hungary</item>
+
+    <item>354,Iceland</item>
+
+    <item>91,India</item>
+
+    <item>62,Indonesia</item>
+
+    <item>98,Iran</item>
+
+    <item>964,Iraq</item>
+
+    <item>353,Ireland</item>
+
+    <item>44,Isle of Man</item>
+
+    <item>972,Israel</item>
+
+    <item>39,Italy</item>
+
+    <item>1876,Jamaica</item>
+
+    <item>81,Japan</item>
+
+    <item>44,Jersey</item>
+
+    <item>962,Jordan</item>
+
+    <item>7,Kazakhstan</item>
+
+    <item>254,Kenya</item>
+
+    <item>686,Kiribati</item>
+
+    <item>850,North Korea</item>
+
+    <item>82,Korea</item>
+
+    <item>965,Kuwait</item>
+
+    <item>996,Kyrgyzstan</item>
+
+    <item>856,Laos</item>
+
+    <item>371,Latvia</item>
+
+    <item>961,Lebanon</item>
+
+    <item>266,Lesotho</item>
+
+    <item>231,Liberia</item>
+
+    <item>218,Libya</item>
+
+    <item>423,Liechtenstein</item>
+
+    <item>370,Lithuania</item>
+
+    <item>352,Luxembourg</item>
+
+    <item>853,Macao</item>
+
+    <item>389,Macedonia</item>
+
+    <item>261,Madagascar</item>
+
+    <item>265,Malawi</item>
+
+    <item>60,Malaysia</item>
+
+    <item>960,Maldives</item>
+
+    <item>223,Mali</item>
+
+    <item>356,Malta</item>
+
+    <item>692,Marshall Islands</item>
+
+    <item>596,Martinique</item>
+
+    <item>222,Mauritania</item>
+
+    <item>230,Mauritius</item>
+
+    <item>262,Mayotte</item>
+
+    <item>52,Mexico</item>
+
+    <item>691,Federated States of Micronesia</item>
+
+    <item>373,Moldova</item>
+
+    <item>377,Monaco</item>
+
+    <item>976,Mongolia</item>
+
+    <item>382,Montenegro</item>
+
+    <item>1664,Montserrat</item>
+
+    <item>212,Morocco</item>
+
+    <item>258,Mozambique</item>
+
+    <item>95,Myanmar</item>
+
+    <item>264,Namibia</item>
+
+    <item>674,Nauru</item>
+
+    <item>977,Nepal</item>
+
+    <item>31,Netherlands</item>
+
+    <item>687,New Caledonia</item>
+
+    <item>64,New Zealand</item>
+
+    <item>505,Nicaragua</item>
+
+    <item>227,Niger</item>
+
+    <item>234,Nigeria</item>
+
+    <item>683,Niue</item>
+
+    <item>672,Norfolk Island</item>
+
+    <item>1670,Northern Mariana Islands</item>
+
+    <item>47,Norway</item>
+
+    <item>968,Oman</item>
+
+    <item>92,Pakistan</item>
+
+    <item>680,Palau</item>
+
+    <item>970,State of Palestine</item>
+
+    <item>507,Panama</item>
+
+    <item>675,Papua New Guinea</item>
+
+    <item>595,Paraguay</item>
+
+    <item>51,Peru</item>
+
+    <item>63,Philippines</item>
+
+    <item>870,Pitcairn</item>
+
+    <item>48,Poland</item>
+
+    <item>351,Portugal</item>
+
+    <item>1,Puerto Rico</item>
+
+    <item>974,Qatar</item>
+
+    <item>40,Romania</item>
+
+    <item>7,Russian Federation</item>
+
+    <item>250,Rwanda</item>
+
+    <item>262,Reunion</item>
+
+    <item>590,Saint Barthelemy</item>
+
+    <item>290,Saint Helena</item>
+
+    <item>1869,Saint Kitts and Nevis</item>
+
+    <item>1758,Saint Lucia</item>
+
+    <item>590,Saint Martin (French part)</item>
+
+    <item>508,Saint Pierre and Miquelon</item>
+
+    <item>1784,Saint Vincent and the Grenadines</item>
+
+    <item>685,Samoa</item>
+
+    <item>378,San Marino</item>
+
+    <item>239,Sao Tome and Principe</item>
+
+    <item>966,Saudi Arabia</item>
+
+    <item>221,Senegal</item>
+
+    <item>381,Serbia</item>
+
+    <item>248,Seychelles</item>
+
+    <item>232,Sierra Leone</item>
+
+    <item>65,Singapore</item>
+
+    <item>1721,Sint Maarten (Dutch part)</item>
+
+    <item>421,Slovakia</item>
+
+    <item>386,Slovenia</item>
+
+    <item>677,Solomon Islands</item>
+
+    <item>252,Somalia</item>
+
+    <item>27,South Africa</item>
+
+    <item>500,South Georgia and the South Sandwich Islands</item>
+
+    <item>211,South Sudan</item>
+
+    <item>34,Spain</item>
+
+    <item>94,Sri Lanka</item>
+
+    <item>249,Sudan</item>
+
+    <item>597,Suriname</item>
+
+    <item>47,Svalbard and Jan Mayen</item>
+
+    <item>268,Swaziland</item>
+
+    <item>46,Sweden</item>
+
+    <item>41,Switzerland</item>
+
+    <item>963,Syrian Arab Republic</item>
+
+    <item>886,Taiwan, Province of China</item>
+
+    <item>992,Tajikistan</item>
+
+    <item>255,United Republic of Tanzania</item>
+
+    <item>66,Thailand</item>
+
+    <item>670,Timor-Leste</item>
+
+    <item>228,Togo</item>
+
+    <item>690,Tokelau</item>
+
+    <item>676,Tonga</item>
+
+    <item>1868,Trinidad and Tobago</item>
+
+    <item>216,Tunisia</item>
+
+    <item>90,Turkey</item>
+
+    <item>993,Turkmenistan</item>
+
+    <item>1649,Turks and Caicos Islands</item>
+
+    <item>688,Tuvalu</item>
+
+    <item>256,Uganda</item>
+
+    <item>380,Ukraine</item>
+
+    <item>971,United Arab Emirates</item>
+
+    <item>44,United Kingdom</item>
+
+    <item>1,United States</item>
+
+    <item>598,Uruguay</item>
+
+    <item>998,Uzbekistan</item>
+
+    <item>678,Vanuatu</item>
+
+    <item>58,Venezuela</item>
+
+    <item>84,Vietnam</item>
+
+    <item>1284,British Virgin Islands</item>
+
+    <item>1340,US Virgin Islands</item>
+
+    <item>681,Wallis and Futuna</item>
+
+    <item>212,Western Sahara</item>
+
+    <item>967,Yemen</item>
+
+    <item>260,Zambia</item>
+
+    <item>263,Zimbabwe</item>
+
+    <item>358,Aland Islands</item>
+  </string-array>
+  <string name="title_activity_otp_confirm">Enter OTP</string>
+  <string name="string_password_changed">Your password has been successfully Changed</string>
+  <string name="string_save_password">SAVE PASSWORD</string>
+  <string name="otp_phone">An OTP has been sent to your phone number</string>
+  <string name="otp_email">An OTP has been sent to your email</string>
+  <string name="title_activity_search">SearchActivity</string>
+  <string name="string_add_to_fav">Add to your favourites</string>
+  <string name="string_added_to_fav">Added to favourite</string>
+  <string name="string_blood_glucose_with_unit">Blood Glucose (mg/dL)</string>
+  <string name="string_blood_glucose_with_unit_mmol">Blood Glucose (mmol)</string>
+  <string name="string_daily_average">Daily average</string>
+  <string name="string_daily_total">Daily total</string>
+  <string name="string_cal_burned">Calories burned (cal)</string>
+  <string name="string_cal_consumed_with_unit">Calories consumed (cal)</string>
+  <string name="string_carbs_consumed_with_unit">Carbs consumed (grams)</string>
+  <string name="string_compliance_with_unit">Compliance (%)</string>
+  <string name="string_insulin_with_unit">Insulin (iu)</string>
+  <string name="string_todays_avg_value"> average value : </string>
+  <string name="please_wait">Please wait...</string>
+  <string name="select_time">Select timeslot</string>
+  <string name="disconnected_integrated_app">Your %1$s account got disconnected! Please reintegrate.</string>
+  <string name="integrate_another_app">Do you want to integrate %1$s? \n\n Your integration with %2$s will be lost! \n (Your synced data will remain unaffected).</string>
+  <string name="disconnect_integrated_app">Are you sure you want to disconnect this app? You will no longer be able to sync your data.</string>
+  <string name="disconnect_integrated_app_title">Disconnect an App!</string>
+  <string name="enter_appointment_name">Please enter the appointment name</string>
+  <string name="enter_appointment_location">Please enter the appointment location</string>
+  <string name="enter_appointment_time">Please enter the appointment time</string>
+  <string name="enter_appointment_date">Please enter the appointment date</string>
+  <string name="confirm_otp">Confirm Otp</string>
+  <string name="set_password">Set Password</string>
+  <string name="add_medicine">Add Medicine</string>
+  <string name="request_recieved">Your request has been recieved!</string>
+  <string name="check_inbox">Please check your inbox</string>
+  <string name="donot_have_dietplan">You don\'t have any diet plan for this particular time slot</string>
+  <string name="log_your_data">Please do log your data so your coaches can keep track of it</string>
+  <string name="tick_achieved">Keep it up! You have unlocked your first target. Keep logging to collect stars.</string>
+  <string name="star_achieved">Well done, you have earned your first star!
+Achieve your targets everyday to collect more. Keep logging!</string>
+  <string name="email_subject">Get your customized Diet Plan</string>
+  <string name="email_body">\nIt’s good to see you take an active interest in your health!\n\nA healthy diet is a critical part of managing Diabetes, and hence it is one of the cornerstones of our special Diabetes Programme. The Program also contains access to a health expert on chat, a special activity plan as well as regular health review and follow up calls.\n\n We would also be to schedule a free health consultation for you! Reply back to this email if you are interested in any of this.\n\nTo your Good Healh!\n\nDr Seema Singh,
+\nMS (Surgery), PGPX
+\nHead, Program Operations
+\nCuro Healthcare Technologies</string>
+  <string name="title_activity_name_unit_change">Unit Settings</string>
+  <string name="unit_change">UNIT CHANGE</string>
+  <string name="kg">Kg</string>
+  <string name="lb">lb</string>
+  <string name="mgdl">mg/dL</string>
+  <string name="mmol">mmol</string>
+  <string name="weight_goal_text">To obtain optimal weight, your future goals should look like this</string>
+  <string name="daily_goal_text">Here are your daily goals to help you achieve your weight goal</string>
+  <string name="clear_activity">Do you want to clear logged activity ?</string>
+  <string name="clear_bg">Do you want to clear logged blood sugar?</string>
+  <string name="clear_medicine">Do you want to clear logged medicine?</string>
+  <string name="explore_plans">Explore Plans</string>
+  <string name="consultation_call"><u>Try our free consultation call</u></string>
+  <string name="consultation_call_requested"><u>We\'ve received your call request.</u></string>
+  <string name="send_text">Send</string>
+  <string name="almost_there">Almost there!</string>
+  <string name="phone_number">Phone number</string>
+  <string name="give_us_contact">Give us your contact number, our coaches will get in touch with you shortly.</string>
+  <string name="number_to_communicate">This number will be used by our team to communicate regularly with you.</string>
+  <string name="title_activity_free_trial">Free Trial</string>
+  <string name="title_activity_subscribe_chat">Subscribe</string>
+  <string name="title_activity_payment">Payment</string>
+  <string name="connect_to_internet">Please connect to the internet.</string>
+  <string name="overall_timeline">Overall Timeline</string>
+  <string name="calories_consumed_burned">Calories consumed &amp; burned</string>
+  <string name="carbs_insulin_conumed">Carbs &amp; Insulin consumed</string>
+  <string name="avg_bg_dist">Average BG Distribution</string>
+  <string name="overall_avg_bg_dist">Overall avg. BG distribution</string>
+  <string name="avg_cal_carbs_consumption">Average Calories &amp; Carbs consumption</string>
+  <string name="avg_bg">Blood Glucose Variability</string>
+  <string name="all_bg">All Blood Glucose</string>
+  <string name="bg_variability">Blood glucose variability</string>
+  <string name="statistics">Statistics</string>
+  <string name="meal_wise_distribution">Meal wise distribution</string>
+  <string name="take_to_app">Continue</string>
+  <string name="mobile_number">Mobile Number</string>
+  <string name="help">Help</string>
+  <string name="need_contact">We will need your contact number for further communications</string>
+  <string name="need_help">Please send us your registered email id and we will get back to you</string>
+  <string name="contact_customer">Life in Control team will be contacting you soon. Sorry for the inconvenience.</string>
+  <string name="tap_back_again_to_exit">Tap Back again to Exit</string>
+  <string name="string_resend_underlined"><u>Resend</u></string>
+  <string name="terms_conditions">http://www.lifeincontrol.com/terms-and-conditions</string>
+  <string name="privacy_ploicy">http://www.lifeincontrol.com/privacy-policy</string>
+  <string name="select_file_type">Please select a valid file type</string>
+  <string name="enter_values">Please enter value for the lab test</string>
+  <string name="add_files">Please add files</string>
+  <string name="sure">SURE</string>
+  <string name="navigation_title">Side Navigation</string>
+  <string name="coachmarks_meal">\n\n\n\nPlease choose your meal from the options given below.\n\n\n</string>
+  <string name="navigation_diary">You can find all your important information here; grouped perfectly for your use\n\n\n</string>
+  <string name="meal_diary">Let\'s start with logging your first meal</string>
+  <string name="fab_fav_myplate">Your tagged favourite meal will show up here</string>
+  <string name="add_fav_myplate">You can tag your logged food items as your favourites</string>
+  <string name="insights_coachmarks">\n\n\nInsights\n\nGet an overall as well as category-wise view of your blood sugar levels on your preferred timescale!\n\n\n</string>
+  <string name="history_coachmarks">\n\n\nHistory\n\nEasily understand how your diet, activity, and medicines impact your blood sugar levels on an interactive timeline!\n\n\n</string>
+  <string name="long_html">
+<![CDATA[
+<p><span style="font-size: large;"><strong>Technical Definitions</strong></span></p>
+<p><br /><span style="font-size: small;">a) <strong>Median Graph:</strong> The Median is the middle number when a group of numbers/data is arranged in ascending or descending order.</span></p>
+<p><span style="font-size: small;">b) <strong>Percentile Graphs:</strong> When we say a number &lsquo;x&rsquo; has a percentile of 95%, we mean that 95% of other numbers within its group have a value which is less than &lsquo;x&rsquo;.</span></p>
+<p><span style="font-size: small;">Thus, the 10-90 percentile graph shows the numbers which are greater than 10% of the numbers and less then 90. Similarly, the 25-75 percentile graph show the numbers which are greater than 75 and less than 25.</span></p>
+]]>
+</string>
+
+  <string name="short_html">
+    <![CDATA[
+    <p><span style="font-size: large;"><strong>Information</strong></span></p>
+<p><span style="font-size: small;">a) This graph shows how your Blood Glucose level varies through a given time.</span></p>
+<p><span style="font-size: small;">b) The median line represents how your blood glucose generally varies across different days.</span></p>
+<p><span style="font-size: small;">c) The percentile bands show how your blood glucose generally varies within each day.</span></p>
+<p><span style="font-size: small;">d) The more the graph lies outside your target range, the more your blood sugar fluctuates, which is bad for your health!</span></p>
+    ]]>
+
+  </string>
+  <string name="no_internet">No internet, Please try again.</string>
+
+</resources>

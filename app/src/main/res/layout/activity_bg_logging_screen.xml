@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_bg_logging_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.rishabh.curotest.Activities.BgLoggingScreen"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="@android:color/white"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        />
+
+    <RelativeLayout
+        android:id="@+id/date_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/trends_background"
+        >
+
+      <RelativeLayout
+          android:id="@+id/layout_left_arrow"
+          android:layout_width="40dp"
+          android:layout_height="match_parent"
+          android:layout_alignParentLeft="true"
+          android:layout_marginLeft="10dp"
+          >
+
+        <ImageView
+            android:id="@+id/left_arrow"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/chevron_left"
+            />
+      </RelativeLayout>
+
+      <TextView
+          android:id="@+id/date_indicator"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:text="Today, 19 April"
+          android:textSize="17dp"
+          />
+
+      <RelativeLayout
+          android:id="@+id/layout_right_arrow"
+          android:layout_width="40dp"
+          android:layout_height="match_parent"
+          android:layout_alignParentRight="true"
+          android:layout_marginRight="10dp"
+          >
+
+        <ImageView
+            android:id="@+id/right_arrow"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/chevron_right"
+            />
+      </RelativeLayout>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/bg_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+
+  </LinearLayout>
+
+
+  <View
+      android:id="@+id/click_blocker"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#AA000000"
+      android:visibility="gone"
+      />
+
+
+  <LinearLayout
+      android:id="@+id/settings_floating_layout"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|right"
+      android:layout_marginBottom="160dp"
+      android:layout_marginRight="@dimen/fab_margin"
+      android:orientation="horizontal"
+      android:visibility="gone"
+      >
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardElevation="4dp"
+        app:contentPadding="4dp"
+        >
+
+      <TextView
+          android:id="@+id/glucose_setup_log"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingBottom="5dp"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
+          android:paddingTop="5dp"
+          android:text="Set blood glucose schedule"
+          android:textColor="@color/white"
+          />
+    </android.support.v7.widget.CardView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/settings_floating_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:src="@drawable/schedule"
+        app:backgroundTint="@color/colorPrimary"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/logs_floating_layout"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|right"
+      android:layout_marginBottom="90dp"
+      android:layout_marginRight="@dimen/fab_margin"
+      android:orientation="horizontal"
+      android:visibility="gone"
+      >
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardElevation="4dp"
+        app:contentPadding="4dp"
+        >
+
+      <TextView
+          android:id="@+id/glucose_quick_log"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingBottom="5dp"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
+          android:paddingTop="5dp"
+          android:text="Quick Log"
+          android:textColor="@color/white"
+          />
+    </android.support.v7.widget.CardView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/logs_floating_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:src="@drawable/log_sheet"
+        app:backgroundTint="@color/colorPrimary"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        />
+  </LinearLayout>
+
+  <android.support.design.widget.FloatingActionButton
+      android:id="@+id/fab_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|right"
+      android:layout_margin="@dimen/fab_margin"
+      android:src="@drawable/plus_icon"
+      app:backgroundTint="@color/floating_red_color"
+      app:rippleColor="@color/floating_red_color"
+      />
+
+</FrameLayout>

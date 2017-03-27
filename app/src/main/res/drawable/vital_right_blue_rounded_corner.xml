@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <padding
+        android:bottom="10dp"
+        android:left="10dp"
+        android:right="10dp"
+        android:top="10dp"/>
+    <corners
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="4dp"
+        android:topLeftRadius="0dp"
+        android:topRightRadius="4dp"/>
+    <stroke
+        android:color="@color/dialogButtons"
+        android:width="1dp"/>
+  </shape>

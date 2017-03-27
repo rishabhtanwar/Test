@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:autofit="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="132dp"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/theme_color"
+      android:orientation="vertical"
+      >
+    <LinearLayout
+        android:id="@+id/daily_goals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="7"
+        >
+      <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+          android:id="@+id/firstGoalProgress"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
+          tools:context=".MainActivity"
+          >
+        <ImageView
+            android:id="@+id/image_one"
+            android:layout_below="@+id/sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:clickable="false"
+            android:src="@drawable/locked_circle"
+            />
+
+        <TextView
+            android:id="@+id/sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-medium"
+            android:layout_centerHorizontal="true"
+            android:text="SUN"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            />
+
+      </RelativeLayout>
+      <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+          android:id="@+id/secondGoalProgress"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
+          tools:context=".MainActivity"
+          >
+        <ImageView
+            android:id="@+id/image_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/monday"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:clickable="false"
+            android:src="@drawable/locked_circle"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/monday"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-medium"
+            android:layout_centerHorizontal="true"
+            android:text="MON"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            />
+
+      </RelativeLayout>
+      <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+          android:id="@+id/thirdGoalProgress"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
+          tools:context=".MainActivity"
+          >
+        <ImageView
+            android:id="@+id/image_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tuesday"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:clickable="false"
+            android:src="@drawable/locked_circle"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tuesday"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-medium"
+            android:layout_centerHorizontal="true"
+            android:text="TUE"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            />
+
+      </RelativeLayout>
+      <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+          android:id="@+id/fourthGoalProgress"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
+          tools:context=".MainActivity"
+          >
+        <ImageView
+            android:id="@+id/image_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/wednesday"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:clickable="false"
+            android:src="@drawable/locked_circle"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wednesday"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-medium"
+            android:layout_centerHorizontal="true"
+            android:text="WED"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            />
+
+      </RelativeLayout>
+      <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+          android:id="@+id/fifthGoalProgress"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
+          tools:context=".MainActivity"
+          >
+        <ImageView
+            android:id="@+id/image_five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/thursday"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:clickable="false"
+            android:src="@drawable/locked_circle"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/thursday"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-medium"
+            android:layout_centerHorizontal="true"
+            android:text="THU"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            />
+
+      </RelativeLayout>
+      <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+          android:id="@+id/sixthGoalProgress"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
+          tools:context=".MainActivity"
+          >
+        <ImageView
+            android:id="@+id/image_six"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/friday"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:clickable="false"
+            android:src="@drawable/locked_circle"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/friday"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-medium"
+            android:layout_centerHorizontal="true"
+            android:text="FRI"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            />
+
+      </RelativeLayout>
+      <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+          android:id="@+id/seventhGoalProgress"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
+          tools:context=".MainActivity"
+          >
+        <ImageView
+            android:id="@+id/image_seven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/saturday"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:clickable="false"
+            android:src="@drawable/locked_circle"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/saturday"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-medium"
+            android:layout_centerHorizontal="true"
+            android:text="SAT"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            />
+
+      </RelativeLayout>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/weekly_display_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kick start your logging streak"
+        android:layout_alignParentBottom="true"
+        android:background="@color/theme_color"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        android:textSize="14dp"
+        android:gravity="center"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        />
+  </RelativeLayout>
+</RelativeLayout>
+

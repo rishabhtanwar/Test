@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="colorPrimary">#43BBE8</color>
+  <color name="colorPrimaryDark">#3595B9</color>
+  <color name="colorAccent">#506F9C</color>
+
+  <color name="whiteTextColor">#FFFFFF</color>
+  <color name="BorderColor">#C0C0C0</color>
+<color name="manageGoalUnitSwitchColorPrimary">#3FA1BD</color>
+  <color name="bs_divider_color">#1f000000</color>
+  <color name="bs_dark_divider_color">#1fffffff</color>
+
+  <color name="search_bg_Color">#bdbdbd</color>
+
+  <!-- today list -->
+
+  <color name="blueFontColor">#43bbc4</color>
+  <color name="blackFontColor">#585858</color>
+
+  <color name="white">#fdfdfd</color>
+
+  <color name="balckFontColor">#585858</color>
+  <color name="black">#000000</color>
+  <color name="pink">#ff80ab</color>
+  <color name="light_orange">#F47873</color>
+  <color name="gray">#e8e8e8</color>
+  <color name="dark_gray">#bdbdbd</color>
+  <color name="light_gray">#eeeeee</color>
+  <color name="dark_gray_notification">#4e4e4e</color>
+  <color name="light_black">#585858</color>
+
+
+  <color name="circular_progress_default_progress">#03a9f5</color>
+  <color name="circular_progress_default_background">#87cefa</color>
+  <color name="circular_progress_default_title">#03a9f5</color>
+  <color name="circular_progress_default_subtitle">#D1D1D1</color>
+
+  <color name="alpha_100">#00000000</color>
+  <color name="whiteTextColor_alpha80">#CCFFFFFF</color>
+  <color name="whiteTextColor_alpha50">#80FFFFFF</color>
+  <color name="whiteTextColor_alpha20">#32FFFFFF</color>
+  <color name="goals_onboarding_daily_goal_secondary_text">#C6FFFC</color>
+
+  <color name="goals_ui_green">#00ff54</color>
+  <color name="goals_ui_yellow">#fff600</color>
+  <color name="goals_ui_red">#ff7474</color>
+  <color name="goals_progress_background">#2a7c7e</color>
+
+  <!--Material Design Dialog Colors-->
+  <color name="card_background">#ffffff</color>
+  <color name="card_shadow">#10000000</color>
+  <color name="window_background">#00000000</color>
+  <color name="black_de">#DE000000</color>
+
+  <color name="toggle_color">#1cc2a9</color>
+
+
+  <color name="spinner_base_color">#00000000</color>
+  <color name="spinner_highlight_color">#00000000</color>
+  <color name="spinner_error_color">#00000000</color>
+  <color name="spinner_hint_color">#9e9e9e</color>
+  <color name="spinner_arrow_color">#4e4e4e</color>
+  <color name="spinner_floatinglabel_color">#80f</color>
+
+  <color name="logging_hint_text_color">#AAAAAA</color>
+  <color name="logging_text_color">#444444</color>
+
+  <!-- Lab -->
+  <color name="lab_test_important">#FFC600</color>
+  <color name="lab_test_normal">@color/logging_hint_text_color</color>
+  <color name="spinner_actionbar_arrow_color">#fff</color>
+  <color name="dialogButtons">#506F9C</color>
+  <color name="line_color_trends">#9a9a9b</color>
+  <color name="trends_ui_green">#39b54a</color>
+  <color name="trends_ui_yellow">#f7941e</color>
+  <color name="trends_ui_red">#ed1c24</color>
+  <color name="trends_ui_band_fill_color">#FF39b54a</color>
+  <color name="dark_red">#c42424</color>
+  <color name="light_red">#d73334</color>
+  <color name="dark_green">#7f9e00</color>
+  <color name="light_green">#8bad00</color>
+  <color name="dark_yellow">#eea424</color>
+  <color name="light_yellow">#f5b33e</color>
+  <color name="onboarding_ui_green">#23fb6a</color>
+  <color name="dark_green_circle">#236b61</color>
+  <color name="trends_background">#f6f6f6</color>
+  <color name="activity_logging_goal_circle_color">#E1E1E1</color>
+  <color name="logging_color_alert">#E17775</color>
+  <color name="logging_color_normal">#51c56d</color>
+  <color name="logging_ui_green">#3AB3A1</color>
+  <color name="logging_ui_yellow">#F5A623</color>
+  <color name="logging_ui_red">#E17775</color>
+  <color name="grey_color_card">#EBEBEB</color>
+  <color name="medicine_list_view_color">#F7F7F7</color>
+  <color name="black_alpha_90">#E6000000</color>
+  <color name="bar_color">#43BBE8</color>
+  <color name="empty_bar_color">#1AFCFFFF</color>
+  <color name="empty_bar_color_snapshot">#D9F1FA</color>
+  <color name="line_color">#DDDDDD</color>
+  <color name="vital_logged_color">#295764</color>
+  <color name="welcome_first_color">#8C77B2</color>
+  <color name="welcome_green_color">#27BBA3</color>
+  <color name="welcome_red_color">#D85C5C</color>
+  <color name="welcome_yellow_color">#D8C45C</color>
+  <color name="onboarding_green_color">#3DCECF</color>
+  <color name="progress_color">#3DCECF</color>
+  <array name="rainbow">
+    <item>@color/spinner_floatinglabel_color</item>
+    <item>@color/blueFontColor</item>
+    <item>@color/trends_ui_yellow</item>
+  </array>
+  <color name="dotted_line">#BEEDCA</color>
+  <color name="bubble_color">#4F6C98</color>
+  <color name="goal_color">#AAAAAA</color>
+  <color name="home_text_color">#444444</color>
+  <color name="disabled_text">#E7E7E7</color>
+  <color name="enabled_text_color">#444444</color>
+  <color name="text_color_blue">#43BAE7</color>
+  <color name="green_button_color">#506F9C</color>
+  <color name="alpha_54_black">#8a000000</color>
+  <color name="alpha_87_black">#de000000</color>
+  <color name="green_color_name">#506F9C</color>
+  <color name="enabled_text">#444444</color>
+  <color name="floating_red_color">#FF564B</color>
+  <color name="theme_color">#43BBE8</color>
+  <color name="today">#4b82ff</color>
+  <color name="greyed_out">#c7c7c7</color>
+  <color name="grey_notes_bg">#F4F4F4</color>
+  <color name="more_text_color">#4A4A4A</color>
+  <color name="green_bg_color">#506F9C</color>
+  <color name="alpha_40_white">#66ffffff</color>
+  <color name="alpha_70_black">#B3000000</color>
+  <color name="card_bg_activity">#E9E9E9</color>
+  <color name="alpha_70_white">#B3FFFFFF</color>
+  <color name="green_include_color">#50C56D</color>
+  <color name="red_exclude_color">#D3746E</color>
+  <color name="color_primary_dark_70_alpha">#B343bbe8</color>
+
+  <color name="message_newday_color">#FF7F7F7F</color>
+  <color name="textColorLink">#008ce3</color>
+  <color name="grey_text_color">#666666</color>
+  <color name="line_color_grey">#DCDCDC</color>
+  <color name="blue_color_variant">#46638D</color>
+  <color name="blue_color_dp">#1A9CCD</color>
+  <color name="yellow_color_graph">#E8AA43</color>
+  <color name="red_color_graph">#FF564B</color>
+  <color name="green_color_graph">#2DC451</color>
+  <color name="view_color_background">#AA000000</color>
+  <color name="login_background">#FCFCFC</color>
+  <color name="custom_showcase_bg">#D9000000</color>
+</resources>
+
