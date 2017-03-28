@@ -10,8 +10,10 @@ import io.realm.RealmResults;
 
 public class LogStreakDBO {
 
-  public int getLogStreakStatus(long date, Realm realm) {
-    int streakStatus = 0;
+  public String getLogStreakStatus(long date, Realm realm) {
+    String streakStatus = "empty";
+    RealmResults<LogStreakPerDay> realmResults1 =
+        realm.where(LogStreakPerDay.class).findAll();
     RealmResults<LogStreakPerDay> realmResults =
         realm.where(LogStreakPerDay.class).equalTo("date", date).findAll();
     if (realmResults.size() == 0) {
@@ -21,4 +23,6 @@ public class LogStreakDBO {
       return streakStatus;
     }
   }
+
+
 }

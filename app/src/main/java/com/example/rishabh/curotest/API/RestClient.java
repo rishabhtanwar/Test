@@ -22,7 +22,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  */
 
   public class RestClient {
-  public static final String BASE_URL = "https://qa-aws.lifeincontrol.com/";
+  public static final String BASE_URL = "http://api.mobile.qa.lifeincontrol.com/";
   public static final String BASE_URL_RETRO = "https://qa-aws.lifeincontrol.com/";
     //private static final String BASE_URL = BuildConfig.BASE_URL_RETRO;
     private static AuthorizedApi apiService;

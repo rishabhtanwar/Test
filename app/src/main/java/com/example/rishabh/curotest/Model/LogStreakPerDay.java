@@ -7,25 +7,25 @@ import io.realm.RealmObject;
  */
 
 public class LogStreakPerDay extends RealmObject {
-  long Date;
-  int statusFlag;
+  long date;
+  String statusFlag;
   int id;
   int userId;
 
-  public int getStatusFlag() {
+  public String  getStatusFlag() {
     return statusFlag;
   }
 
-  public void setStatusFlag(int statusFlag) {
+  public void setStatusFlag(String  statusFlag) {
     this.statusFlag = statusFlag;
   }
 
   public long getDate() {
-    return Date;
+    return date;
   }
 
   public void setDate(long date) {
-    Date = date;
+    this.date = date;
   }
 
   public int getId() {

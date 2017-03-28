@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.example.rishabh.curotest.R;
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class BgQuickLog extends AppCompatActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_bg_quick_log);
+    ButterKnife.bind(this);
   }
 
   private void setSpinnerData(ArrayList<String> arrayList) {

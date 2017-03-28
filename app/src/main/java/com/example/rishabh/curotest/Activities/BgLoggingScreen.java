@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.example.rishabh.curotest.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class BgLoggingScreen extends AppCompatActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_bg_logging_screen);
+    ButterKnife.bind(this);
     mContext = this;
     setUpAnimation();
     linearLayoutManager=new LinearLayoutManager(this);

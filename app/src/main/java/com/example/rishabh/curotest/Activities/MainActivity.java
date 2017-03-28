@@ -12,11 +12,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import butterknife.ButterKnife;
 import com.example.rishabh.curotest.DBO.LogStreakDBO;
+import com.example.rishabh.curotest.Helpers.AppSettings;
 import com.example.rishabh.curotest.Helpers.SetTimeSlots;
 import com.example.rishabh.curotest.Model.LogStreakPerDay;
 import com.example.rishabh.curotest.Model.TimeSlots;
 import com.example.rishabh.curotest.R;
+import com.example.rishabh.curotest.Utils.AppDateHelper;
+import com.example.rishabh.curotest.Utils.Constants;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import java.util.Calendar;
@@ -35,19 +39,21 @@ public class MainActivity extends AppCompatActivity {
   Context mContext;
   ImageView img1, img2, img3, img4, img5, img6, img7;
   Realm realm;
+  String bgSummary, activitySummary, mealSummary, medicationSummary, vitalSummary, goalSummary;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    ButterKnife.bind(this);
     realm = Realm.getDefaultInstance();
     setUpUI();
-    checkTimeSlot();
     setStreakData();
+    setSummaryData();
   }
 
   private void setUpUI() {
 
-    mDialog = new Dialog(mContext, R.style.ProgressBarTheme);
+    //mDialog = new Dialog(mContext, R.style.ProgressBarTheme);
     toolbar = (Toolbar) findViewById(R.id.toolbar);
     toolbar.setTitle("Lifeincontrol");
     toolbar.setNavigationIcon(R.drawable.menu);
@@ -128,29 +134,44 @@ public class MainActivity extends AppCompatActivity {
     });
   }
 
-  private void checkTimeSlot() {
-    Realm realm = Realm.getDefaultInstance();
-    RealmResults<TimeSlots> realmResults = realm.where(TimeSlots.class).findAll();
-    if (realmResults.size() < 1) {
-      SetTimeSlots setTimeSlots = new SetTimeSlots(realm);
+  private void setSummaryData() {
+    if (!AppSettings.getActivitySummary().equalsIgnoreCase("")) {
+      activitySummary = "Toaday: " + AppSettings.getActivitySummary() + " cal burned";
+      activityText.setText(activitySummary);
+    }
+    if (!AppSettings.getBgSummary().equalsIgnoreCase("")) {
+      bgSummary = "Last reading: " + AppSettings.getBgSummary();
+      bgText.setText(bgSummary);
+    }
+    if (!AppSettings.getMealSummary().equalsIgnoreCase("")) {
+      mealSummary = "Toaday: " + AppSettings.getMealSummary() + " cal consumed";
+      mealText.setText(mealSummary);
+    }
+    if (!AppSettings.getMedicationSummary().equalsIgnoreCase("")) {
+      medicationSummary = "Medicine taken: " + AppSettings.getMedicationSummary();
+      medicationText.setText(medicationSummary);
+    }
+    if (!AppSettings.getGoalSummary().equalsIgnoreCase("")) {
+      goalSummary = AppSettings.getGoalSummary() + " goal set";
+      textGoals.setText(goalSummary);
     }
   }
 
   private void setStreakData() {
     Calendar calendar = Calendar.getInstance();
-    int dayOfWeek = (calendar.get(Calendar.DAY_OF_WEEK) * -1) + 1;
-    int[] statusArray = new int[7];
+    int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+    String[] statusArray = new String[7];
     int count = 0;
-    long currentMiilis = System.currentTimeMillis();
-    currentMiilis = currentMiilis - (86400000 * (calendar.get(Calendar.DAY_OF_WEEK) - 1));
     LogStreakDBO logStreakDBO = new LogStreakDBO();
-    for (int i = dayOfWeek; i >= 0; i++) {
-      statusArray[count] = logStreakDBO.getLogStreakStatus(currentMiilis, realm);
-      currentMiilis = currentMiilis + 86400000;
+    for (int i = 1; i <= dayOfWeek; i++) {
+      String date =
+          AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, i - dayOfWeek);
+      long milliSecond = AppDateHelper.getInstance().getMillisFromDate(date, Constants.DATEFORMAT);
+      statusArray[count] = logStreakDBO.getLogStreakStatus(milliSecond, realm);
       count++;
     }
-    for (int j = count + 1; j < 6; j++) {
-      statusArray[j] = 3;
+    for (int j = count; j < 7; j++) {
+      statusArray[j] = "locked";
     }
     for (int k = 0; k < statusArray.length; k++) {
       switch (k) {
@@ -179,120 +200,120 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  private void setSunImage(int status) {
+  private void setSunImage(String status) {
     switch (status) {
-      case 0:
+      case "empty":
         img1.setImageResource(R.drawable.empty_circle);
         break;
-      case 1:
+      case "logged":
         img1.setImageResource(R.drawable.checked_circle);
         break;
-      case 2:
+      case "starred":
         img1.setImageResource(R.drawable.starred_circle);
         break;
-      case 3:
+      case "locked":
         img1.setImageResource(R.drawable.locked_circle);
         break;
     }
   }
 
-  private void setMonImage(int status) {
+  private void setMonImage(String status) {
     switch (status) {
-      case 0:
+      case "empty":
         img2.setImageResource(R.drawable.empty_circle);
         break;
-      case 1:
+      case "logged":
         img2.setImageResource(R.drawable.checked_circle);
         break;
-      case 2:
+      case "starred":
         img2.setImageResource(R.drawable.starred_circle);
         break;
-      case 3:
+      case "locked":
         img2.setImageResource(R.drawable.locked_circle);
         break;
     }
   }
 
-  private void setTueImage(int status) {
+  private void setTueImage(String status) {
     switch (status) {
-      case 0:
+      case "empty":
         img3.setImageResource(R.drawable.empty_circle);
         break;
-      case 1:
+      case "logged":
         img3.setImageResource(R.drawable.checked_circle);
         break;
-      case 2:
+      case "starred":
         img3.setImageResource(R.drawable.starred_circle);
         break;
-      case 3:
+      case "locked":
         img3.setImageResource(R.drawable.locked_circle);
         break;
     }
   }
 
-  private void setWedImage(int status) {
+  private void setWedImage(String status) {
     switch (status) {
-      case 0:
+      case "empty":
         img4.setImageResource(R.drawable.empty_circle);
         break;
-      case 1:
+      case "logged":
         img4.setImageResource(R.drawable.checked_circle);
         break;
-      case 2:
+      case "starred":
         img4.setImageResource(R.drawable.starred_circle);
         break;
-      case 3:
+      case "locked":
         img4.setImageResource(R.drawable.locked_circle);
         break;
     }
   }
 
-  private void setThuImage(int status) {
+  private void setThuImage(String status) {
     switch (status) {
-      case 0:
+      case "empty":
         img5.setImageResource(R.drawable.empty_circle);
         break;
-      case 1:
+      case "logged":
         img5.setImageResource(R.drawable.checked_circle);
         break;
-      case 2:
+      case "starred":
         img5.setImageResource(R.drawable.starred_circle);
         break;
-      case 3:
+      case "locked":
         img5.setImageResource(R.drawable.locked_circle);
         break;
     }
   }
 
-  private void setFriImage(int status) {
+  private void setFriImage(String status) {
     switch (status) {
-      case 0:
+      case "empty":
         img6.setImageResource(R.drawable.empty_circle);
         break;
-      case 1:
+      case "logged":
         img6.setImageResource(R.drawable.checked_circle);
         break;
-      case 2:
+      case "starred":
         img6.setImageResource(R.drawable.starred_circle);
         break;
-      case 3:
+      case "locked":
         img6.setImageResource(R.drawable.locked_circle);
         break;
     }
   }
 
-  private void setSatImage(int status) {
+  private void setSatImage(String status) {
     switch (status) {
-      case 0:
+      case "empty":
         img7.setImageResource(R.drawable.empty_circle);
         break;
-      case 1:
+      case "logged":
         img7.setImageResource(R.drawable.checked_circle);
         break;
-      case 2:
+      case "starred":
         img7.setImageResource(R.drawable.starred_circle);
         break;
-      case 3:
+      case "locked":
         img7.setImageResource(R.drawable.locked_circle);
         break;
     }

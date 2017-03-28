@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.example.rishabh.curotest.Adapter.BgLogAdapter;
 import com.example.rishabh.curotest.DBO.TimeSlotDBO;
 import com.example.rishabh.curotest.Model.BgLoggingSettingInfo;
@@ -22,6 +23,7 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_blood_sugar_logging_settings);
+    ButterKnife.bind(this);
     linearLayoutManager = new LinearLayoutManager(this);
     realm = Realm.getDefaultInstance();
     setData();
