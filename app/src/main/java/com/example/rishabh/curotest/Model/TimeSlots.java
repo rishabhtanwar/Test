@@ -8,17 +8,21 @@ import io.realm.RealmObject;
  */
 
 public class TimeSlots extends RealmObject {
-  @JsonProperty("id") int id;
- @JsonProperty("name") String name;
+ public long id;
 
-  public int getId() {
+ public String name;
+
+public int slotTypeId;
+
+ public int sortOrder;
+
+  public long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(long id) {
     this.id = id;
   }
-
 
   public String getName() {
     return name;
@@ -26,6 +30,38 @@ public class TimeSlots extends RealmObject {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public int getSlotTypeId() {
+    return slotTypeId;
+  }
+
+  public void setSlotTypeId(int slotTypeId) {
+    this.slotTypeId = slotTypeId;
+  }
+
+  public int getSortOrder() {
+    return sortOrder;
+  }
+
+  public void setSortOrder(int sortOrder) {
+    this.sortOrder = sortOrder;
+  }
+
+  public boolean isMealSlot() {
+    return mealSlot;
+  }
+
+  public void setMealSlot(boolean mealSlot) {
+    this.mealSlot = mealSlot;
+  }
+
+  public String getDefaultTime() {
+    return defaultTime;
+  }
+
+  public void setDefaultTime(String defaultTime) {
+    this.defaultTime = defaultTime;
   }
 
   public boolean isBg() {
@@ -44,15 +80,10 @@ public class TimeSlots extends RealmObject {
     this.description = description;
   }
 
-  public int getSlotId() {
-    return slotId;
-  }
+  public boolean mealSlot;
 
-  public void setSlotId(int slotId) {
-    this.slotId = slotId;
-  }
+ public String defaultTime;
 
-  @JsonProperty("bg") boolean bg;
-  @JsonProperty("description") String description;
-  int slotId;
+ public boolean bg;
+ public String description;
 }

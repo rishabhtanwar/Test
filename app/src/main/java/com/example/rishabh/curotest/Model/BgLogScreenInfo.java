@@ -24,13 +24,13 @@ public class BgLogScreenInfo {
     this.subTitle = subTitle;
   }
 
-  public int getValue() {
+  public long getValue() {
     return value;
   }
 
-  public void setValue(int value) {
+  public void setValue(long value) {
     this.value = value;
   }
 
-  int value;
+  long value;
 }

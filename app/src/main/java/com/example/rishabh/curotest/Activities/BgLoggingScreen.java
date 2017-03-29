@@ -17,7 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.example.rishabh.curotest.Adapter.BgLogScreenAdapter;
+import com.example.rishabh.curotest.DBO.BgDBO;
+import com.example.rishabh.curotest.Model.BgLogScreenInfo;
 import com.example.rishabh.curotest.R;
+import com.example.rishabh.curotest.Utils.AppDateHelper;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONException;
@@ -40,6 +44,8 @@ public class BgLoggingScreen extends AppCompatActivity {
   private Animation fab_open, fab_close, rotate_forward, rotate_backward;
   Context mContext;
   LinearLayoutManager linearLayoutManager;
+  ArrayList<BgLogScreenInfo> arrayList = new ArrayList<>();
+  int swipeCount = 0;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -47,12 +53,13 @@ public class BgLoggingScreen extends AppCompatActivity {
     ButterKnife.bind(this);
     mContext = this;
     setUpAnimation();
-    linearLayoutManager=new LinearLayoutManager(this);
+    linearLayoutManager = new LinearLayoutManager(this);
     settings_fab_button.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         // Click action
         Intent intent = new Intent(mContext, BloodSugarLoggingSettings.class);
         startActivity(intent);
+        closeFAB();
       }
     });
     mClickBlocker.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +74,20 @@ public class BgLoggingScreen extends AppCompatActivity {
         animateFAB();
       }
     });
+  }
+
+  @Override protected void onResume() {
+    setAdapter();
+    super.onResume();
+  }
+
+  private void setAdapter() {
+    arrayList = BgDBO.getBgLogScreenListByDate(
+        AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount));
+    linearLayoutManager = new LinearLayoutManager(this);
+    recyclerView.setLayoutManager(linearLayoutManager);
+    BgLogScreenAdapter bgLogScreenAdapter = new BgLogScreenAdapter(arrayList, BgLoggingScreen.this);
+    recyclerView.setAdapter(bgLogScreenAdapter);
   }
 
   private void setUpAnimation() {

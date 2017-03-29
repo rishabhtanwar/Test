@@ -8,6 +8,15 @@ public class BgLoggingSettingInfo {
   boolean check;
   String mainTitle;
   String subTitle;
+  int slotid;
+
+  public int getSlotid() {
+    return slotid;
+  }
+
+  public void setSlotid(int slotid) {
+    this.slotid = slotid;
+  }
 
   public String getSubTitle() {
     return subTitle;
@@ -25,11 +34,11 @@ public class BgLoggingSettingInfo {
     this.check = check;
   }
 
-  public String getTimeSlot() {
+  public String getMainTitle() {
     return mainTitle;
   }
 
-  public void setTimeSlot(String mainTitle) {
+  public void setMainTitle(String mainTitle) {
     this.mainTitle = mainTitle;
   }
 }

@@ -22,12 +22,12 @@ public class AppSettings {
     String authToken = settings.getString(Constants.AUTH_TOKEN, "");
     return authToken;
   }
-  public static int getCurrentUser() {
+  public static int getCurrentUserId() {
     SharedPreferences settings =Application.getAppContext().getSharedPreferences(SHARED_PREFS_NAME, 0);
     int userId = settings.getInt(Constants.APP_CURRENT_USER, 0);
     return userId;
   }
-  public static void setCurrentUser(int id) {
+  public static void setCurrentUserId(int id) {
     SharedPreferences settings = Application.getAppContext().getSharedPreferences(SHARED_PREFS_NAME, 0);
     SharedPreferences.Editor editor = settings.edit();
     editor.putInt(Constants.APP_CURRENT_USER, id);

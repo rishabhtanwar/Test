@@ -27,7 +27,8 @@ public class LauncherActivity extends AppCompatActivity {
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
     if (AppSettings.getAuthToken().equalsIgnoreCase("")) {
-      AppSettings.setAuthToken("uv_ebhghxkj4xxfkqrxf");
+      AppSettings.setAuthToken("ecf5yhhkvcpu5dxbsbuy");
+      AppSettings.setCurrentUserId(111);
     }
     checkTimeSlot();
     Calendar calendar = Calendar.getInstance();

@@ -14,4 +14,5 @@ public class Constants {
   public static final String MEDICATION_SUMMARY="medication_summary";
   public static final String VITAL_SUMMARY="vital_summary";
   public static final String GOAL_SUMMARY="goal_summary";
+  public static final int APPOINTMENT_SLOTID = 101;
 }

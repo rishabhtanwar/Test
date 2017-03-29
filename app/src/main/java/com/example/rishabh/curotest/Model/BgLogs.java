@@ -10,7 +10,7 @@ public class BgLogs extends RealmObject {
   int id;
   int userId;
   long date;
-  int timeSlot;
+  int timeSlotId;
   boolean isDeleted;
   boolean isSynced;
   long value;
@@ -40,12 +40,12 @@ public class BgLogs extends RealmObject {
     this.date = date;
   }
 
-  public int getTimeSlot() {
-    return timeSlot;
+  public int getTimeSlotId() {
+    return timeSlotId;
   }
 
-  public void setTimeSlot(int timeSlot) {
-    this.timeSlot = timeSlot;
+  public void setTimeSlotId(int timeSlotId) {
+    this.timeSlotId = timeSlotId;
   }
 
   public boolean isDeleted() {

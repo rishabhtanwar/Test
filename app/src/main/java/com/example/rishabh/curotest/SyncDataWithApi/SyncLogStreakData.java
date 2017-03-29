@@ -23,10 +23,10 @@ public class SyncLogStreakData {
   static Realm realm = Realm.getDefaultInstance();
 
   public static void syncData(String startDate, String endDate, String requestType) {
-    Call<ResponseBody> call = RestClient.getApiService().getLogStreak(startDate, endDate, requestType);
+    Call<ResponseBody> call =
+        RestClient.getApiService().getLogStreak(startDate, endDate, requestType);
     call.enqueue(new Callback<ResponseBody>() {
-      @Override
-      public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+      @Override public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
         try {
           updateLogStreak(response.body().string());
         } catch (IOException e) {
@@ -43,7 +43,8 @@ public class SyncLogStreakData {
   private static void updateLogStreak(String response) {
     try {
       JSONObject jsonObject1 = new JSONObject(response);
-      JSONObject jsonObject=new JSONObject(String.valueOf(jsonObject1.getJSONObject("log_data").getJSONObject("streak")));
+      JSONObject jsonObject = new JSONObject(
+          String.valueOf(jsonObject1.getJSONObject("log_data").getJSONObject("streak")));
       Iterator iterator = jsonObject.keys();
       while (iterator.hasNext()) {
         String key = String.valueOf(iterator.next());
@@ -52,27 +53,28 @@ public class SyncLogStreakData {
         setLogStreakDB(date, status);
       }
       realm.close();
-
     } catch (JSONException e) {
       e.printStackTrace();
     }
   }
 
   private static void setLogStreakDB(long date, String status) {
-    if (realm.isClosed()){
-      realm=Realm.getDefaultInstance();
+    if (realm.isClosed()) {
+      realm = Realm.getDefaultInstance();
     }
     try {
+      LogStreakPerDay logStreakPerDay =
+          realm.where(LogStreakPerDay.class).equalTo("date", date).findFirst();
       realm.beginTransaction();
-      LogStreakPerDay logStreakPerDay = new LogStreakPerDay();
+      if (logStreakPerDay==null){
+        logStreakPerDay = new LogStreakPerDay();
+      }
       logStreakPerDay.setDate(date);
       logStreakPerDay.setStatusFlag(status);
       realm.copyToRealm(logStreakPerDay);
       realm.commitTransaction();
-
-    }catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
-
   }
 }

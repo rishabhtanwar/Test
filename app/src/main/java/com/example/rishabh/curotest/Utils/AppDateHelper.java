@@ -45,11 +45,17 @@ public class AppDateHelper {
     return datemilliseconds;
   }
 
-  public String getDateWithWeekDays(String format,int weekdays) {
+  public String getDateWithWeekDays(String format, int weekdays) {
     DateFormat dateFormat = new SimpleDateFormat(format);
     Calendar startCalender = Calendar.getInstance();
     startCalender.add(Calendar.DAY_OF_YEAR, weekdays);
     String currentDate = dateFormat.format(startCalender.getTime());
     return currentDate;
   }
+
+  public long getDateInMillisWithSwipeCount(int swipeCount) {
+    return getMillisFromDate(getDateWithWeekDays(Constants.DATEFORMAT, swipeCount), Constants.DATEFORMAT);
+  }
+
+
 }

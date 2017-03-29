@@ -6,11 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.example.rishabh.curotest.DBO.BgDBO;
 import com.example.rishabh.curotest.Model.BgLoggingSettingInfo;
 import com.example.rishabh.curotest.R;
+import com.example.rishabh.curotest.Utils.AppDateHelper;
 import java.util.ArrayList;
 
 /**
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
   Context context;
   ArrayList<BgLoggingSettingInfo> arrayList = new ArrayList<>();
+  ArrayList<Integer> timeSlotIdList = new ArrayList<>();
 
   public BgLogAdapter(Context context, ArrayList<BgLoggingSettingInfo> arrayList) {
     this.context = context;
@@ -33,16 +37,32 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     return viewHolder;
   }
 
-  @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    BgLoggingSettingInfo bgLoggingSettingInfo = arrayList.get(position);
+  @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    final BgLoggingSettingInfo bgLoggingSettingInfo = arrayList.get(position);
     ViewHolder viewHolder = (ViewHolder) holder;
     if (bgLoggingSettingInfo.isCheck()) {
       viewHolder.checkBox.setChecked(true);
+      if (!timeSlotIdList.contains(bgLoggingSettingInfo.getSlotid())) {
+        timeSlotIdList.add(bgLoggingSettingInfo.getSlotid());
+      }
     } else {
       viewHolder.checkBox.setChecked(false);
     }
-    viewHolder.mainTitle.setText(bgLoggingSettingInfo.getTimeSlot());
+    viewHolder.mainTitle.setText(bgLoggingSettingInfo.getMainTitle());
     viewHolder.subTitle.setText(bgLoggingSettingInfo.getSubTitle());
+    viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+          if (!timeSlotIdList.contains(bgLoggingSettingInfo.getSlotid())) {
+            timeSlotIdList.add(bgLoggingSettingInfo.getSlotid());
+          }
+        } else {
+          timeSlotIdList.remove(bgLoggingSettingInfo.getSlotid());
+          BgDBO.deleteBgSchedule(bgLoggingSettingInfo.getSlotid(),
+              AppDateHelper.getInstance().getDateInMillisWithSwipeCount(0));
+        }
+      }
+    });
   }
 
   @Override public int getItemCount() {
@@ -58,5 +78,9 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       super(itemView);
       ButterKnife.bind(this, itemView);
     }
+  }
+
+  public ArrayList<Integer> getTimeSlotIdList() {
+    return timeSlotIdList;
   }
 }
