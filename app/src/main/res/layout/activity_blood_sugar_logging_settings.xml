@@ -10,14 +10,26 @@
     tools:context="com.example.rishabh.curotest.Activities.BloodSugarLoggingSettings"
     >
 
-  <android.support.v7.widget.Toolbar
-      android:id="@+id/toolbar"
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="@dimen/toolbar_height"
+      android:layout_gravity="right"
       android:background="?attr/colorPrimary"
+      android:gravity="right"
+      android:orientation="horizontal"
       android:titleTextColor="@android:color/white"
-      app:popupTheme="@style/AppTheme.PopupOverlay"
-      />
+      >
+    <ImageView
+        android:id="@+id/done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        android:src="@drawable/check"
+        />
+
+  </LinearLayout>
 
   <TextView
       android:layout_width="match_parent"
@@ -31,10 +43,10 @@
       android:text="When do you want to record your blood glucose?"
       android:textSize="21sp"
       />
- <android.support.v7.widget.RecyclerView
-     android:id="@+id/bg_log_rv"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     ></android.support.v7.widget.RecyclerView>
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/bg_log_rv"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      ></android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

@@ -1,0 +1,49 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:calendarNS="http://schemas.android.com/apk/res-auto"
+    android:weightSum="1"
+    android:orientation="vertical"
+    android:background="@color/theme_color"
+    >
+  <android.support.design.widget.AppBarLayout
+      android:id="@+id/appbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:theme="@style/AppTheme.AppBarOverlay"
+      >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="?attr/colorPrimary"
+        >
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+        <TextView
+            android:id="@+id/tvtoolbarheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="20sp"
+            android:text="Logging Events"
+            />
+
+      </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+  </android.support.design.widget.AppBarLayout>
+  <com.example.rishabh.curotest.Activities.CalendarView
+      android:id="@+id/calendar_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      calendarNS:dateFormat="MMMM yyyy"/>
+
+</LinearLayout>

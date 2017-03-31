@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.example.rishabh.curotest.Adapter.BgLogAdapter;
@@ -28,6 +30,7 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
   Realm realm;
   ArrayList<Integer> timeSlotIdList = new ArrayList<>();
   long todayDateInMillis;
+  @Bind(R.id.done) ImageView done;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -35,12 +38,24 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
     ButterKnife.bind(this);
     linearLayoutManager = new LinearLayoutManager(this);
     realm = Realm.getDefaultInstance();
-    setData();
     todayDateInMillis = AppDateHelper.getInstance().getDateInMillisWithSwipeCount(0);
+    setData();
+    done.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        //timeSlotIdList = bgLogAdapter.getTimeSlotIdList();
+        //BgDBO.saveBgScheduleFromLogging(timeSlotIdList, todayDateInMillis);
+        if (realm.isClosed()) {
+          realm = Realm.getDefaultInstance();
+        }
+        RealmResults<BgSchedule> realmResults = realm.where(BgSchedule.class).findAll();
+        realm.close();
+        finish();
+      }
+    });
   }
 
   private void setData() {
-    arrayList = BgDBO.setLoggingTimeSlot(realm);
+    arrayList = BgDBO.setLoggingTimeSlot(realm, todayDateInMillis);
     setAdapter();
   }
 
@@ -65,14 +80,7 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
   }
 
   @Override public void onBackPressed() {
-    timeSlotIdList = bgLogAdapter.getTimeSlotIdList();
-    BgDBO.saveBgScheduleFromLogging(timeSlotIdList, todayDateInMillis);
-    if (realm == null) {
-      realm = Realm.getDefaultInstance();
-    }
-    RealmResults<BgSchedule> realmResults = realm.where(BgSchedule.class).findAll();
-    realm.close();
-    super.onBackPressed();
 
+    super.onBackPressed();
   }
 }

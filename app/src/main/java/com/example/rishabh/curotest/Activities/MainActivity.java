@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
   private static final String BUNDLE_RECYCLER_LAYOUT = "classname.recycler.layout";
   Dialog mDialog;
-  private RelativeLayout coachMarksLayout1, doctorAdviceLayout;
+  private RelativeLayout coachMarksLayout1, doctorAdviceLayout, streakLayout;
   LinearLayout mealLayout, bgLayout, vitalsLayout, medicationLayout, activityLayout, goalsLayout;
   TextView mealText, vitalsText, activityText, medicationText, quickTipText, bgText,
       docNameTextView, textGoals;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
     swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.goals_ui_red,
         R.color.trends_ui_band_fill_color, R.color.spinner_floatinglabel_color);
-
+    streakLayout = (RelativeLayout) findViewById(R.id.streak_layout);
     mealLayout = (LinearLayout) findViewById(R.id.meal_layout);
     bgLayout = (LinearLayout) findViewById(R.id.bg_layout);
     vitalsLayout = (LinearLayout) findViewById(R.id.vitals_layout);
@@ -132,6 +132,13 @@ public class MainActivity extends AppCompatActivity {
         //freeLogging(AppConstants.VITALS_TASKTYPE_ID);
       }
     });
+
+    streakLayout.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intent = new Intent(MainActivity.this, GoalsCalendarActivity.class);
+        startActivity(intent);
+      }
+    });
   }
 
   private void setSummaryData() {
@@ -171,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
       count++;
     }
     for (int j = count; j < 7; j++) {
-      statusArray[j] = "locked";
+      statusArray[j] = Constants.LOCKED_STREAK;
     }
     for (int k = 0; k < statusArray.length; k++) {
       switch (k) {
@@ -202,16 +209,16 @@ public class MainActivity extends AppCompatActivity {
 
   private void setSunImage(String status) {
     switch (status) {
-      case "empty":
+      case Constants.EMPTY_STREAK:
         img1.setImageResource(R.drawable.empty_circle);
         break;
-      case "logged":
+      case Constants.LOGGED_STREAK:
         img1.setImageResource(R.drawable.checked_circle);
         break;
-      case "starred":
+      case Constants.STARRED_STREAK:
         img1.setImageResource(R.drawable.starred_circle);
         break;
-      case "locked":
+      case Constants.LOCKED_STREAK:
         img1.setImageResource(R.drawable.locked_circle);
         break;
     }
@@ -219,16 +226,16 @@ public class MainActivity extends AppCompatActivity {
 
   private void setMonImage(String status) {
     switch (status) {
-      case "empty":
+      case Constants.EMPTY_STREAK:
         img2.setImageResource(R.drawable.empty_circle);
         break;
-      case "logged":
+      case Constants.LOGGED_STREAK:
         img2.setImageResource(R.drawable.checked_circle);
         break;
-      case "starred":
+      case Constants.STARRED_STREAK:
         img2.setImageResource(R.drawable.starred_circle);
         break;
-      case "locked":
+      case Constants.LOCKED_STREAK:
         img2.setImageResource(R.drawable.locked_circle);
         break;
     }
@@ -236,16 +243,16 @@ public class MainActivity extends AppCompatActivity {
 
   private void setTueImage(String status) {
     switch (status) {
-      case "empty":
+      case Constants.EMPTY_STREAK:
         img3.setImageResource(R.drawable.empty_circle);
         break;
-      case "logged":
+      case Constants.LOGGED_STREAK:
         img3.setImageResource(R.drawable.checked_circle);
         break;
-      case "starred":
+      case Constants.STARRED_STREAK:
         img3.setImageResource(R.drawable.starred_circle);
         break;
-      case "locked":
+      case Constants.LOCKED_STREAK:
         img3.setImageResource(R.drawable.locked_circle);
         break;
     }
@@ -253,16 +260,16 @@ public class MainActivity extends AppCompatActivity {
 
   private void setWedImage(String status) {
     switch (status) {
-      case "empty":
+      case Constants.EMPTY_STREAK:
         img4.setImageResource(R.drawable.empty_circle);
         break;
-      case "logged":
+      case Constants.LOGGED_STREAK:
         img4.setImageResource(R.drawable.checked_circle);
         break;
-      case "starred":
+      case Constants.STARRED_STREAK:
         img4.setImageResource(R.drawable.starred_circle);
         break;
-      case "locked":
+      case Constants.LOCKED_STREAK:
         img4.setImageResource(R.drawable.locked_circle);
         break;
     }
@@ -270,16 +277,16 @@ public class MainActivity extends AppCompatActivity {
 
   private void setThuImage(String status) {
     switch (status) {
-      case "empty":
+      case Constants.EMPTY_STREAK:
         img5.setImageResource(R.drawable.empty_circle);
         break;
-      case "logged":
+      case Constants.LOGGED_STREAK:
         img5.setImageResource(R.drawable.checked_circle);
         break;
-      case "starred":
+      case Constants.STARRED_STREAK:
         img5.setImageResource(R.drawable.starred_circle);
         break;
-      case "locked":
+      case Constants.LOCKED_STREAK:
         img5.setImageResource(R.drawable.locked_circle);
         break;
     }
@@ -287,16 +294,16 @@ public class MainActivity extends AppCompatActivity {
 
   private void setFriImage(String status) {
     switch (status) {
-      case "empty":
+      case Constants.EMPTY_STREAK:
         img6.setImageResource(R.drawable.empty_circle);
         break;
-      case "logged":
+      case Constants.LOGGED_STREAK:
         img6.setImageResource(R.drawable.checked_circle);
         break;
-      case "starred":
+      case Constants.STARRED_STREAK:
         img6.setImageResource(R.drawable.starred_circle);
         break;
-      case "locked":
+      case Constants.LOCKED_STREAK:
         img6.setImageResource(R.drawable.locked_circle);
         break;
     }
@@ -304,16 +311,16 @@ public class MainActivity extends AppCompatActivity {
 
   private void setSatImage(String status) {
     switch (status) {
-      case "empty":
+      case Constants.EMPTY_STREAK:
         img7.setImageResource(R.drawable.empty_circle);
         break;
-      case "logged":
+      case Constants.LOGGED_STREAK:
         img7.setImageResource(R.drawable.checked_circle);
         break;
-      case "starred":
+      case Constants.STARRED_STREAK:
         img7.setImageResource(R.drawable.starred_circle);
         break;
-      case "locked":
+      case Constants.LOCKED_STREAK:
         img7.setImageResource(R.drawable.locked_circle);
         break;
     }

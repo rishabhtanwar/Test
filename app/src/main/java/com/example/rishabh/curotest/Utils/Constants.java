@@ -15,4 +15,9 @@ public class Constants {
   public static final String VITAL_SUMMARY="vital_summary";
   public static final String GOAL_SUMMARY="goal_summary";
   public static final int APPOINTMENT_SLOTID = 101;
+  public static final String STARRED_STREAK="starred";
+  public static final String EMPTY_STREAK="empty";
+  public static final String LOGGED_STREAK="logged";
+  public static final String LOCKED_STREAK="locked";
+
 }

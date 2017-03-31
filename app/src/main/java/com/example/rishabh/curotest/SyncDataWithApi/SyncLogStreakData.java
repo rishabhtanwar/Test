@@ -1,7 +1,8 @@
 package com.example.rishabh.curotest.SyncDataWithApi;
 
 import com.example.rishabh.curotest.API.RestClient;
-import com.example.rishabh.curotest.Helpers.LogStreakResponse;
+import com.example.rishabh.curotest.Interfaces.LogStreakResponse;
+import com.example.rishabh.curotest.Model.LogStreakForMonth;
 import com.example.rishabh.curotest.Model.LogStreakPerDay;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
 import com.example.rishabh.curotest.Utils.Constants;
@@ -22,13 +23,15 @@ import retrofit2.Response;
 public class SyncLogStreakData {
   static Realm realm = Realm.getDefaultInstance();
 
-  public static void syncData(String startDate, String endDate, String requestType) {
+  public static void syncData(String startDate, String endDate, final String requestType,
+      final LogStreakResponse logStreakResponse, final String month) {
     Call<ResponseBody> call =
         RestClient.getApiService().getLogStreak(startDate, endDate, requestType);
     call.enqueue(new Callback<ResponseBody>() {
       @Override public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
         try {
-          updateLogStreak(response.body().string());
+
+          updateLogStreak(response.body().string(), logStreakResponse, requestType, month);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -40,7 +43,8 @@ public class SyncLogStreakData {
     });
   }
 
-  private static void updateLogStreak(String response) {
+  private static void updateLogStreak(String response, LogStreakResponse logStreakResponse,
+      String requestType, String month) {
     try {
       JSONObject jsonObject1 = new JSONObject(response);
       JSONObject jsonObject = new JSONObject(
@@ -50,9 +54,16 @@ public class SyncLogStreakData {
         String key = String.valueOf(iterator.next());
         long date = AppDateHelper.getInstance().getMillisFromDate(key, Constants.DATEFORMAT);
         String status = jsonObject.getString(key);
-        setLogStreakDB(date, status);
+        if (requestType.equalsIgnoreCase("history")) {
+          setMonthStreakData(date, status, month);
+        } else {
+          setLogStreakDB(date, status);
+        }
       }
       realm.close();
+      if (requestType.equalsIgnoreCase("history")) {
+        logStreakResponse.onSuccess(true);
+      }
     } catch (JSONException e) {
       e.printStackTrace();
     }
@@ -66,12 +77,44 @@ public class SyncLogStreakData {
       LogStreakPerDay logStreakPerDay =
           realm.where(LogStreakPerDay.class).equalTo("date", date).findFirst();
       realm.beginTransaction();
-      if (logStreakPerDay==null){
+      if (logStreakPerDay == null) {
         logStreakPerDay = new LogStreakPerDay();
       }
       logStreakPerDay.setDate(date);
       logStreakPerDay.setStatusFlag(status);
       realm.copyToRealm(logStreakPerDay);
+      realm.commitTransaction();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private static void setMonthStreakData(long date, String status, String month) {
+    if (realm.isClosed()) {
+      realm = Realm.getDefaultInstance();
+    }
+    try {
+      LogStreakForMonth logStreakForMonth =
+          realm.where(LogStreakForMonth.class).equalTo("date", date).findFirst();
+      realm.beginTransaction();
+      if (logStreakForMonth == null) {
+        logStreakForMonth = new LogStreakForMonth();
+      }
+      logStreakForMonth.setDate(date);
+      switch (status) {
+        case Constants.EMPTY_STREAK:
+          logStreakForMonth.setStatusFlag(2);
+          break;
+        case Constants.LOGGED_STREAK:
+          logStreakForMonth.setStatusFlag(1);
+          break;
+
+        case Constants.STARRED_STREAK:
+          logStreakForMonth.setStatusFlag(0);
+          break;
+      }
+      logStreakForMonth.setMonth(month);
+      realm.copyToRealm(logStreakForMonth);
       realm.commitTransaction();
     } catch (Exception e) {
       e.printStackTrace();

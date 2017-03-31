@@ -7,6 +7,24 @@ package com.example.rishabh.curotest.Model;
 public class BgLogScreenInfo {
   String mainTitle;
   String subTitle;
+  long date;
+int timeSlotId;
+
+  public int getTimeSlotId() {
+    return timeSlotId;
+  }
+
+  public void setTimeSlotId(int timeSlotId) {
+    this.timeSlotId = timeSlotId;
+  }
+
+  public long getDate() {
+    return date;
+  }
+
+  public void setDate(long date) {
+    this.date = date;
+  }
 
   public String getMainTitle() {
     return mainTitle;

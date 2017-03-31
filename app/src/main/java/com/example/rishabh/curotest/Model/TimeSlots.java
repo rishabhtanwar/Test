@@ -8,7 +8,7 @@ import io.realm.RealmObject;
  */
 
 public class TimeSlots extends RealmObject {
- public long id;
+ public int id;
 
  public String name;
 
@@ -16,11 +16,11 @@ public int slotTypeId;
 
  public int sortOrder;
 
-  public long getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(int id) {
     this.id = id;
   }
 

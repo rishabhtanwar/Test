@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:weightSum="100"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="85"
+        android:background="@color/theme_color"
+        android:orientation="vertical"
+        >
+    <!-- date toolbar -->
+    <RelativeLayout
+        android:id="@+id/first_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="8dp"
+        >
+
+      <!-- prev button -->
+      <ImageView
+          android:id="@+id/calendar_prev_button"
+          android:layout_width="34dp"
+          android:layout_height="34dp"
+          android:layout_alignParentLeft="true"
+          android:layout_centerVertical="true"
+          android:padding="12dp"
+          android:src="@drawable/chevron_left"
+          />
+
+      <!-- date title -->
+      <TextView
+          android:id="@+id/calendar_date_display"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:layout_centerVertical="true"
+          android:textAppearance="@android:style/TextAppearance.Medium"
+          android:textColor="@color/white"
+          />
+
+      <!-- next button -->
+      <ImageView
+          android:id="@+id/calendar_next_button"
+          android:layout_width="34dp"
+          android:layout_height="34dp"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:padding="12dp"
+          android:src="@drawable/chevron_right"
+          />
+    </RelativeLayout>
+
+    <!-- days header -->
+    <LinearLayout
+        android:id="@+id/calendar_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/first_row"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_horizontal"
+          android:text="SUN"
+          android:textColor="@color/white"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_horizontal"
+          android:text="MON"
+          android:textColor="@color/white"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_horizontal"
+          android:text="TUE"
+          android:textColor="@color/white"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_horizontal"
+          android:text="WED"
+          android:textColor="@color/white"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_horizontal"
+          android:text="THU"
+          android:textColor="@color/white"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_horizontal"
+          android:text="FRI"
+          android:textColor="@color/white"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_horizontal"
+          android:text="SAT"
+          android:textColor="@color/white"
+          />
+    </LinearLayout>
+
+    <!-- days view -->
+    <GridView
+        android:id="@+id/calendar_grid"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calendar_header"
+        android:layout_marginBottom="50dp"
+        android:background="@color/theme_color"
+        android:numColumns="7"
+        />
+
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/bottom_text"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginTop="-50dp"-->
+        <!--android:background="@color/white"-->
+        <!--android:orientation="vertical"-->
+        <!--&gt;-->
+      <!--<TextView-->
+          <!--android:layout_width="wrap_content"-->
+          <!--android:layout_height="wrap_content"-->
+          <!--android:layout_gravity="center"-->
+          <!--android:layout_marginTop="60dp"-->
+          <!--/>-->
+    <!--</LinearLayout>-->
+
+    </LinearLayout>
+
+
+  </LinearLayout>
+
+
+  <android.support.v7.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
+      android:layout_marginBottom="50dp"
+      android:layout_marginLeft="24dp"
+      android:layout_marginRight="24dp"
+      android:layout_marginTop="20dp"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+      <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="12dp"
+          android:layout_marginTop="12dp"
+          android:layout_weight="1"
+          android:orientation="vertical"
+          >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="Longest streak"
+            android:textColor="@color/goal_color"
+            android:textSize="10sp"
+            />
+        <TextView
+            android:id="@+id/longest_streak_days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/home_text_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+      </LinearLayout>
+      <View
+          android:layout_width="1dip"
+          android:layout_height="fill_parent"
+          android:background="@color/disabled_text"
+          />
+      <RelativeLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="12dp"
+          android:layout_marginTop="12dp"
+          android:layout_weight="1"
+          android:orientation="vertical"
+          >
+        <ImageView
+            android:id="@+id/star_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/star"
+            />
+        <TextView
+            android:id="@+id/perfect_days_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_toRightOf="@+id/star_image"
+            android:text="Stars Collected"
+            android:textColor="@color/goal_color"
+            android:textSize="10sp"
+            />
+        <TextView
+            android:id="@+id/perfect_days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/perfect_days_text"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@+id/star_image"
+            android:text="11"
+            android:textColor="@color/home_text_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+      </RelativeLayout>
+    </LinearLayout>
+  </android.support.v7.widget.CardView>
+
+</FrameLayout>

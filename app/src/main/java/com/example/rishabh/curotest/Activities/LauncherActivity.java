@@ -36,7 +36,7 @@ public class LauncherActivity extends AppCompatActivity {
     String startDate =
         AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, -(dayOfWeek - 1));
     String endDate = AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, 0);
-    SyncLogStreakData.syncData(startDate, endDate, "latest");
+    SyncLogStreakData.syncData(startDate, endDate, "latest",null,"");
     SyncSummary.syncSummary();
     enterButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {

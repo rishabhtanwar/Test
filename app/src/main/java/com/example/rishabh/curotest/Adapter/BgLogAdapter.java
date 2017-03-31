@@ -42,9 +42,10 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     ViewHolder viewHolder = (ViewHolder) holder;
     if (bgLoggingSettingInfo.isCheck()) {
       viewHolder.checkBox.setChecked(true);
-      if (!timeSlotIdList.contains(bgLoggingSettingInfo.getSlotid())) {
-        timeSlotIdList.add(bgLoggingSettingInfo.getSlotid());
-      }
+      //if (!timeSlotIdList.contains(bgLoggingSettingInfo.getSlotid())) {
+      //  timeSlotIdList.add(bgLoggingSettingInfo.getSlotid());
+      //}
+
     } else {
       viewHolder.checkBox.setChecked(false);
     }
@@ -53,13 +54,14 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-          if (!timeSlotIdList.contains(bgLoggingSettingInfo.getSlotid())) {
-            timeSlotIdList.add(bgLoggingSettingInfo.getSlotid());
-          }
-        } else {
-          timeSlotIdList.remove(bgLoggingSettingInfo.getSlotid());
-          BgDBO.deleteBgSchedule(bgLoggingSettingInfo.getSlotid(),
+          //if (!timeSlotIdList.contains(bgLoggingSettingInfo.getSlotid())) {
+          //  timeSlotIdList.add(bgLoggingSettingInfo.getSlotid());
+          //}
+          BgDBO.saveBgSchedule(bgLoggingSettingInfo.getSlotid(),
               AppDateHelper.getInstance().getDateInMillisWithSwipeCount(0));
+        } else {
+          //timeSlotIdList.remove(removePosition(bgLoggingSettingInfo.getSlotid()));
+          BgDBO.deleteBgSchedule(bgLoggingSettingInfo.getSlotid());
         }
       }
     });
@@ -82,5 +84,14 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   public ArrayList<Integer> getTimeSlotIdList() {
     return timeSlotIdList;
+  }
+
+  private int removePosition(int slotId) {
+    for (int i = 0; i < timeSlotIdList.size(); i++) {
+      if (timeSlotIdList.get(i) == slotId) {
+        return i;
+      }
+    }
+    return 0; // this should never occur
   }
 }

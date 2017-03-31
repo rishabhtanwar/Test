@@ -54,8 +54,69 @@ public class AppDateHelper {
   }
 
   public long getDateInMillisWithSwipeCount(int swipeCount) {
-    return getMillisFromDate(getDateWithWeekDays(Constants.DATEFORMAT, swipeCount), Constants.DATEFORMAT);
+    return getMillisFromDate(getDateWithWeekDays(Constants.DATEFORMAT, swipeCount),
+        Constants.DATEFORMAT);
   }
 
+  public static String getFirstDayOfTheMonth(int swipeCount) {
+    Calendar aCalendar = Calendar.getInstance();
+    // add -1 month to current month
+    aCalendar.add(Calendar.MONTH, swipeCount);
+    // set DATE to 1, so first date of previous month
+    aCalendar.set(Calendar.DATE, 1);
 
+    Date firstDateOfPreviousMonth = aCalendar.getTime();
+
+    return stringFromDate(firstDateOfPreviousMonth);
+  }
+
+  public static String getLastDayOfTheMonth(int swipeCount) {
+    Calendar aCalendar = Calendar.getInstance();
+    // add  month to current month
+    aCalendar.add(Calendar.MONTH, swipeCount);
+    // set DATE to 1, so first date of previous month
+    aCalendar.set(Calendar.DATE, 1);
+
+    //Date firstDateOfPreviousMonth = aCalendar.getTime();
+
+    // set actual maximum date of previous month
+    aCalendar.set(Calendar.DATE, aCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+    //read it
+    Date lastDateOfPreviousMonth = aCalendar.getTime();
+    return stringFromDate(lastDateOfPreviousMonth);
+  }
+
+  public static String stringFromDate(Date date) {
+    DateFormat dateFormat = new SimpleDateFormat(Constants.DATEFORMAT);
+    String _date = null;
+    if (date != null) _date = dateFormat.format(date);
+    return _date;
+  }
+
+  public static String monthYearNameBySwipeIndex(int swipeCount) {
+    Calendar cal = Calendar.getInstance();
+    cal.add(Calendar.MONTH, swipeCount);
+    //format it to MMM-yyyy // January-2012
+    String previousMonthYear = new SimpleDateFormat("MMM-yyyy").format(cal.getTime());
+    return previousMonthYear;
+  }
+
+  public static int totalNumberOfDays(int swipeCount) {
+    Calendar aCalendar = Calendar.getInstance();
+    // add  month to current month
+    aCalendar.add(Calendar.MONTH, swipeCount);
+    aCalendar.set(Calendar.YEAR, aCalendar.get(Calendar.YEAR));
+    return aCalendar.getActualMaximum(Calendar.MONTH);
+  }
+
+  public static String getStrigDateFromMillis(long date){
+    String _date = null;
+    try {
+      DateFormat dateFormat = new SimpleDateFormat(Constants.DATEFORMAT);
+      _date = dateFormat.format(new Date(date));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return _date;
+  }
 }

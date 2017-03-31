@@ -9,9 +9,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.example.rishabh.curotest.DBO.BgDBO;
 import com.example.rishabh.curotest.Model.BgLogScreenInfo;
 import com.example.rishabh.curotest.R;
 import java.util.ArrayList;
@@ -37,7 +41,47 @@ public class BgLogScreenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
   }
 
   @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    final ViewHolder viewHolder = (ViewHolder) holder;
+    final BgLogScreenInfo bgLogScreenInfo = arrayList.get(position);
+    viewHolder.mainTitle.setText(bgLogScreenInfo.getMainTitle());
+    viewHolder.subTitle.setText(bgLogScreenInfo.getSubTitle());
+    if (bgLogScreenInfo.getValue() == 0) {
+      viewHolder.log.setText("Log Value");
+    } else {
+      viewHolder.log.setText("" + bgLogScreenInfo.getValue());
+    }
+    viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (viewHolder.childLayout.getVisibility() == View.VISIBLE) {
+          viewHolder.childLayout.setVisibility(View.GONE);
+          viewHolder.log.setVisibility(View.VISIBLE);
+        } else {
+          viewHolder.childLayout.setVisibility(View.VISIBLE);
+          viewHolder.log.setVisibility(View.GONE);
+        }
+      }
+    });
 
+    viewHolder.btnCancel.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        viewHolder.childLayout.setVisibility(View.GONE);
+        viewHolder.log.setVisibility(View.VISIBLE);
+      }
+    });
+    viewHolder.btnDone.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (!viewHolder.value.getText().toString().equalsIgnoreCase("")
+            && !viewHolder.value.getText().toString().equalsIgnoreCase("0")) {
+          viewHolder.childLayout.setVisibility(View.GONE);
+          viewHolder.log.setVisibility(View.VISIBLE);
+          viewHolder.log.setText(viewHolder.value.getText().toString());
+          BgDBO.saveBgLog(Integer.parseInt(viewHolder.value.getText().toString()),
+              bgLogScreenInfo.getDate(), bgLogScreenInfo.getTimeSlotId(), 0, 0);
+        } else {
+          Toast.makeText(context, "Please enter valid value", Toast.LENGTH_SHORT).show();
+        }
+      }
+    });
   }
 
   @Override public int getItemCount() {
@@ -57,6 +101,8 @@ public class BgLogScreenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Bind(R.id.btn_cancel) TextView btnCancel;
     @Bind(R.id.btn_done) TextView btnDone;
     @Bind(R.id.unit) TextView unit;
+    @Bind(R.id.parent_layout) RelativeLayout parentLayout;
+    @Bind(R.id.child_layout) LinearLayout childLayout;
 
     public ViewHolder(View itemView) {
       super(itemView);

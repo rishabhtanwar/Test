@@ -1,4 +1,4 @@
-package com.example.rishabh.curotest.Helpers;
+package com.example.rishabh.curotest.POJO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

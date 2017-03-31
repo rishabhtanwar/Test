@@ -1,13 +1,13 @@
 package com.example.rishabh.curotest.API;
 
-import com.example.rishabh.curotest.Helpers.LogStreakResponse;
-import com.example.rishabh.curotest.Helpers.SummaryResponse;
+import com.example.rishabh.curotest.POJO.LogScheduleData;
+import com.example.rishabh.curotest.POJO.SummaryResponse;
+import com.example.rishabh.curotest.BodyRequest.LogSchedulePostData;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -20,4 +20,10 @@ public interface AuthorizedApi {
       @Query("type") String requestType);
 
   @GET(ApiRequest.SUMMARY) Call<SummaryResponse> getSummary();
+
+  @POST(ApiRequest.BGLOGGING) Call<LogScheduleData> postBgSchedule(@Body
+      LogSchedulePostData logSchedulePostData);
+
+  @GET(ApiRequest.BGLOGGING) Call<ResponseBody> getBgSchedule(@Query("start_date") String startDate,
+      @Query("end_date") String endDate, @Query("log_type") String logType);
 }

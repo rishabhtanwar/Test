@@ -16,6 +16,25 @@ public class BgLogs extends RealmObject {
   long value;
   int serverId;
 
+  public long getDateTime() {
+    return dateTime;
+  }
+
+  public void setDateTime(long dateTime) {
+    this.dateTime = dateTime;
+  }
+
+  public long getLoggedTime() {
+    return loggedTime;
+  }
+
+  public void setLoggedTime(long loggedTime) {
+    this.loggedTime = loggedTime;
+  }
+
+  long dateTime;
+  long loggedTime;
+
   public int getId() {
     return id;
   }

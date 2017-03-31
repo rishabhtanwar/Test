@@ -1,12 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.toolbar.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
   <item
       android:id="@+id/done"
       android:icon="@drawable/check"
-      android:menuCategory="secondary"
-      android:orderInCategory="1"
-      android:title="Filter"
+      android:orderInCategory="100"
       app:showAsAction="always"/>
 </menu>

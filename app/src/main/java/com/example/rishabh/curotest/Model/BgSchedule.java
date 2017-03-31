@@ -13,6 +13,15 @@ public class BgSchedule extends RealmObject {
   int slotTypeId;
   int setById;
   String notes;
+  int clientId;
+
+  public int getClientId() {
+    return clientId;
+  }
+
+  public void setClientId(int clientId) {
+    this.clientId = clientId;
+  }
 
   public int getId() {
     return id;
