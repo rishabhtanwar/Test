@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,7 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BgLoggingScreen extends AppCompatActivity {
-  @Bind(R.id.right_arrow) ImageView mRightArrow;
+  //@Bind(R.id.right_arrow) ImageView mRightArrow;
   @Bind(R.id.date_indicator) TextView mDateIndicator;
   @Bind(R.id.glucose_quick_log) TextView quickLog;
   @Bind(R.id.glucose_setup_log) TextView logSetup;
@@ -42,8 +43,8 @@ public class BgLoggingScreen extends AppCompatActivity {
   @Bind(R.id.settings_floating_button) FloatingActionButton settings_fab_button;
   @Bind(R.id.logs_floating_button) FloatingActionButton logs_fab_button;
   @Bind(R.id.click_blocker) View mClickBlocker;
-  @Bind(R.id.left_arrow) ImageView leftArrow;
-  @Bind(R.id.right_arrow) ImageView rightArrow;
+  @Bind(R.id.layout_left_arrow) RelativeLayout leftArrow;
+  @Bind(R.id.layout_right_arrow) RelativeLayout rightArrow;
   double conversionFactorBG;
   private Boolean isFabOpen = false;
   @Bind(R.id.bg_rv) RecyclerView recyclerView;
@@ -95,6 +96,11 @@ public class BgLoggingScreen extends AppCompatActivity {
         arrayList = BgDBO.getBgLogScreenListByDate(
             AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount));
         bgLogScreenAdapter.notifyDataSetChanged();
+        if (arrayList.size()==0){
+          recyclerView.setVisibility(View.GONE);
+        }else {
+          recyclerView.setVisibility(View.VISIBLE);
+        }
       }
     });
 
@@ -114,6 +120,11 @@ public class BgLoggingScreen extends AppCompatActivity {
           arrayList = BgDBO.getBgLogScreenListByDate(
               AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount));
           bgLogScreenAdapter.notifyDataSetChanged();
+          if (arrayList.size()==0){
+            recyclerView.setVisibility(View.GONE);
+          }else {
+            recyclerView.setVisibility(View.VISIBLE);
+          }
         }
       }
     });
@@ -127,10 +138,11 @@ public class BgLoggingScreen extends AppCompatActivity {
     if (AppSettings.getBgApiStatus()) {
       AppSettings.setBgApiStatus(false);
       SyncBgLogging.getBgSchedule(
+          AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, swipeCount-30),
           AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, swipeCount),
-          AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, swipeCount - 30),
           new LogScheduleCallback() {
             @Override public void onSuccess(boolean check) {
+
               setAdapter();
             }
           });

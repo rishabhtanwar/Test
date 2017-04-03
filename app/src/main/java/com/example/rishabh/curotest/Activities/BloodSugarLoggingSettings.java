@@ -9,11 +9,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.example.rishabh.curotest.Adapter.BgLogAdapter;
 import com.example.rishabh.curotest.DBO.BgDBO;
 import com.example.rishabh.curotest.DBO.TimeSlotDBO;
+import com.example.rishabh.curotest.Helpers.AppSettings;
+import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
 import com.example.rishabh.curotest.Model.BgLoggingSettingInfo;
 import com.example.rishabh.curotest.Model.BgSchedule;
 import com.example.rishabh.curotest.R;
@@ -24,9 +27,11 @@ import io.realm.RealmResults;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import retrofit2.http.Body;
 
 public class BloodSugarLoggingSettings extends AppCompatActivity {
   @Bind(R.id.bg_log_rv) RecyclerView recyclerView;
+  @Bind(R.id.progress) ProgressBar progressBar;
   LinearLayoutManager linearLayoutManager;
   ArrayList<BgLoggingSettingInfo> arrayList = new ArrayList<>();
   BgLogAdapter bgLogAdapter;
@@ -43,6 +48,8 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
     realm = Realm.getDefaultInstance();
     todayDateInMillis = AppDateHelper.getInstance().getDateInMillisWithSwipeCount(0);
     setData();
+    AppSettings.setBgApiStatus(true);
+    progressBar.setVisibility(View.GONE);
     done.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         timeSlotIdList = bgLogAdapter.getTimeSlotIdList();
@@ -53,13 +60,18 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
             BgDBO.deleteBgSchedule(entry.getKey());
           }
         }
-
-        if (realm.isClosed()) {
-          realm = Realm.getDefaultInstance();
-        }
-        RealmResults<BgSchedule> realmResults = realm.where(BgSchedule.class).findAll();
-        realm.close();
-        finish();
+        progressBar.setVisibility(View.VISIBLE);
+        BgDBO.syncBgSchedule(new LogScheduleCallback() {
+          @Override public void onSuccess(boolean check) {
+            progressBar.setVisibility(View.GONE);
+            if (realm.isClosed()) {
+              realm = Realm.getDefaultInstance();
+            }
+            RealmResults<BgSchedule> realmResults = realm.where(BgSchedule.class).findAll();
+            realm.close();
+            finish();
+          }
+        });
       }
     });
   }

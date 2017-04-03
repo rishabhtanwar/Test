@@ -58,8 +58,8 @@ public class LogScheduleData {
 
   public static class LogSchedule {
     @JsonProperty("id") private int id;
-    @JsonProperty("startdate") private String startdate;
-    @JsonProperty("enddate") private String enddate;
+    @JsonProperty("start_date") private String startdate;
+    @JsonProperty("end_date") private String enddate;
     @JsonProperty("set_by_id") private int setById;
 
     public int getId() {

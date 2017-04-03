@@ -4,8 +4,11 @@ import android.util.Log;
 import com.example.rishabh.curotest.API.RestClient;
 import com.example.rishabh.curotest.BodyRequest.LogScheduleJson;
 import com.example.rishabh.curotest.BodyRequest.LogScheduleTimeSlotList;
+import com.example.rishabh.curotest.BodyRequest.LogValuePostData;
+import com.example.rishabh.curotest.BodyRequest.LogValuesData;
 import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
 import com.example.rishabh.curotest.Model.BgSchedule;
+import com.example.rishabh.curotest.POJO.BgLogValueResponse;
 import com.example.rishabh.curotest.POJO.LogScheduleData;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
 import com.example.rishabh.curotest.BodyRequest.LogSchedulePostData;
@@ -28,7 +31,8 @@ import retrofit2.Response;
 public class SyncBgLogging {
   static String TAG = "SyncBgLogging";
 
-  public static void postBgSchedule(long startDate, JSONArray jsonArray, String logType) {
+  public static void postBgSchedule(long startDate, JSONArray jsonArray, String logType,
+      final LogScheduleCallback logScheduleCallback) {
     LogSchedulePostData logSchedulePostData = new LogSchedulePostData();
     //logSchedulePostData.start_date = AppDateHelper.getStrigDateFromMillis(startDate);
     logSchedulePostData.log_type = logType;
@@ -41,8 +45,12 @@ public class SyncBgLogging {
         logs.client_id = json.getInt("client_id");
         logs.timeslot_id = json.getInt("timeslot_id");
         logs.is_deleted = json.getBoolean("is_deleted");
-        logs.end_date = json.getString("end_date");
-        logs.server_id = json.getString("server_id");
+        if (json.has("end_date")) {
+          logs.end_date = json.getString("end_date");
+        }
+        if (json.has("server_id")) {
+          logs.server_id = json.getString("server_id");
+        }
         logs.start_date = json.getString("start_date");
         log.timeslots.add(logs);
       } catch (JSONException e) {
@@ -55,8 +63,8 @@ public class SyncBgLogging {
       @Override
       public void onResponse(Call<LogScheduleData> call, Response<LogScheduleData> response) {
 
-        Log.e(TAG, "onResponse: " + response.body().getLogSchedules().get(0).getId());
-        saveBgSchedule(response);
+        //Log.e(TAG, "onResponse: " + response.body().getLogSchedules().get(0).getId());
+        saveBgSchedule(response, logScheduleCallback);
       }
 
       @Override public void onFailure(Call<LogScheduleData> call, Throwable t) {
@@ -84,6 +92,7 @@ public class SyncBgLogging {
   private static void saveBgscheduleBWDates(Response<LogScheduleData> response,
       LogScheduleCallback logScheduleCallback) {
     Realm realm = Realm.getDefaultInstance();
+    int count = 0;
     try {
       realm.beginTransaction();
       for (LogScheduleData.LogSchedule logSchedule : response.body().getLogSchedules()) {
@@ -107,15 +116,19 @@ public class SyncBgLogging {
         bgSchedule.setServerId(logSchedule.getId());
         bgSchedule.setSynced(true);
         realm.copyToRealm(bgSchedule);
+        count++;
       }
-      logScheduleCallback.onSuccess(true);
+      if (count == response.body().getLogSchedules().size()) {
+        logScheduleCallback.onSuccess(true);
+      }
       realm.commitTransaction();
     } finally {
       realm.close();
     }
   }
 
-  private static void saveBgSchedule(Response<LogScheduleData> response) {
+  private static void saveBgSchedule(Response<LogScheduleData> response,
+      LogScheduleCallback logScheduleCallback) {
     Realm realm = Realm.getDefaultInstance();
     try {
       realm.beginTransaction();
@@ -129,9 +142,28 @@ public class SyncBgLogging {
         bgSchedule.setSynced(true);
         realm.copyToRealm(bgSchedule);
       }
+      logScheduleCallback.onSuccess(true);
       realm.commitTransaction();
     } finally {
       realm.close();
     }
   }
+
+  public static void postBgValues(ArrayList<LogValuesData> logValuesDatas) {
+    LogValuePostData logValuePostData = new LogValuePostData();
+    logValuePostData.sync_data = logValuesDatas;
+    Call<BgLogValueResponse> call = RestClient.getApiService().postBgLog(logValuePostData);
+    call.enqueue(new Callback<BgLogValueResponse>() {
+      @Override
+      public void onResponse(Call<BgLogValueResponse> call, Response<BgLogValueResponse> response) {
+
+      }
+
+      @Override public void onFailure(Call<BgLogValueResponse> call, Throwable t) {
+
+      }
+    });
+  }
+
+
 }

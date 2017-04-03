@@ -76,7 +76,8 @@ public class BgLogScreenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
           viewHolder.log.setVisibility(View.VISIBLE);
           viewHolder.log.setText(viewHolder.value.getText().toString());
           BgDBO.saveBgLog(Integer.parseInt(viewHolder.value.getText().toString()),
-              bgLogScreenInfo.getDate(), bgLogScreenInfo.getTimeSlotId(), 0, 0);
+              bgLogScreenInfo.getDate(), bgLogScreenInfo.getTimeSlotId(), "", "");
+
         } else {
           Toast.makeText(context, "Please enter valid value", Toast.LENGTH_SHORT).show();
         }

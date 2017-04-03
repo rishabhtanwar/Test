@@ -1,5 +1,7 @@
 package com.example.rishabh.curotest.API;
 
+import com.example.rishabh.curotest.BodyRequest.LogValuePostData;
+import com.example.rishabh.curotest.POJO.BgLogValueResponse;
 import com.example.rishabh.curotest.POJO.LogScheduleData;
 import com.example.rishabh.curotest.POJO.SummaryResponse;
 import com.example.rishabh.curotest.BodyRequest.LogSchedulePostData;
@@ -26,4 +28,6 @@ public interface AuthorizedApi {
 
   @GET(ApiRequest.BGLOGGING) Call<LogScheduleData> getBgSchedule(@Query("start_date") String startDate,
       @Query("end_date") String endDate, @Query("log_type") String logType);
+
+  @POST(ApiRequest.BGLOGGING) Call<BgLogValueResponse> postBgLog(@Body LogValuePostData logValuePostData);
 }

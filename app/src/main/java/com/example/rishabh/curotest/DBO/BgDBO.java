@@ -1,6 +1,8 @@
 package com.example.rishabh.curotest.DBO;
 
+import com.example.rishabh.curotest.BodyRequest.LogValuesData;
 import com.example.rishabh.curotest.Helpers.AppSettings;
+import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
 import com.example.rishabh.curotest.Model.BgLogScreenInfo;
 import com.example.rishabh.curotest.Model.BgLoggingSettingInfo;
 import com.example.rishabh.curotest.Model.BgLogs;
@@ -10,6 +12,7 @@ import com.example.rishabh.curotest.SyncDataWithApi.SyncBgLogging;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
 import com.example.rishabh.curotest.Utils.IncrementClientId;
 import io.realm.Realm;
+import io.realm.RealmModel;
 import io.realm.RealmResults;
 import java.util.ArrayList;
 import org.json.JSONArray;
@@ -92,24 +95,37 @@ public class BgDBO {
   public static void saveBgSchedule(int slotId, long date) {
     Realm realm = Realm.getDefaultInstance();
     try {
-      realm.beginTransaction();
-      BgSchedule bgSchedule = new BgSchedule();
-      bgSchedule.setDeleted(false);
-      bgSchedule.setEndDate(0);
-      bgSchedule.setSetById(0);
-      bgSchedule.setStartDate(date);
-      bgSchedule.setSynced(false);
-      bgSchedule.setTimeSlotId(slotId);
-      bgSchedule.setUserId(AppSettings.getCurrentUserId());
-      bgSchedule.setClientId(getBgScheduleLastClientId(realm));
-      //BgSchedule bgSchedule1 = realm.copyToRealm(bgSchedule);
-      realm.commitTransaction();
+      if (checkBgScheduleForId(slotId, realm)) {
+        realm.beginTransaction();
+        BgSchedule bgSchedule = new BgSchedule();
+        bgSchedule.setDeleted(false);
+        bgSchedule.setEndDate(0);
+        bgSchedule.setSetById(0);
+        bgSchedule.setStartDate(date);
+        bgSchedule.setSynced(false);
+        bgSchedule.setTimeSlotId(slotId);
+        bgSchedule.setUserId(AppSettings.getCurrentUserId());
+        bgSchedule.setClientId(getBgScheduleLastClientId(realm));
+        realm.copyToRealm(bgSchedule);
+        realm.commitTransaction();
+      }
     } finally {
       realm.close();
     }
   }
 
-  private static void syncBgSchedule() {
+  private static boolean checkBgScheduleForId(int id, Realm realm) {
+    RealmResults<BgSchedule> realmResults =
+        realm.where(BgSchedule.class).equalTo("slotTypeId", id).findAll();
+    for (BgSchedule bgSchedule : realmResults) {
+      if (bgSchedule.isDeleted() == false) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public static void syncBgSchedule(LogScheduleCallback logScheduleCallback) {
     Realm realm = Realm.getDefaultInstance();
     try {
       JSONArray jsonArray = new JSONArray();
@@ -125,7 +141,7 @@ public class BgDBO {
               AppDateHelper.getStrigDateFromMillis(bgSchedule.getStartDate()));
           if (bgSchedule.getEndDate() == 0) {
             jsonObject.put("end_date", null);
-            jsonObject.put("is_delete", false);
+            jsonObject.put("is_deleted", false);
           } else {
             jsonObject.put("end_date",
                 AppDateHelper.getStrigDateFromMillis(bgSchedule.getEndDate()));
@@ -140,8 +156,8 @@ public class BgDBO {
         } catch (JSONException e) {
           e.printStackTrace();
         }
-        SyncBgLogging.postBgSchedule(0, jsonArray, "blood_glucose");
       }
+      SyncBgLogging.postBgSchedule(0, jsonArray, "blood_glucose", logScheduleCallback);
     } finally {
       realm.close();
     }
@@ -232,7 +248,10 @@ public class BgDBO {
   private static ArrayList<BgLogScreenInfo> getBgLogListBySchedule(
       ArrayList<BgLogScreenInfo> arrayList, Realm realm, long date) {
     RealmResults<BgSchedule> realmResults = realm.where(BgSchedule.class)
-        .equalTo("startDate", date)
+        .lessThanOrEqualTo("startDate", date)
+        .equalTo("endDate", 0)
+        .or()
+        .greaterThan("endDate", date)
         .equalTo("isDeleted", false)
         .findAll();
     for (BgSchedule bgSchedule : realmResults) {
@@ -266,8 +285,8 @@ public class BgDBO {
     return realm.where(TimeSlots.class).equalTo("id", id).findFirst().getDescription();
   }
 
-  public static void saveBgLog(int value, long date, int timeSlotId, long dateTime,
-      long loggedTime) {
+  public static void saveBgLog(int value, long date, int timeSlotId, String dateTime,
+      String loggedTime) {
     Realm realm = Realm.getDefaultInstance();
     try {
       realm.beginTransaction();
@@ -286,10 +305,39 @@ public class BgDBO {
       bgLogs.setDateTime(dateTime);
       bgLogs.setLoggedTime(loggedTime);
       bgLogs.setValue(value);
-      realm.copyToRealm(bgLogs);
+      bgLogs.setClientId(getBgValueLastClientId(realm));
+      BgLogs bgLogs1 = realm.copyToRealm(bgLogs);
+      SyncBgLogging.postBgValues( arrayList(bgLogs1.getClientId(), bgLogs1.getServerId(), bgLogs1.getValue(),
+          bgLogs1.getTimeSlotId(), bgLogs1.getDateTime(), bgLogs1.getLoggedTime()));
+
       realm.commitTransaction();
     } finally {
       realm.close();
+    }
+  }
+
+  private static ArrayList<LogValuesData> arrayList(int clientId, int serverId, long value,
+      int timeslotId, String dateTime, String loggedTime) {
+    ArrayList<LogValuesData> arrayList = new ArrayList<>();
+    LogValuesData logValuesData = new LogValuesData();
+    logValuesData.client_id = clientId;
+    if (serverId != 0) {
+      logValuesData.server_id = serverId;
+    }
+    logValuesData.date_time = dateTime;
+    logValuesData.logged_time = loggedTime;
+    logValuesData.timeslot_id = timeslotId;
+    logValuesData.value = value;
+    arrayList.add(logValuesData);
+    return arrayList;
+  }
+
+  private static int getBgValueLastClientId(Realm realm) {
+    RealmResults<BgLogs> realmResults = realm.where(BgLogs.class).findAll();
+    if (realmResults.size() > 0) {
+      return realmResults.get(realmResults.size() - 1).getClientId() + 1;
+    } else {
+      return 1;
     }
   }
 

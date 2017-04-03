@@ -15,25 +15,34 @@ public class BgLogs extends RealmObject {
   boolean isSynced;
   long value;
   int serverId;
+  int clientId;
 
-  public long getDateTime() {
+  public int getClientId() {
+    return clientId;
+  }
+
+  public void setClientId(int clientId) {
+    this.clientId = clientId;
+  }
+
+  public String getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(long dateTime) {
+  public void setDateTime(String dateTime) {
     this.dateTime = dateTime;
   }
 
-  public long getLoggedTime() {
+  public String getLoggedTime() {
     return loggedTime;
   }
 
-  public void setLoggedTime(long loggedTime) {
+  public void setLoggedTime(String loggedTime) {
     this.loggedTime = loggedTime;
   }
 
-  long dateTime;
-  long loggedTime;
+  String  dateTime;
+  String  loggedTime;
 
   public int getId() {
     return id;

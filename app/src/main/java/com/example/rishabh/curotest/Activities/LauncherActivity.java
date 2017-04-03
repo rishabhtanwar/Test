@@ -27,7 +27,7 @@ public class LauncherActivity extends AppCompatActivity {
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
     if (AppSettings.getAuthToken().equalsIgnoreCase("")) {
-      AppSettings.setAuthToken("ecf5yhhkvcpu5dxbsbuy");
+      AppSettings.setAuthToken("xpdpm31gayvg-pkdvfwv");
       AppSettings.setCurrentUserId(111);
     }
     AppSettings.setBgApiStatus(true);

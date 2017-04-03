@@ -8,7 +8,7 @@ public class BgLogScreenInfo {
   String mainTitle;
   String subTitle;
   long date;
-int timeSlotId;
+  int timeSlotId;
 
   public int getTimeSlotId() {
     return timeSlotId;
