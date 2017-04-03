@@ -30,13 +30,14 @@ public class LauncherActivity extends AppCompatActivity {
       AppSettings.setAuthToken("ecf5yhhkvcpu5dxbsbuy");
       AppSettings.setCurrentUserId(111);
     }
+    AppSettings.setBgApiStatus(true);
     checkTimeSlot();
     Calendar calendar = Calendar.getInstance();
     int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
     String startDate =
         AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, -(dayOfWeek - 1));
     String endDate = AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, 0);
-    SyncLogStreakData.syncData(startDate, endDate, "latest",null,"");
+    SyncLogStreakData.syncData(startDate, endDate, "latest", null, "");
     SyncSummary.syncSummary();
     enterButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {

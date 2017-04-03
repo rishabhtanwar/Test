@@ -8,6 +8,5 @@ import org.json.JSONObject;
 
 public class LogSchedulePostData {
   public String log_type;
-  public String start_date;
   public LogScheduleJson log_schedule_data;
 }

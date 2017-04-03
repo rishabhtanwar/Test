@@ -48,7 +48,6 @@ public class BgDBO {
     RealmResults<BgSchedule> realmResults1 = realm.where(BgSchedule.class).findAll();
     RealmResults<BgSchedule> realmResults = realm.where(BgSchedule.class)
         .equalTo("slotTypeId", timeSlot)
-        .equalTo("startDate", date)
         .equalTo("isDeleted", false)
         .findAll();
     if (realmResults.size() > 0) {
@@ -103,12 +102,46 @@ public class BgDBO {
       bgSchedule.setTimeSlotId(slotId);
       bgSchedule.setUserId(AppSettings.getCurrentUserId());
       bgSchedule.setClientId(getBgScheduleLastClientId(realm));
-      BgSchedule bgSchedule1 = realm.copyToRealm(bgSchedule);
+      //BgSchedule bgSchedule1 = realm.copyToRealm(bgSchedule);
       realm.commitTransaction();
+    } finally {
+      realm.close();
+    }
+  }
 
-      SyncBgLogging.postBgSchedule(date,
-          array(bgSchedule1.getClientId(), bgSchedule1.getTimeSlotId(), bgSchedule1.getServerId()),
-          "blood_glucose");
+  private static void syncBgSchedule() {
+    Realm realm = Realm.getDefaultInstance();
+    try {
+      JSONArray jsonArray = new JSONArray();
+      JSONObject jsonObject = null;
+      RealmResults<BgSchedule> realmResults =
+          realm.where(BgSchedule.class).equalTo("isSynced", false).findAll();
+      for (BgSchedule bgSchedule : realmResults) {
+        jsonObject = new JSONObject();
+        try {
+          jsonObject.put("client_id", bgSchedule.getClientId());
+          jsonObject.put("timeslot_id", bgSchedule.getTimeSlotId());
+          jsonObject.put("start_date",
+              AppDateHelper.getStrigDateFromMillis(bgSchedule.getStartDate()));
+          if (bgSchedule.getEndDate() == 0) {
+            jsonObject.put("end_date", null);
+            jsonObject.put("is_delete", false);
+          } else {
+            jsonObject.put("end_date",
+                AppDateHelper.getStrigDateFromMillis(bgSchedule.getEndDate()));
+            jsonObject.put("is_deleted", true);
+          }
+          if (bgSchedule.getServerId() == 0) {
+            jsonObject.put("server_id", null);
+          } else {
+            jsonObject.put("server_id", bgSchedule.getServerId());
+          }
+          jsonArray.put(jsonObject);
+        } catch (JSONException e) {
+          e.printStackTrace();
+        }
+        SyncBgLogging.postBgSchedule(0, jsonArray, "blood_glucose");
+      }
     } finally {
       realm.close();
     }
@@ -146,11 +179,12 @@ public class BgDBO {
       realm.beginTransaction();
       BgSchedule bgSchedule = realm.where(BgSchedule.class)
           .equalTo("slotTypeId", timeSlotId)
-          .equalTo("endDate", 0)
+          .equalTo("isDeleted", false)
           .findFirst();
       if (bgSchedule != null) {
         bgSchedule.setDeleted(true);
         bgSchedule.setEndDate(AppDateHelper.getInstance().getDateInMillisWithSwipeCount(-1));
+        bgSchedule.setSynced(false);
       }
       realm.commitTransaction();
       //deleteBgLog(timeSlotId, realm);

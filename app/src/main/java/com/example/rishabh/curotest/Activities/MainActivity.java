@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
   private void setStreakData() {
     Calendar calendar = Calendar.getInstance();
     int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-    String[] statusArray = new String[7];
+    int[] statusArray = new int[7];
     int count = 0;
     LogStreakDBO logStreakDBO = new LogStreakDBO();
     for (int i = 1; i <= dayOfWeek; i++) {
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
       count++;
     }
     for (int j = count; j < 7; j++) {
-      statusArray[j] = Constants.LOCKED_STREAK;
+      statusArray[j] = 3;
     }
     for (int k = 0; k < statusArray.length; k++) {
       switch (k) {
@@ -207,120 +207,120 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  private void setSunImage(String status) {
+  private void setSunImage(int status) {
     switch (status) {
-      case Constants.EMPTY_STREAK:
+      case 2:
         img1.setImageResource(R.drawable.empty_circle);
         break;
-      case Constants.LOGGED_STREAK:
+      case 1:
         img1.setImageResource(R.drawable.checked_circle);
         break;
-      case Constants.STARRED_STREAK:
+      case 0:
         img1.setImageResource(R.drawable.starred_circle);
         break;
-      case Constants.LOCKED_STREAK:
+      case 4:
         img1.setImageResource(R.drawable.locked_circle);
         break;
     }
   }
 
-  private void setMonImage(String status) {
+  private void setMonImage(int status) {
     switch (status) {
-      case Constants.EMPTY_STREAK:
+      case 2:
         img2.setImageResource(R.drawable.empty_circle);
         break;
-      case Constants.LOGGED_STREAK:
+      case 1:
         img2.setImageResource(R.drawable.checked_circle);
         break;
-      case Constants.STARRED_STREAK:
+      case 0:
         img2.setImageResource(R.drawable.starred_circle);
         break;
-      case Constants.LOCKED_STREAK:
+      case 4:
         img2.setImageResource(R.drawable.locked_circle);
         break;
     }
   }
 
-  private void setTueImage(String status) {
+  private void setTueImage(int status) {
     switch (status) {
-      case Constants.EMPTY_STREAK:
+      case 2:
         img3.setImageResource(R.drawable.empty_circle);
         break;
-      case Constants.LOGGED_STREAK:
+      case 1:
         img3.setImageResource(R.drawable.checked_circle);
         break;
-      case Constants.STARRED_STREAK:
+      case 0:
         img3.setImageResource(R.drawable.starred_circle);
         break;
-      case Constants.LOCKED_STREAK:
+      case 4:
         img3.setImageResource(R.drawable.locked_circle);
         break;
     }
   }
 
-  private void setWedImage(String status) {
+  private void setWedImage(int status) {
     switch (status) {
-      case Constants.EMPTY_STREAK:
+      case 2:
         img4.setImageResource(R.drawable.empty_circle);
         break;
-      case Constants.LOGGED_STREAK:
+      case 1:
         img4.setImageResource(R.drawable.checked_circle);
         break;
-      case Constants.STARRED_STREAK:
+      case 0:
         img4.setImageResource(R.drawable.starred_circle);
         break;
-      case Constants.LOCKED_STREAK:
+      case 4:
         img4.setImageResource(R.drawable.locked_circle);
         break;
     }
   }
 
-  private void setThuImage(String status) {
+  private void setThuImage(int status) {
     switch (status) {
-      case Constants.EMPTY_STREAK:
+      case 2:
         img5.setImageResource(R.drawable.empty_circle);
         break;
-      case Constants.LOGGED_STREAK:
+      case 1:
         img5.setImageResource(R.drawable.checked_circle);
         break;
-      case Constants.STARRED_STREAK:
+      case 0:
         img5.setImageResource(R.drawable.starred_circle);
         break;
-      case Constants.LOCKED_STREAK:
+      case 4:
         img5.setImageResource(R.drawable.locked_circle);
         break;
     }
   }
 
-  private void setFriImage(String status) {
+  private void setFriImage(int status) {
     switch (status) {
-      case Constants.EMPTY_STREAK:
+      case 2:
         img6.setImageResource(R.drawable.empty_circle);
         break;
-      case Constants.LOGGED_STREAK:
+      case 1:
         img6.setImageResource(R.drawable.checked_circle);
         break;
-      case Constants.STARRED_STREAK:
+      case 0:
         img6.setImageResource(R.drawable.starred_circle);
         break;
-      case Constants.LOCKED_STREAK:
+      case 4:
         img6.setImageResource(R.drawable.locked_circle);
         break;
     }
   }
 
-  private void setSatImage(String status) {
+  private void setSatImage(int status) {
     switch (status) {
-      case Constants.EMPTY_STREAK:
+      case 2:
         img7.setImageResource(R.drawable.empty_circle);
         break;
-      case Constants.LOGGED_STREAK:
+      case 1:
         img7.setImageResource(R.drawable.checked_circle);
         break;
-      case Constants.STARRED_STREAK:
+      case 0:
         img7.setImageResource(R.drawable.starred_circle);
         break;
-      case Constants.LOCKED_STREAK:
+      case 4:
         img7.setImageResource(R.drawable.locked_circle);
         break;
     }

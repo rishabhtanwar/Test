@@ -54,11 +54,11 @@ public class SyncLogStreakData {
         String key = String.valueOf(iterator.next());
         long date = AppDateHelper.getInstance().getMillisFromDate(key, Constants.DATEFORMAT);
         String status = jsonObject.getString(key);
-        if (requestType.equalsIgnoreCase("history")) {
-          setMonthStreakData(date, status, month);
-        } else {
-          setLogStreakDB(date, status);
-        }
+        //if (requestType.equalsIgnoreCase("history")) {
+        //  setMonthStreakData(date, status, month);
+        //} else {
+          setLogStreakDB(date, status,month);
+        //}
       }
       realm.close();
       if (requestType.equalsIgnoreCase("history")) {
@@ -69,7 +69,7 @@ public class SyncLogStreakData {
     }
   }
 
-  private static void setLogStreakDB(long date, String status) {
+  private static void setLogStreakDB(long date, String status,String month) {
     if (realm.isClosed()) {
       realm = Realm.getDefaultInstance();
     }
@@ -81,7 +81,19 @@ public class SyncLogStreakData {
         logStreakPerDay = new LogStreakPerDay();
       }
       logStreakPerDay.setDate(date);
-      logStreakPerDay.setStatusFlag(status);
+      switch (status) {
+        case Constants.EMPTY_STREAK:
+          logStreakPerDay.setStatusFlag(2);
+          break;
+        case Constants.LOGGED_STREAK:
+          logStreakPerDay.setStatusFlag(1);
+          break;
+
+        case Constants.STARRED_STREAK:
+          logStreakPerDay.setStatusFlag(0);
+          break;
+      }
+      logStreakPerDay.setMonth(month);
       realm.copyToRealm(logStreakPerDay);
       realm.commitTransaction();
     } catch (Exception e) {

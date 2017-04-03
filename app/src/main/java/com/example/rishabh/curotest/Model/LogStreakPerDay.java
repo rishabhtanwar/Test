@@ -8,15 +8,25 @@ import io.realm.RealmObject;
 
 public class LogStreakPerDay extends RealmObject {
   long date;
-  String statusFlag;
+  int statusFlag;
   int id;
   int userId;
 
-  public String  getStatusFlag() {
+  public String getMonth() {
+    return month;
+  }
+
+  public void setMonth(String month) {
+    this.month = month;
+  }
+
+  String month;
+
+  public int getStatusFlag() {
     return statusFlag;
   }
 
-  public void setStatusFlag(String  statusFlag) {
+  public void setStatusFlag(int statusFlag) {
     this.statusFlag = statusFlag;
   }
 
@@ -43,6 +53,4 @@ public class LogStreakPerDay extends RealmObject {
   public void setUserId(int userId) {
     this.userId = userId;
   }
-
-
 }

@@ -5,6 +5,10 @@ package com.example.rishabh.curotest.BodyRequest;
  */
 
 public class LogScheduleTimeSlotList {
-  public String client_id;
-  public String timeslot_id;
+  public int client_id;
+  public int timeslot_id;
+  public String server_id;
+  public String start_date;
+  public String end_date;
+  public boolean is_deleted;
 }

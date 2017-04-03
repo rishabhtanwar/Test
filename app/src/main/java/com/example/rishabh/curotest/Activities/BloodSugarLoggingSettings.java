@@ -17,10 +17,13 @@ import com.example.rishabh.curotest.DBO.TimeSlotDBO;
 import com.example.rishabh.curotest.Model.BgLoggingSettingInfo;
 import com.example.rishabh.curotest.Model.BgSchedule;
 import com.example.rishabh.curotest.R;
+import com.example.rishabh.curotest.SyncDataWithApi.SyncBgLogging;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BloodSugarLoggingSettings extends AppCompatActivity {
   @Bind(R.id.bg_log_rv) RecyclerView recyclerView;
@@ -28,7 +31,7 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
   ArrayList<BgLoggingSettingInfo> arrayList = new ArrayList<>();
   BgLogAdapter bgLogAdapter;
   Realm realm;
-  ArrayList<Integer> timeSlotIdList = new ArrayList<>();
+  HashMap<Integer, String> timeSlotIdList = new HashMap<>();
   long todayDateInMillis;
   @Bind(R.id.done) ImageView done;
 
@@ -42,8 +45,15 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
     setData();
     done.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        //timeSlotIdList = bgLogAdapter.getTimeSlotIdList();
-        //BgDBO.saveBgScheduleFromLogging(timeSlotIdList, todayDateInMillis);
+        timeSlotIdList = bgLogAdapter.getTimeSlotIdList();
+        for (Map.Entry<Integer, String> entry : timeSlotIdList.entrySet()) {
+          if (entry.getValue().equalsIgnoreCase("ticked")) {
+            BgDBO.saveBgSchedule(entry.getKey(), todayDateInMillis);
+          } else {
+            BgDBO.deleteBgSchedule(entry.getKey());
+          }
+        }
+
         if (realm.isClosed()) {
           realm = Realm.getDefaultInstance();
         }

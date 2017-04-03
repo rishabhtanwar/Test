@@ -12,9 +12,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.example.rishabh.curotest.DBO.BgDBO;
 import com.example.rishabh.curotest.Model.BgLoggingSettingInfo;
+import com.example.rishabh.curotest.Model.BgSchedule;
 import com.example.rishabh.curotest.R;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
+import io.realm.Realm;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by rishabh on 27/03/2017.
@@ -23,7 +26,9 @@ import java.util.ArrayList;
 public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
   Context context;
   ArrayList<BgLoggingSettingInfo> arrayList = new ArrayList<>();
-  ArrayList<Integer> timeSlotIdList = new ArrayList<>();
+  ArrayList<Integer> timeSlotIdListTicked = new ArrayList<>();
+  ArrayList<Integer> timeSlotIdListUnTicked = new ArrayList<>();
+  HashMap<Integer, String> hashMap = new HashMap<>();
 
   public BgLogAdapter(Context context, ArrayList<BgLoggingSettingInfo> arrayList) {
     this.context = context;
@@ -42,10 +47,10 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     ViewHolder viewHolder = (ViewHolder) holder;
     if (bgLoggingSettingInfo.isCheck()) {
       viewHolder.checkBox.setChecked(true);
-      //if (!timeSlotIdList.contains(bgLoggingSettingInfo.getSlotid())) {
-      //  timeSlotIdList.add(bgLoggingSettingInfo.getSlotid());
-      //}
-
+      if (!hashMap.containsKey(bgLoggingSettingInfo.getSlotid())) {
+        //timeSlotIdListTicked.add(bgLoggingSettingInfo.getSlotid());
+        hashMap.put(bgLoggingSettingInfo.getSlotid(), "ticked");
+      }
     } else {
       viewHolder.checkBox.setChecked(false);
     }
@@ -57,11 +62,15 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
           //if (!timeSlotIdList.contains(bgLoggingSettingInfo.getSlotid())) {
           //  timeSlotIdList.add(bgLoggingSettingInfo.getSlotid());
           //}
-          BgDBO.saveBgSchedule(bgLoggingSettingInfo.getSlotid(),
-              AppDateHelper.getInstance().getDateInMillisWithSwipeCount(0));
+          hashMap.put(bgLoggingSettingInfo.getSlotid(), "ticked");
+          //BgDBO.saveBgSchedule(bgLoggingSettingInfo.getSlotid(),
+          //    AppDateHelper.getInstance().getDateInMillisWithSwipeCount(0));
         } else {
+          if (checkBgValueInDb(bgLoggingSettingInfo.getSlotid())){
+            hashMap.put(bgLoggingSettingInfo.getSlotid(), "unticked");
+          }
           //timeSlotIdList.remove(removePosition(bgLoggingSettingInfo.getSlotid()));
-          BgDBO.deleteBgSchedule(bgLoggingSettingInfo.getSlotid());
+          //BgDBO.deleteBgSchedule(bgLoggingSettingInfo.getSlotid());
         }
       }
     });
@@ -82,16 +91,32 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
   }
 
-  public ArrayList<Integer> getTimeSlotIdList() {
-    return timeSlotIdList;
+  public HashMap<Integer,String> getTimeSlotIdList() {
+    return hashMap;
   }
 
   private int removePosition(int slotId) {
-    for (int i = 0; i < timeSlotIdList.size(); i++) {
-      if (timeSlotIdList.get(i) == slotId) {
+    for (int i = 0; i < timeSlotIdListTicked.size(); i++) {
+      if (timeSlotIdListTicked.get(i) == slotId) {
         return i;
       }
     }
     return 0; // this should never occur
+  }
+
+  private boolean checkBgValueInDb(int id) {
+    Realm realm = Realm.getDefaultInstance();
+    try {
+      BgSchedule bgSchedule = realm.where(BgSchedule.class)
+          .equalTo("slotTypeId", id)
+          .equalTo("isDeleted", false)
+          .findFirst();
+      if (bgSchedule != null) {
+        return true;
+      }
+    } finally {
+      realm.close();
+    }
+    return false;
   }
 }

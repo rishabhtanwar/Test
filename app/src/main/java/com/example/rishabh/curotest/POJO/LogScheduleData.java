@@ -102,11 +102,11 @@ public class LogScheduleData {
       this.notes = notes;
     }
 
-    public String getTimeslotId() {
+    public int getTimeslotId() {
       return timeslotId;
     }
 
-    public void setTimeslotId(String timeslotId) {
+    public void setTimeslotId(int timeslotId) {
       this.timeslotId = timeslotId;
     }
 
@@ -135,7 +135,7 @@ public class LogScheduleData {
     }
 
     @JsonProperty("notes") private String notes;
-    @JsonProperty("timeslot_id") private String timeslotId;
+    @JsonProperty("timeslot_id") private int timeslotId;
     @JsonProperty("client_id") private Integer clientId;
     @JsonProperty("status") private Boolean status;
     @JsonProperty("is_deleted") private Boolean isDeleted;

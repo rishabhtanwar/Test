@@ -24,6 +24,6 @@ public interface AuthorizedApi {
   @POST(ApiRequest.BGLOGGING) Call<LogScheduleData> postBgSchedule(@Body
       LogSchedulePostData logSchedulePostData);
 
-  @GET(ApiRequest.BGLOGGING) Call<ResponseBody> getBgSchedule(@Query("start_date") String startDate,
+  @GET(ApiRequest.BGLOGGING) Call<LogScheduleData> getBgSchedule(@Query("start_date") String startDate,
       @Query("end_date") String endDate, @Query("log_type") String logType);
 }
