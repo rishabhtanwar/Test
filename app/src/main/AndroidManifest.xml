@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rishabh.curotest">
+
+  <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
   <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+  <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
 
   <application
+      android:name=".Utils.Application"
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
       android:supportsRtl="true"
-      android:name=".Utils.Application"
       android:theme="@style/AppTheme">
     <activity android:name=".Activities.MainActivity">
       <intent-filter>
@@ -32,6 +36,18 @@
     </activity>
     <activity android:name=".Activities.GoalsCalendarActivity">
     </activity>
+
+    <service
+        android:name=".services.SyncService"
+        android:exported="true"
+        android:process=":sync">
+      <intent-filter>
+        <action android:name="android.content.SyncAdapter"/>
+      </intent-filter>
+      <meta-data
+          android:name="android.content.SyncAdapter"
+          android:resource="@xml/syncadapter"/>
+    </service>
   </application>
 
 </manifest>

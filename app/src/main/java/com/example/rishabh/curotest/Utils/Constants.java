@@ -1,5 +1,7 @@
 package com.example.rishabh.curotest.Utils;
 
+import com.example.rishabh.curotest.BuildConfig;
+
 /**
  * Created by rishabh on 27/03/2017.
  */
@@ -21,5 +23,7 @@ public class Constants {
   public static final String LOGGED_STREAK="logged";
   public static final String LOCKED_STREAK="locked";
   public static final String BG_API_STATUS="bgApi";
-
+  public static final String AUTHORITY = BuildConfig.APPLICATION_ID+".helper.provider";
+  public static final String ACCOUNT_TYPE = BuildConfig.APPLICATION_ID;
+  public static final String ACCOUNT = "curotest";
 }
