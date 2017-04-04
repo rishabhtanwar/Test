@@ -1,9 +1,8 @@
-package com.example.rishabh.curotest.Helpers;
+package com.example.rishabh.curotest.helpers;
 
 import com.example.rishabh.curotest.Model.TimeSlots;
 import com.example.rishabh.curotest.Utils.Constants;
 import io.realm.Realm;
-import retrofit2.Response;
 
 /**
  * Created by rishabh on 27/03/2017.

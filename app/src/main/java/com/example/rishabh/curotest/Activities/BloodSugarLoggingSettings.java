@@ -1,4 +1,4 @@
-package com.example.rishabh.curotest.Activities;
+package com.example.rishabh.curotest.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,21 +14,18 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.example.rishabh.curotest.Adapter.BgLogAdapter;
 import com.example.rishabh.curotest.DBO.BgDBO;
-import com.example.rishabh.curotest.DBO.TimeSlotDBO;
-import com.example.rishabh.curotest.Helpers.AppSettings;
+import com.example.rishabh.curotest.helpers.AppSettings;
 import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
 import com.example.rishabh.curotest.Model.BgLoggingSettingInfo;
 import com.example.rishabh.curotest.Model.BgSchedule;
 import com.example.rishabh.curotest.Network.ConnectionDetector;
 import com.example.rishabh.curotest.R;
-import com.example.rishabh.curotest.SyncDataWithApi.SyncBgLogging;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import retrofit2.http.Body;
 
 public class BloodSugarLoggingSettings extends AppCompatActivity {
   @Bind(R.id.bg_log_rv) RecyclerView recyclerView;

@@ -1,4 +1,4 @@
-package com.example.rishabh.curotest.Activities;
+package com.example.rishabh.curotest.activities;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -14,17 +14,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import com.example.rishabh.curotest.DBO.LogStreakDBO;
-import com.example.rishabh.curotest.Helpers.AppSettings;
-import com.example.rishabh.curotest.Helpers.SetTimeSlots;
-import com.example.rishabh.curotest.Model.LogStreakPerDay;
-import com.example.rishabh.curotest.Model.TimeSlots;
+import com.example.rishabh.curotest.helpers.AppSettings;
 import com.example.rishabh.curotest.R;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
 import com.example.rishabh.curotest.Utils.Constants;
 import io.realm.Realm;
-import io.realm.RealmResults;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
   private static final String BUNDLE_RECYCLER_LAYOUT = "classname.recycler.layout";

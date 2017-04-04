@@ -7,7 +7,7 @@ import com.example.rishabh.curotest.BodyRequest.LogScheduleJson;
 import com.example.rishabh.curotest.BodyRequest.LogScheduleTimeSlotList;
 import com.example.rishabh.curotest.BodyRequest.LogValuePostData;
 import com.example.rishabh.curotest.BodyRequest.LogValuesData;
-import com.example.rishabh.curotest.Helpers.AppSettings;
+import com.example.rishabh.curotest.helpers.AppSettings;
 import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
 import com.example.rishabh.curotest.Model.BgAverageGraph;
 import com.example.rishabh.curotest.Model.BgLogs;

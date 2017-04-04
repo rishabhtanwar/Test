@@ -1,5 +1,6 @@
 package com.example.rishabh.curotest.Utils;
 
+import com.example.rishabh.curotest.helpers.AppSettings;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 

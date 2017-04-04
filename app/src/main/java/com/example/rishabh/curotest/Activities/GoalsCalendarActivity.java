@@ -1,4 +1,4 @@
-package com.example.rishabh.curotest.Activities;
+package com.example.rishabh.curotest.activities;
 
 import android.graphics.Color;
 import android.os.Build;

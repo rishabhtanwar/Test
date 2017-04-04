@@ -1,6 +1,6 @@
 package com.example.rishabh.curotest.API;
 
-import com.example.rishabh.curotest.Helpers.AppSettings;
+import com.example.rishabh.curotest.helpers.AppSettings;
 import com.example.rishabh.curotest.Utils.Constants;
 import com.example.rishabh.curotest.BuildConfig;
 import com.fasterxml.jackson.annotation.JsonInclude;

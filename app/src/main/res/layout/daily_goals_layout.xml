@@ -40,7 +40,7 @@
     </android.support.v7.widget.Toolbar>
 
   </android.support.design.widget.AppBarLayout>
-  <com.example.rishabh.curotest.Activities.CalendarView
+  <com.example.rishabh.curotest.activities.CalendarView
       android:id="@+id/calendar_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"

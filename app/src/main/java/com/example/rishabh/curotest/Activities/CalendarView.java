@@ -1,4 +1,4 @@
-package com.example.rishabh.curotest.Activities;
+package com.example.rishabh.curotest.activities;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.rishabh.curotest.R;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
-import com.example.rishabh.curotest.Utils.Constants;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;

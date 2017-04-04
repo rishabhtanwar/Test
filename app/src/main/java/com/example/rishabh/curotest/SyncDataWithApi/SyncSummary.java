@@ -1,7 +1,7 @@
 package com.example.rishabh.curotest.SyncDataWithApi;
 
 import com.example.rishabh.curotest.API.RestClient;
-import com.example.rishabh.curotest.Helpers.AppSettings;
+import com.example.rishabh.curotest.helpers.AppSettings;
 import com.example.rishabh.curotest.POJO.SummaryResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,25 +28,25 @@ public class SyncSummary {
   }
 
   private static void saveSummary(SummaryResponse response) {
-    if (response.getActivity() != null) {
-      AppSettings.setActivitySummary(
-          String.valueOf(response.getActivity().getTotalCaloriesBurned()));
-    }
-    if (response.getBloodGlucose() != null) {
-      AppSettings.setBgSummary(
-          String.valueOf(response.getBloodGlucose().getLatestValue()) + response.getBloodGlucose()
-              .getUnit());
-    }
-    if (response.getGoals() != null) {
-      AppSettings.setGoalSummary(String.valueOf(response.getGoals().getNumberOfGoalsSet()));
-    }
-    if (response.getMeal() != null) {
-      AppSettings.setMealSummary(String.valueOf(response.getMeal().getTotalCaloriesConsumed()));
-    }
-    if (response.getMedication() != null) {
-      AppSettings.setMedicationSummary(String.valueOf(response.getMedication().getMedicineTaken())
-          + "/"
-          + response.getMedication().getMedicineTarget());
+    if (response != null) {
+      if (response.getActivity() != null) {
+        AppSettings.setActivitySummary(String.valueOf(response.getActivity().getTotalCaloriesBurned()));
+      }
+      if (response.getBloodGlucose() != null) {
+        AppSettings.setBgSummary(String.valueOf(response.getBloodGlucose().getLatestValue()) + response.getBloodGlucose()
+            .getUnit());
+      }
+      if (response.getGoals() != null) {
+        AppSettings.setGoalSummary(String.valueOf(response.getGoals().getNumberOfGoalsSet()));
+      }
+      if (response.getMeal() != null) {
+        AppSettings.setMealSummary(String.valueOf(response.getMeal().getTotalCaloriesConsumed()));
+      }
+      if (response.getMedication() != null) {
+        AppSettings.setMedicationSummary(String.valueOf(response.getMedication().getMedicineTaken())
+            + "/"
+            + response.getMedication().getMedicineTarget());
+      }
     }
   }
 }

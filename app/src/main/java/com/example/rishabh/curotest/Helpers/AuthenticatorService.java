@@ -1,4 +1,4 @@
-package com.example.rishabh.curotest.Helpers;
+package com.example.rishabh.curotest.helpers;
 
 import android.app.Service;
 import android.content.Intent;

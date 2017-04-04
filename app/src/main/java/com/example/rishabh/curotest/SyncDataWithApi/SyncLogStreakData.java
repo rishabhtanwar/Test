@@ -30,8 +30,9 @@ public class SyncLogStreakData {
     call.enqueue(new Callback<ResponseBody>() {
       @Override public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
         try {
-
-          updateLogStreak(response.body().string(), logStreakResponse, requestType, month);
+          if(response!=null&&response.body()!=null) {
+            updateLogStreak(response.body().string(), logStreakResponse, requestType, month);
+          }
         } catch (IOException e) {
           e.printStackTrace();
         }

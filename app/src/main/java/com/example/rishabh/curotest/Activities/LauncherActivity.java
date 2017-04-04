@@ -1,4 +1,4 @@
-package com.example.rishabh.curotest.Activities;
+package com.example.rishabh.curotest.activities;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.example.rishabh.curotest.Helpers.AppSettings;
-import com.example.rishabh.curotest.Helpers.SetTimeSlots;
+import com.example.rishabh.curotest.helpers.AppSettings;
+import com.example.rishabh.curotest.helpers.SetTimeSlots;
 import com.example.rishabh.curotest.Model.TimeSlots;
 import com.example.rishabh.curotest.Network.ConnectionDetector;
 import com.example.rishabh.curotest.R;

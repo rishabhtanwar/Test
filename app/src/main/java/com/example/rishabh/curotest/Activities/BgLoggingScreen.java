@@ -1,10 +1,8 @@
-package com.example.rishabh.curotest.Activities;
+package com.example.rishabh.curotest.activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,22 +18,18 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.example.rishabh.curotest.Adapter.BgLogScreenAdapter;
 import com.example.rishabh.curotest.DBO.BgDBO;
-import com.example.rishabh.curotest.Helpers.AppSettings;
+import com.example.rishabh.curotest.helpers.AppSettings;
 import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
 import com.example.rishabh.curotest.Model.BgLogScreenInfo;
 import com.example.rishabh.curotest.R;
 import com.example.rishabh.curotest.SyncDataWithApi.SyncBgLogging;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
 import com.example.rishabh.curotest.Utils.Constants;
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.LineData;
 import java.util.ArrayList;
-import java.util.List;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class BgLoggingScreen extends AppCompatActivity {
   //@Bind(R.id.right_arrow) ImageView mRightArrow;

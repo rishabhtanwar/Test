@@ -1,4 +1,4 @@
-package com.example.rishabh.curotest.Helpers;
+package com.example.rishabh.curotest.helpers;
 
 import com.github.mikephil.charting.formatter.FillFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
