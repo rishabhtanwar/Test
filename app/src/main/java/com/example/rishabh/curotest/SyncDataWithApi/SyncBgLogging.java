@@ -36,7 +36,7 @@ public class SyncBgLogging {
   static String TAG = "SyncBgLogging";
   static SyncListener syncListener;
 
-  public static void postBgSchedule(long startDate, JSONArray jsonArray, String logType,
+  public static void postBgSchedule(final String uploadType, JSONArray jsonArray, String logType,
       final LogScheduleCallback logScheduleCallback) {
     LogSchedulePostData logSchedulePostData = new LogSchedulePostData();
     //logSchedulePostData.start_date = AppDateHelper.getStrigDateFromMillis(startDate);
@@ -63,19 +63,30 @@ public class SyncBgLogging {
       }
     }
     logSchedulePostData.log_schedule_data = log;
-    Call<LogScheduleData> call = RestClient.getApiService().postBgSchedule(logSchedulePostData);
-    call.enqueue(new Callback<LogScheduleData>() {
-      @Override
-      public void onResponse(Call<LogScheduleData> call, Response<LogScheduleData> response) {
+    if (log.timeslots.size()>0) {
+      Call<LogScheduleData> call = RestClient.getApiService().postBgSchedule(logSchedulePostData);
+      call.enqueue(new Callback<LogScheduleData>() {
+        @Override public void onResponse(Call<LogScheduleData> call, Response<LogScheduleData> response) {
 
-        //Log.e(TAG, "onResponse: " + response.body().getLogSchedules().get(0).getId());
-        saveBgSchedule(response, logScheduleCallback);
-      }
+          //Log.e(TAG, "onResponse: " + response.body().getLogSchedules().get(0).getId());
+          saveBgSchedule(response, logScheduleCallback);
+          if (response.body().getLogSchedules().size() != 0 && uploadType.equalsIgnoreCase("bulk")) {
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.SYNC_DATA, Constants.BG_SCHEDULE_SYNC);
+            ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(), Constants.AUTHORITY, bundle);
+          }
+          if (response.body().getLogSchedules().size() == 0 && uploadType.equalsIgnoreCase("bulk")) {
+            syncListener.onSucess(true);
+          }
+        }
 
-      @Override public void onFailure(Call<LogScheduleData> call, Throwable t) {
-        t.printStackTrace();
-      }
-    });
+        @Override public void onFailure(Call<LogScheduleData> call, Throwable t) {
+          t.printStackTrace();
+        }
+      });
+    }else {
+      syncListener.onSucess(true);
+    }
   }
 
   public static void getBgSchedule(String startDate, String endDate,
@@ -147,37 +158,44 @@ public class SyncBgLogging {
         bgSchedule.setSynced(true);
         realm.copyToRealm(bgSchedule);
       }
-      logScheduleCallback.onSuccess(true);
+      if (logScheduleCallback!=null) {
+        logScheduleCallback.onSuccess(true);
+      }
       realm.commitTransaction();
     } finally {
       realm.close();
     }
   }
 
-  public static void postBgValues(ArrayList<LogValuesData> logValuesDatas,
-      final String uploadType) {
+  public static void postBgValues(ArrayList<LogValuesData> logValuesDatas, final String uploadType,
+      final LogScheduleCallback logScheduleCallback) {
     LogValuePostData logValuePostData = new LogValuePostData();
     logValuePostData.sync_data = logValuesDatas;
-    Call<BgLogValuePostResponse> call = RestClient.getApiService().postBgLog(logValuePostData);
-    call.enqueue(new Callback<BgLogValuePostResponse>() {
-      @Override public void onResponse(Call<BgLogValuePostResponse> call,
-          Response<BgLogValuePostResponse> response) {
-        saveBgPostResponse(response);
-        if (response.body().getResult().size() != 0 && uploadType.equalsIgnoreCase("bulk")) {
-          Bundle bundle = new Bundle();
-          bundle.putString(Constants.SYNC_DATA, Constants.BG_LOG_SYNC);
-          ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(),
-              Constants.AUTHORITY, bundle);
+    if (logValuesDatas.size()>0) {
+      Call<BgLogValuePostResponse> call = RestClient.getApiService().postBgLog(logValuePostData);
+      call.enqueue(new Callback<BgLogValuePostResponse>() {
+        @Override public void onResponse(Call<BgLogValuePostResponse> call, Response<BgLogValuePostResponse> response) {
+          if (logScheduleCallback != null) {
+            logScheduleCallback.onSuccess(true);
+          }
+          saveBgPostResponse(response);
+          if (response.body().getResult().size() != 0 && uploadType.equalsIgnoreCase("bulk")) {
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.SYNC_DATA, Constants.BG_LOG_SYNC);
+            ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(), Constants.AUTHORITY, bundle);
+          }
+          if (response.body().getResult().size() == 0 && uploadType.equalsIgnoreCase("bulk")) {
+            syncListener.onSucess(true);
+          }
         }
-        if (response.body().getResult().size() == 0 && uploadType.equalsIgnoreCase("bulk")) {
-          syncListener.onSucess(true);
+
+        @Override public void onFailure(Call<BgLogValuePostResponse> call, Throwable t) {
+          logScheduleCallback.onSuccess(false);
         }
-      }
-
-      @Override public void onFailure(Call<BgLogValuePostResponse> call, Throwable t) {
-
-      }
-    });
+      });
+    }else {
+      syncListener.onSucess(true);
+    }
   }
 
   private static void saveBgPostResponse(Response<BgLogValuePostResponse> response) {

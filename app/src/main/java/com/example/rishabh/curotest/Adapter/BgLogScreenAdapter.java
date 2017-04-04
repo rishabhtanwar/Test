@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,14 +16,15 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.example.rishabh.curotest.activities.BgLoggingScreen;
 import com.example.rishabh.curotest.DBO.BgDBO;
+import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
 import com.example.rishabh.curotest.Model.BgLogScreenInfo;
 import com.example.rishabh.curotest.Network.ConnectionDetector;
 import com.example.rishabh.curotest.R;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
 import com.example.rishabh.curotest.Utils.Constants;
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 /**
  * Created by rishabh on 27/03/2017.
@@ -101,7 +101,11 @@ public class BgLogScreenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
           BgDBO.saveBgLog(Integer.parseInt(viewHolder.value.getText().toString()),
               bgLogScreenInfo.getDate(), bgLogScreenInfo.getTimeSlotId(),
               getDateTimeValue(viewHolder.time), getLoggedTimeValue(viewHolder.time),
-              connectionDetector.isConnectingToInternet());
+              connectionDetector.isConnectingToInternet(), new LogScheduleCallback() {
+                @Override public void onSuccess(boolean check) {
+                  ((BgLoggingScreen) context).setGraph();
+                }
+              });
         } else {
           Toast.makeText(context, "Please enter valid value", Toast.LENGTH_SHORT).show();
         }

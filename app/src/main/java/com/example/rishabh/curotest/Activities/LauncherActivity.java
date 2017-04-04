@@ -34,7 +34,7 @@ public class LauncherActivity extends AppCompatActivity {
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
     if (AppSettings.getAuthToken().equalsIgnoreCase("")) {
-      AppSettings.setAuthToken("sxgpixpe7tkbwktzz-yn");
+      AppSettings.setAuthToken("sjmqwz6gmn9chq6h9kcu");
       AppSettings.setCurrentUserId(111);
     }
     connectionDetector = new ConnectionDetector(this);
@@ -47,7 +47,7 @@ public class LauncherActivity extends AppCompatActivity {
     String endDate = AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, 0);
     SyncLogStreakData.syncData(startDate, endDate, "latest", null, "");
     SyncSummary.syncSummary();
-    syncBgLogging=new SyncBgLogging();
+    syncBgLogging = new SyncBgLogging();
     syncBgLogging.setSyncListener(new SyncBgLogging.SyncListener() {
       @Override public void onSucess(boolean check) {
         if (check == true) {
@@ -71,8 +71,8 @@ public class LauncherActivity extends AppCompatActivity {
       bundle.putString(Constants.SYNC_DATA, Constants.SYNC_ALL);
       ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(),
           Constants.AUTHORITY, bundle);
-    }else {
-      proceed=1;
+    } else {
+      proceed = 1;
     }
   }
 
@@ -82,5 +82,9 @@ public class LauncherActivity extends AppCompatActivity {
     if (realmResults.size() < 1) {
       SetTimeSlots setTimeSlots = new SetTimeSlots(realm);
     }
+  }
+
+  public void setProceed(int proceed1) {
+    proceed = proceed+proceed1;
   }
 }

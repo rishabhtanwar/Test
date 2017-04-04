@@ -98,6 +98,7 @@ public class BgLoggingScreen extends AppCompatActivity {
         animateFAB();
       }
     });
+    recyclerView.setNestedScrollingEnabled(false);
     startDateLong = AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount - 6);
     endDateLong = AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount);
     setBloodGlucoseData();
@@ -157,6 +158,7 @@ public class BgLoggingScreen extends AppCompatActivity {
     indicatordate = AppDateHelper.getInstance()
         .getDateWithWeekDays(Constants.DATEFORMAT_LOGGING_SCREEN, swipeCount);
     mDateIndicator.setText("Today " + indicatordate);
+    setAdapter();
     if (AppSettings.getBgApiStatus()) {
       AppSettings.setBgApiStatus(false);
       SyncBgLogging.getBgSchedule(
@@ -164,7 +166,6 @@ public class BgLoggingScreen extends AppCompatActivity {
           AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, swipeCount),
           new LogScheduleCallback() {
             @Override public void onSuccess(boolean check) {
-
               setAdapter();
             }
           });
@@ -176,20 +177,23 @@ public class BgLoggingScreen extends AppCompatActivity {
               setAdapter();
             }
           });
-
-      SyncBgLogging.getBgGraph(
-          AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, swipeCount - 30),
-          AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, swipeCount),
-          new LogScheduleCallback() {
-            @Override public void onSuccess(boolean check) {
-              setBloodGlucoseData();
-            }
-          });
+      setGraph();
     } else {
       setAdapter();
     }
 
     super.onResume();
+  }
+
+  public void setGraph() {
+    SyncBgLogging.getBgGraph(
+        AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, swipeCount - 30),
+        AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, swipeCount),
+        new LogScheduleCallback() {
+          @Override public void onSuccess(boolean check) {
+            setBloodGlucoseData();
+          }
+        });
   }
 
   private void setAdapter() {

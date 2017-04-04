@@ -1,5 +1,6 @@
 package com.example.rishabh.curotest.POJO;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -8,63 +9,92 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SummaryResponse {
 
-  @JsonProperty("blood_glucose") private BloodGlucose bloodGlucose;
-  @JsonProperty("activity") private Activity activity;
-  @JsonProperty("meal") private Meal meal;
-
-  public Medication getMedication() {
-    return medication;
+  public Summary getSummary() {
+    return summary;
   }
 
-  public void setMedication(Medication medication) {
-    this.medication = medication;
+  public void setSummary(Summary summary) {
+    this.summary = summary;
   }
 
-  public Goals getGoals() {
-    return goals;
+  @JsonProperty("summary") private Summary summary;
+
+  @JsonCreator public SummaryResponse(@JsonProperty("summary") Summary summary) {
+    this.summary = summary;
   }
 
-  public void setGoals(Goals goals) {
-    this.goals = goals;
+  public static class Summary {
+
+    @JsonProperty("blood_glucose") private BloodGlucose bloodGlucose;
+    @JsonProperty("activity") private Activity activity;
+    @JsonProperty("meal") private Meal meal;
+
+    public Medication getMedication() {
+      return medication;
+    }
+
+    public void setMedication(Medication medication) {
+      this.medication = medication;
+    }
+
+    public Goals getGoals() {
+      return goals;
+    }
+
+    public void setGoals(Goals goals) {
+      this.goals = goals;
+    }
+
+    public Vitals getVitals() {
+      return vitals;
+    }
+
+    public void setVitals(Vitals vitals) {
+      this.vitals = vitals;
+    }
+
+    public Meal getMeal() {
+      return meal;
+    }
+
+    public void setMeal(Meal meal) {
+      this.meal = meal;
+    }
+
+    public Activity getActivity() {
+      return activity;
+    }
+
+    public void setActivity(Activity activity) {
+      this.activity = activity;
+    }
+
+    public BloodGlucose getBloodGlucose() {
+      return bloodGlucose;
+    }
+
+    public void setBloodGlucose(BloodGlucose bloodGlucose) {
+      this.bloodGlucose = bloodGlucose;
+    }
+
+    @JsonProperty("medication") private Medication medication;
+    @JsonProperty("vitals") private Vitals vitals;
+    @JsonProperty("goals") private Goals goals;
+
+    @JsonCreator public Summary(@JsonProperty("medication") Medication medication,
+        @JsonProperty("vitals") Vitals vitals, @JsonProperty("goals") Goals goals,
+        @JsonProperty("blood_glucose") BloodGlucose bloodGlucose,
+        @JsonProperty("activity") Activity activity, @JsonProperty("meal") Meal meal) {
+      this.meal = meal;
+      this.activity = activity;
+      this.bloodGlucose = bloodGlucose;
+      this.goals = goals;
+      this.vitals = vitals;
+      this.medication = medication;
+    }
   }
 
-  public Vitals getVitals() {
-    return vitals;
-  }
-
-  public void setVitals(Vitals vitals) {
-    this.vitals = vitals;
-  }
-
-  public Meal getMeal() {
-    return meal;
-  }
-
-  public void setMeal(Meal meal) {
-    this.meal = meal;
-  }
-
-  public Activity getActivity() {
-    return activity;
-  }
-
-  public void setActivity(Activity activity) {
-    this.activity = activity;
-  }
-
-  public BloodGlucose getBloodGlucose() {
-    return bloodGlucose;
-  }
-
-  public void setBloodGlucose(BloodGlucose bloodGlucose) {
-    this.bloodGlucose = bloodGlucose;
-  }
-
-  @JsonProperty("medication") private Medication medication;
-  @JsonProperty("vitals") private Vitals vitals;
-  @JsonProperty("goals") private Goals goals;
-
-  public class Activity {
+  public static class Activity {
 
     public Integer getTotalActivityCount() {
       return totalActivityCount;
@@ -85,17 +115,13 @@ public class SummaryResponse {
     @JsonProperty("total_activity_count")
 
     private Integer totalActivityCount;
-    @JsonProperty("total_calories_burned")
-    private Double totalCaloriesBurned;
+    @JsonProperty("total_calories_burned") private Double totalCaloriesBurned;
   }
 
-  public class BloodGlucose {
-    @JsonProperty("latest_timeslot")
-    private Integer latestTimeslot;
-    @JsonProperty("latest_value")
-    private Double latestValue;
-    @JsonProperty("unit_id")
-    private Integer unitId;
+  public static class BloodGlucose {
+    @JsonProperty("latest_timeslot") private Integer latestTimeslot;
+    @JsonProperty("latest_value") private Double latestValue;
+    @JsonProperty("unit_id") private Integer unitId;
 
     public Integer getLatestTimeslot() {
       return latestTimeslot;
@@ -137,13 +163,11 @@ public class SummaryResponse {
       this.timeslotsLogged = timeslotsLogged;
     }
 
-    @JsonProperty("unit")
-    private String unit;
-    @JsonProperty("timeslots_logged")
-    private Integer timeslotsLogged;
+    @JsonProperty("unit") private String unit;
+    @JsonProperty("timeslots_logged") private Integer timeslotsLogged;
   }
 
-  public class Meal {
+  public static class Meal {
     public Double getTotalCaloriesConsumed() {
       return totalCaloriesConsumed;
     }
@@ -171,15 +195,12 @@ public class SummaryResponse {
     @JsonProperty("timeslots_logged")
 
     private Integer timeslotsLogged;
-    @JsonProperty("total_calories_consumed")
-    private Double totalCaloriesConsumed;
-    @JsonProperty("total_carbs_consumed")
-    private Double totalCarbsConsumed;
+    @JsonProperty("total_calories_consumed") private Double totalCaloriesConsumed;
+    @JsonProperty("total_carbs_consumed") private Double totalCarbsConsumed;
   }
 
-  public class Medication {
-    @JsonProperty("medicine_target")
-    private Integer medicineTarget;
+  public static class Medication {
+    @JsonProperty("medicine_target") private Integer medicineTarget;
 
     public Integer getMedicineTaken() {
       return medicineTaken;
@@ -202,9 +223,8 @@ public class SummaryResponse {
     private Integer medicineTaken;
   }
 
-  public class Vitals {
-    @JsonProperty("vitaldataattribute_id")
-    private Integer vitaldataattributeId;
+  public static class Vitals {
+    @JsonProperty("vitaldataattribute_id") private Integer vitaldataattributeId;
 
     public String getVitaldataattributeName() {
       return vitaldataattributeName;
@@ -233,13 +253,11 @@ public class SummaryResponse {
     @JsonProperty("vitaldataattribute_name")
 
     private String vitaldataattributeName;
-    @JsonProperty("value")
-    private Double value;
+    @JsonProperty("value") private Double value;
   }
 
-  public class Goals {
-    @JsonProperty("number_of_goals_set")
-    private Integer numberOfGoalsSet;
+  public  static class Goals {
+    @JsonProperty("number_of_goals_set") private Integer numberOfGoalsSet;
 
     public Integer getNumberOfGoalsSet() {
       return numberOfGoalsSet;

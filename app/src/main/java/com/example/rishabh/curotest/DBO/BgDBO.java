@@ -3,8 +3,6 @@ package com.example.rishabh.curotest.DBO;
 import android.content.Context;
 import com.example.rishabh.curotest.BodyRequest.LogValuesData;
 import com.example.rishabh.curotest.helpers.AppSettings;
-import com.example.rishabh.curotest.helpers.CustomValueFormatter;
-import com.example.rishabh.curotest.helpers.CustomizedFillFormatter;
 import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
 import com.example.rishabh.curotest.Model.BgAverageGraph;
 import com.example.rishabh.curotest.Model.BgLogScreenInfo;
@@ -15,6 +13,8 @@ import com.example.rishabh.curotest.Model.TimeSlots;
 import com.example.rishabh.curotest.R;
 import com.example.rishabh.curotest.SyncDataWithApi.SyncBgLogging;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
+import com.example.rishabh.curotest.helpers.CustomValueFormatter;
+import com.example.rishabh.curotest.helpers.CustomizedFillFormatter;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -167,7 +167,7 @@ public class BgDBO {
           e.printStackTrace();
         }
       }
-      SyncBgLogging.postBgSchedule(0, jsonArray, "blood_glucose", logScheduleCallback);
+      SyncBgLogging.postBgSchedule("notbulk", jsonArray, "blood_glucose", logScheduleCallback);
     } finally {
       realm.close();
     }
@@ -213,7 +213,7 @@ public class BgDBO {
         bgSchedule.setSynced(false);
       }
       realm.commitTransaction();
-      //deleteBgLog(timeSlotId, realm);
+      deleteBgLog(timeSlotId, realm);
     } finally {
       realm.close();
     }
@@ -223,7 +223,7 @@ public class BgDBO {
     realm.beginTransaction();
     BgLogs bgLogs = realm.where(BgLogs.class)
         .equalTo("timeSlotId", timeSlotId)
-        .equalTo("isDeleted", false)
+        .equalTo("date", AppDateHelper.getInstance().getDateInMillisWithSwipeCount(0))
         .findFirst();
     if (bgLogs != null) {
       bgLogs.setDeleted(true);
@@ -302,7 +302,7 @@ public class BgDBO {
   }
 
   public static void saveBgLog(int value, long date, int timeSlotId, String dateTime,
-      String loggedTime, boolean checkConnection) {
+      String loggedTime, boolean checkConnection,LogScheduleCallback logScheduleCallback) {
     Realm realm = Realm.getDefaultInstance();
     try {
       realm.beginTransaction();
@@ -326,7 +326,7 @@ public class BgDBO {
       if (checkConnection) {
         SyncBgLogging.postBgValues(
             arrayList(bgLogs1.getClientId(), bgLogs1.getServerId(), bgLogs1.getValue(),
-                bgLogs1.getTimeSlotId(), bgLogs1.getDateTime(), bgLogs1.getLoggedTime()),"notBulk");
+                bgLogs1.getTimeSlotId(), bgLogs1.getDateTime(), bgLogs1.getLoggedTime()),"notBulk",logScheduleCallback);
       }
       realm.commitTransaction();
     } finally {

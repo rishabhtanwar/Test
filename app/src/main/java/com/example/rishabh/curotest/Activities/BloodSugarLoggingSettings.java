@@ -73,6 +73,8 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
               finish();
             }
           });
+        }else {
+          finish();
         }
       }
     });
