@@ -1,22 +1,26 @@
 package com.example.rishabh.curotest.SyncDataWithApi;
 
-import android.util.Log;
+import android.content.ContentResolver;
+import android.os.Bundle;
 import com.example.rishabh.curotest.API.RestClient;
 import com.example.rishabh.curotest.BodyRequest.LogScheduleJson;
 import com.example.rishabh.curotest.BodyRequest.LogScheduleTimeSlotList;
 import com.example.rishabh.curotest.BodyRequest.LogValuePostData;
 import com.example.rishabh.curotest.BodyRequest.LogValuesData;
+import com.example.rishabh.curotest.Helpers.AppSettings;
 import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
+import com.example.rishabh.curotest.Model.BgAverageGraph;
+import com.example.rishabh.curotest.Model.BgLogs;
 import com.example.rishabh.curotest.Model.BgSchedule;
-import com.example.rishabh.curotest.POJO.BgLogValueResponse;
+import com.example.rishabh.curotest.POJO.BgGraphResponse;
+import com.example.rishabh.curotest.POJO.BgLogValueGetResponse;
+import com.example.rishabh.curotest.POJO.BgLogValuePostResponse;
 import com.example.rishabh.curotest.POJO.LogScheduleData;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
 import com.example.rishabh.curotest.BodyRequest.LogSchedulePostData;
 import com.example.rishabh.curotest.Utils.Constants;
 import io.realm.Realm;
-import java.io.IOException;
 import java.util.ArrayList;
-import okhttp3.ResponseBody;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +34,7 @@ import retrofit2.Response;
 
 public class SyncBgLogging {
   static String TAG = "SyncBgLogging";
+  static SyncListener syncListener;
 
   public static void postBgSchedule(long startDate, JSONArray jsonArray, String logType,
       final LogScheduleCallback logScheduleCallback) {
@@ -84,7 +89,7 @@ public class SyncBgLogging {
       }
 
       @Override public void onFailure(Call<LogScheduleData> call, Throwable t) {
-
+        t.printStackTrace();
       }
     });
   }
@@ -149,21 +154,147 @@ public class SyncBgLogging {
     }
   }
 
-  public static void postBgValues(ArrayList<LogValuesData> logValuesDatas) {
+  public static void postBgValues(ArrayList<LogValuesData> logValuesDatas,
+      final String uploadType) {
     LogValuePostData logValuePostData = new LogValuePostData();
     logValuePostData.sync_data = logValuesDatas;
-    Call<BgLogValueResponse> call = RestClient.getApiService().postBgLog(logValuePostData);
-    call.enqueue(new Callback<BgLogValueResponse>() {
-      @Override
-      public void onResponse(Call<BgLogValueResponse> call, Response<BgLogValueResponse> response) {
-
+    Call<BgLogValuePostResponse> call = RestClient.getApiService().postBgLog(logValuePostData);
+    call.enqueue(new Callback<BgLogValuePostResponse>() {
+      @Override public void onResponse(Call<BgLogValuePostResponse> call,
+          Response<BgLogValuePostResponse> response) {
+        saveBgPostResponse(response);
+        if (response.body().getResult().size() != 0 && uploadType.equalsIgnoreCase("bulk")) {
+          Bundle bundle = new Bundle();
+          bundle.putString(Constants.SYNC_DATA, Constants.BG_LOG_SYNC);
+          ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(),
+              Constants.AUTHORITY, bundle);
+        }
+        if (response.body().getResult().size() == 0 && uploadType.equalsIgnoreCase("bulk")) {
+          syncListener.onSucess(true);
+        }
       }
 
-      @Override public void onFailure(Call<BgLogValueResponse> call, Throwable t) {
+      @Override public void onFailure(Call<BgLogValuePostResponse> call, Throwable t) {
 
       }
     });
   }
 
+  private static void saveBgPostResponse(Response<BgLogValuePostResponse> response) {
+    Realm realm = Realm.getDefaultInstance();
+    try {
+      realm.beginTransaction();
+      for (BgLogValuePostResponse.Result logValue : response.body().getResult()) {
+        BgLogs bgLogs =
+            realm.where(BgLogs.class).equalTo("clientId", logValue.getClientId()).findFirst();
+        bgLogs.setValue(Double.parseDouble(logValue.getValue()));
+        bgLogs.setTimeSlotId(logValue.getTimeslotId());
+        bgLogs.setLoggedTime(logValue.getLoggedTime());
+        bgLogs.setDateTime(logValue.getDateTime());
+        bgLogs.setDate(AppDateHelper.getInstance()
+            .getMillisFromDate(logValue.getDate(), Constants.DATEFORMAT));
+        bgLogs.setServerId(logValue.getId());
+        bgLogs.setDeleted(logValue.getDeleted());
+        bgLogs.setSynced(true);
+        realm.copyToRealm(bgLogs);
+      }
+      realm.commitTransaction();
+    } finally {
+      realm.close();
+    }
+  }
 
+  public static void getBgLogValues(String startDate, String endDate,
+      final LogScheduleCallback logScheduleCallback) {
+    Call<BgLogValueGetResponse> call =
+        RestClient.getApiService().getBgLogs(startDate, endDate, "blood_glucose");
+    call.enqueue(new Callback<BgLogValueGetResponse>() {
+      @Override public void onResponse(Call<BgLogValueGetResponse> call,
+          Response<BgLogValueGetResponse> response) {
+        saveBgLogs(response, logScheduleCallback);
+      }
+
+      @Override public void onFailure(Call<BgLogValueGetResponse> call, Throwable t) {
+        t.printStackTrace();
+      }
+    });
+  }
+
+  private static void saveBgLogs(Response<BgLogValueGetResponse> response,
+      LogScheduleCallback logScheduleCallback) {
+    Realm realm = Realm.getDefaultInstance();
+    try {
+      realm.beginTransaction();
+      for (BgLogValueGetResponse.LogValue logValue : response.body().getLogValues()) {
+        BgLogs bgLogs = realm.where(BgLogs.class).equalTo("serverId", logValue.getId()).findFirst();
+        if (bgLogs == null) {
+          bgLogs = new BgLogs();
+        }
+        bgLogs.setServerId(logValue.getId());
+        bgLogs.setValue(Double.parseDouble(logValue.getValue()));
+        bgLogs.setTimeSlotId(logValue.getTimeslotId());
+        bgLogs.setLoggedTime(logValue.getLoggedTime());
+        bgLogs.setDateTime(logValue.getDateTime());
+        bgLogs.setDate(AppDateHelper.getInstance()
+            .getMillisFromDate(logValue.getDate(), Constants.DATEFORMAT));
+        realm.copyToRealm(bgLogs);
+      }
+      realm.commitTransaction();
+      logScheduleCallback.onSuccess(true);
+    } finally {
+      realm.close();
+    }
+  }
+
+  public static void getBgGraph(String startDate, String endDate,
+      final LogScheduleCallback logScheduleCallback) {
+    Call<BgGraphResponse> call = RestClient.getApiService().getBgGraph(startDate, endDate);
+    call.enqueue(new Callback<BgGraphResponse>() {
+      @Override
+      public void onResponse(Call<BgGraphResponse> call, Response<BgGraphResponse> response) {
+        saveBgGraph(logScheduleCallback, response);
+      }
+
+      @Override public void onFailure(Call<BgGraphResponse> call, Throwable t) {
+        t.printStackTrace();
+      }
+    });
+  }
+
+  private static void saveBgGraph(LogScheduleCallback logScheduleCallback,
+      Response<BgGraphResponse> response) {
+    Realm realm = Realm.getDefaultInstance();
+    try {
+      realm.beginTransaction();
+      for (BgGraphResponse.Datum datum : response.body().getData()) {
+        long date =
+            AppDateHelper.getInstance().getMillisFromDate(datum.getDate(), Constants.DATEFORMAT);
+        BgAverageGraph bgAverageGraph =
+            realm.where(BgAverageGraph.class).equalTo("date", date).findFirst();
+        if (bgAverageGraph == null) {
+          bgAverageGraph = new BgAverageGraph();
+        }
+        bgAverageGraph.setDate(date);
+        if (datum.getAvgValue() == null) {
+          bgAverageGraph.setAverage(0);
+        } else {
+          bgAverageGraph.setAverage(Double.parseDouble(datum.getAvgValue()));
+        }
+        realm.copyToRealm(bgAverageGraph);
+      }
+
+      realm.commitTransaction();
+      logScheduleCallback.onSuccess(true);
+    } finally {
+      realm.close();
+    }
+  }
+
+  public void setSyncListener(SyncListener syncListener) {
+    this.syncListener = syncListener;
+  }
+
+  public interface SyncListener {
+    void onSucess(boolean check);
+  }
 }

@@ -1,5 +1,6 @@
 package com.example.rishabh.curotest.POJO;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by rishabh on 03/04/2017.
  */
 
-public class BgLogValueResponse {
+public class BgLogValuePostResponse {
   @JsonProperty("success")
   private Boolean success;
   @JsonProperty("errorcode")
@@ -50,7 +51,16 @@ public class BgLogValueResponse {
   @JsonProperty("result")
   private List<Result> result = null;
 
-  public class Result{
+  @JsonCreator public BgLogValuePostResponse(@JsonProperty("success") Boolean success,
+      @JsonProperty("errorcode") int errorcode, @JsonProperty("message") String message,
+      @JsonProperty("log_schedules") List<Result> result) {
+    this.success = success;
+    this.errorcode = errorcode;
+    this.message = message;
+    this.result = result;
+  }
+
+  public static class Result{
     @JsonProperty("id")
     private Integer id;
     @JsonProperty("date")

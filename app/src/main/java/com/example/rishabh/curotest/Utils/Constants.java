@@ -26,4 +26,10 @@ public class Constants {
   public static final String AUTHORITY = BuildConfig.APPLICATION_ID+".helper.provider";
   public static final String ACCOUNT_TYPE = BuildConfig.APPLICATION_ID;
   public static final String ACCOUNT = "curotest";
+  public static String DATE_FORMAT_TRENDS = "MMM dd";
+  public static String BG_LOG_SYNC="bglog";
+  public static String SYNC_ALL="all";
+  public static String SYNC_DATA="syncData";
+  public static String BG_SCHEDULE_SYNC="bgschedule";
+
 }

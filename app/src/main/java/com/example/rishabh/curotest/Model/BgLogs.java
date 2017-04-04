@@ -13,7 +13,7 @@ public class BgLogs extends RealmObject {
   int timeSlotId;
   boolean isDeleted;
   boolean isSynced;
-  long value;
+  double value;
   int serverId;
   int clientId;
 
@@ -92,11 +92,11 @@ public class BgLogs extends RealmObject {
     isSynced = synced;
   }
 
-  public long getValue() {
+  public double getValue() {
     return value;
   }
 
-  public void setValue(long value) {
+  public void setValue(double value) {
     this.value = value;
   }
 

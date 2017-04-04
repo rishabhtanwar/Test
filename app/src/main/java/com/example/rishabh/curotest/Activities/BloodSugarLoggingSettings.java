@@ -19,6 +19,7 @@ import com.example.rishabh.curotest.Helpers.AppSettings;
 import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
 import com.example.rishabh.curotest.Model.BgLoggingSettingInfo;
 import com.example.rishabh.curotest.Model.BgSchedule;
+import com.example.rishabh.curotest.Network.ConnectionDetector;
 import com.example.rishabh.curotest.R;
 import com.example.rishabh.curotest.SyncDataWithApi.SyncBgLogging;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
@@ -39,11 +40,13 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
   HashMap<Integer, String> timeSlotIdList = new HashMap<>();
   long todayDateInMillis;
   @Bind(R.id.done) ImageView done;
+  ConnectionDetector connectionDetector;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_blood_sugar_logging_settings);
     ButterKnife.bind(this);
+    connectionDetector = new ConnectionDetector(this);
     linearLayoutManager = new LinearLayoutManager(this);
     realm = Realm.getDefaultInstance();
     todayDateInMillis = AppDateHelper.getInstance().getDateInMillisWithSwipeCount(0);
@@ -60,18 +63,20 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
             BgDBO.deleteBgSchedule(entry.getKey());
           }
         }
-        progressBar.setVisibility(View.VISIBLE);
-        BgDBO.syncBgSchedule(new LogScheduleCallback() {
-          @Override public void onSuccess(boolean check) {
-            progressBar.setVisibility(View.GONE);
-            if (realm.isClosed()) {
-              realm = Realm.getDefaultInstance();
+        if (connectionDetector.isConnectingToInternet()) {
+          progressBar.setVisibility(View.VISIBLE);
+          BgDBO.syncBgSchedule(new LogScheduleCallback() {
+            @Override public void onSuccess(boolean check) {
+              progressBar.setVisibility(View.GONE);
+              if (realm.isClosed()) {
+                realm = Realm.getDefaultInstance();
+              }
+              RealmResults<BgSchedule> realmResults = realm.where(BgSchedule.class).findAll();
+              realm.close();
+              finish();
             }
-            RealmResults<BgSchedule> realmResults = realm.where(BgSchedule.class).findAll();
-            realm.close();
-            finish();
-          }
-        });
+          });
+        }
       }
     });
   }

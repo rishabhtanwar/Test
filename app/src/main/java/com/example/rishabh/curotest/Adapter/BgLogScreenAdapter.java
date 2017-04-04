@@ -1,5 +1,6 @@
 package com.example.rishabh.curotest.Adapter;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +13,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.example.rishabh.curotest.DBO.BgDBO;
 import com.example.rishabh.curotest.Model.BgLogScreenInfo;
+import com.example.rishabh.curotest.Network.ConnectionDetector;
 import com.example.rishabh.curotest.R;
+import com.example.rishabh.curotest.Utils.AppDateHelper;
+import com.example.rishabh.curotest.Utils.Constants;
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
@@ -28,10 +33,17 @@ import java.util.zip.Inflater;
 public class BgLogScreenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
   Context context;
   ArrayList<BgLogScreenInfo> arrayList = new ArrayList<>();
+  int swipeCount;
+  ConnectionDetector connectionDetector;
 
   public BgLogScreenAdapter(ArrayList<BgLogScreenInfo> arrayList, Context context) {
     this.arrayList = arrayList;
     this.context = context;
+    connectionDetector = new ConnectionDetector(context);
+  }
+
+  public void swipeCount(int swipeCount) {
+    this.swipeCount = swipeCount;
   }
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -62,6 +74,16 @@ public class BgLogScreenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
       }
     });
 
+    viewHolder.time.setText(bgLogScreenInfo.getLogTime());
+
+    viewHolder.time.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        String[] minHour = viewHolder.time.getText().toString().split(":");
+        int min = Integer.parseInt(minHour[1]);
+        int hour = Integer.parseInt(minHour[0]);
+        setTimer(viewHolder.time, hour, min);
+      }
+    });
     viewHolder.btnCancel.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         viewHolder.childLayout.setVisibility(View.GONE);
@@ -75,9 +97,11 @@ public class BgLogScreenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
           viewHolder.childLayout.setVisibility(View.GONE);
           viewHolder.log.setVisibility(View.VISIBLE);
           viewHolder.log.setText(viewHolder.value.getText().toString());
-          BgDBO.saveBgLog(Integer.parseInt(viewHolder.value.getText().toString()),
-              bgLogScreenInfo.getDate(), bgLogScreenInfo.getTimeSlotId(), "", "");
 
+          BgDBO.saveBgLog(Integer.parseInt(viewHolder.value.getText().toString()),
+              bgLogScreenInfo.getDate(), bgLogScreenInfo.getTimeSlotId(),
+              getDateTimeValue(viewHolder.time), getLoggedTimeValue(viewHolder.time),
+              connectionDetector.isConnectingToInternet());
         } else {
           Toast.makeText(context, "Please enter valid value", Toast.LENGTH_SHORT).show();
         }
@@ -117,5 +141,41 @@ public class BgLogScreenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
       log = (TextView) itemView.findViewById(R.id.log);
       lineView = (View) itemView.findViewById(R.id.line_view);
     }
+  }
+
+  private void setTimer(final EditText editText, int hour, int min) {
+    TimePickerDialog mTimePicker =
+        new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+          @Override
+          public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+            String minuteFormate;
+            if (selectedMinute < 10) {
+              minuteFormate = String.format("%02d", selectedMinute);
+            } else {
+              minuteFormate = String.valueOf(selectedMinute);
+            }
+            int notificationMin = Integer.parseInt(minuteFormate);
+            int notificationHour = selectedHour;
+            editText.setText("" + notificationHour + ":" + minuteFormate + ":" + "00");
+          }
+        }, hour, min, true);//Yes 24 hour time
+    mTimePicker.show();
+  }
+
+  private String getDateTimeValue(EditText editText) {
+    String dateTime =
+        AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, swipeCount)
+            + " "
+            + editText.getText().toString()
+            + " +0530";
+    return dateTime;
+  }
+
+  private String getLoggedTimeValue(EditText editText) {
+    String loggedTime = AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, 0)
+        + " "
+        + editText.getText().toString()
+        + " +0530";
+    return loggedTime;
   }
 }

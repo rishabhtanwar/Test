@@ -10,6 +10,16 @@ public class BgLogScreenInfo {
   long date;
   int timeSlotId;
 
+  public String getLogTime() {
+    return logTime;
+  }
+
+  public void setLogTime(String logTime) {
+    this.logTime = logTime;
+  }
+
+  String logTime;
+
   public int getTimeSlotId() {
     return timeSlotId;
   }
@@ -42,13 +52,13 @@ public class BgLogScreenInfo {
     this.subTitle = subTitle;
   }
 
-  public long getValue() {
+  public double getValue() {
     return value;
   }
 
-  public void setValue(long value) {
+  public void setValue(double value) {
     this.value = value;
   }
 
-  long value;
+  double value;
 }

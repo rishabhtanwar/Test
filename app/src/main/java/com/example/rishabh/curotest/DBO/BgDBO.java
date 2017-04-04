@@ -1,20 +1,32 @@
 package com.example.rishabh.curotest.DBO;
 
+import android.content.Context;
+import android.util.Log;
 import com.example.rishabh.curotest.BodyRequest.LogValuesData;
 import com.example.rishabh.curotest.Helpers.AppSettings;
+import com.example.rishabh.curotest.Helpers.CustomValueFormatter;
+import com.example.rishabh.curotest.Helpers.CustomizedFillFormatter;
 import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
+import com.example.rishabh.curotest.Model.BgAverageGraph;
 import com.example.rishabh.curotest.Model.BgLogScreenInfo;
 import com.example.rishabh.curotest.Model.BgLoggingSettingInfo;
 import com.example.rishabh.curotest.Model.BgLogs;
 import com.example.rishabh.curotest.Model.BgSchedule;
 import com.example.rishabh.curotest.Model.TimeSlots;
+import com.example.rishabh.curotest.R;
 import com.example.rishabh.curotest.SyncDataWithApi.SyncBgLogging;
 import com.example.rishabh.curotest.Utils.AppDateHelper;
 import com.example.rishabh.curotest.Utils.IncrementClientId;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import io.realm.Realm;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +36,8 @@ import org.json.JSONObject;
  */
 
 public class BgDBO {
+  public double avgValue = 0;
+
   public static ArrayList<BgLoggingSettingInfo> setLoggingTimeSlot(Realm realm, long date) {
     ArrayList<BgLoggingSettingInfo> arrayList = new ArrayList<>();
     BgLoggingSettingInfo bgLoggingSettingInfo;
@@ -233,6 +247,7 @@ public class BgDBO {
         BgLogScreenInfo bgLogScreenInfo = new BgLogScreenInfo();
         bgLogScreenInfo.setMainTitle(getTimeSlotTitleById(bgLogs.getTimeSlotId(), realm));
         bgLogScreenInfo.setSubTitle(getTimeSlotDescriptionById(bgLogs.getTimeSlotId(), realm));
+        bgLogScreenInfo.setLogTime(getDefaultTimeById(bgLogs.getTimeSlotId(), realm));
         bgLogScreenInfo.setValue(bgLogs.getValue());
         bgLogScreenInfo.setDate(date);
         bgLogScreenInfo.setTimeSlotId(bgLogs.getTimeSlotId());
@@ -259,6 +274,7 @@ public class BgDBO {
         BgLogScreenInfo bgLogScreenInfo = new BgLogScreenInfo();
         bgLogScreenInfo.setMainTitle(getTimeSlotTitleById(bgSchedule.getTimeSlotId(), realm));
         bgLogScreenInfo.setSubTitle(getTimeSlotDescriptionById(bgSchedule.getTimeSlotId(), realm));
+        bgLogScreenInfo.setLogTime(getDefaultTimeById(bgSchedule.getTimeSlotId(), realm));
         bgLogScreenInfo.setDate(date);
         bgLogScreenInfo.setTimeSlotId(bgSchedule.getTimeSlotId());
         arrayList.add(bgLogScreenInfo);
@@ -285,8 +301,12 @@ public class BgDBO {
     return realm.where(TimeSlots.class).equalTo("id", id).findFirst().getDescription();
   }
 
+  private static String getDefaultTimeById(int id, Realm realm) {
+    return realm.where(TimeSlots.class).equalTo("id", id).findFirst().getDefaultTime();
+  }
+
   public static void saveBgLog(int value, long date, int timeSlotId, String dateTime,
-      String loggedTime) {
+      String loggedTime, boolean checkConnection) {
     Realm realm = Realm.getDefaultInstance();
     try {
       realm.beginTransaction();
@@ -296,6 +316,7 @@ public class BgDBO {
           .findFirst();
       if (bgLogs == null) {
         bgLogs = new BgLogs();
+        bgLogs.setClientId(getBgValueLastClientId(realm));
       }
       bgLogs.setDate(date);
       bgLogs.setTimeSlotId(timeSlotId);
@@ -305,28 +326,33 @@ public class BgDBO {
       bgLogs.setDateTime(dateTime);
       bgLogs.setLoggedTime(loggedTime);
       bgLogs.setValue(value);
-      bgLogs.setClientId(getBgValueLastClientId(realm));
       BgLogs bgLogs1 = realm.copyToRealm(bgLogs);
-      SyncBgLogging.postBgValues( arrayList(bgLogs1.getClientId(), bgLogs1.getServerId(), bgLogs1.getValue(),
-          bgLogs1.getTimeSlotId(), bgLogs1.getDateTime(), bgLogs1.getLoggedTime()));
-
+      if (checkConnection) {
+        SyncBgLogging.postBgValues(
+            arrayList(bgLogs1.getClientId(), bgLogs1.getServerId(), bgLogs1.getValue(),
+                bgLogs1.getTimeSlotId(), bgLogs1.getDateTime(), bgLogs1.getLoggedTime()),"notBulk");
+      }
       realm.commitTransaction();
     } finally {
       realm.close();
     }
   }
 
-  private static ArrayList<LogValuesData> arrayList(int clientId, int serverId, long value,
+  private static ArrayList<LogValuesData> arrayList(int clientId, int serverId, double value,
       int timeslotId, String dateTime, String loggedTime) {
     ArrayList<LogValuesData> arrayList = new ArrayList<>();
     LogValuesData logValuesData = new LogValuesData();
     logValuesData.client_id = clientId;
     if (serverId != 0) {
       logValuesData.server_id = serverId;
+      logValuesData.tasktemplate_id = serverId;
+    } else {
+      logValuesData.tasktemplate_id = 0;
     }
     logValuesData.date_time = dateTime;
     logValuesData.logged_time = loggedTime;
     logValuesData.timeslot_id = timeslotId;
+    logValuesData.vitaldataattribute_id = 4;
     logValuesData.value = value;
     arrayList.add(logValuesData);
     return arrayList;
@@ -348,5 +374,86 @@ public class BgDBO {
     } else {
       return 1;
     }
+  }
+
+  public LineData getLineDataForBloodSugar(long startDate, long endDate, int color,
+      boolean showBand, double conversionFactor, Context mContext) {
+    if (startDate > endDate) {
+      avgValue = 0;
+      return null;
+    }
+    Realm realm = Realm.getDefaultInstance();
+    RealmResults<BgAverageGraph> realmResults = realm.where(BgAverageGraph.class).findAll();
+    try {
+
+      ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+      List<String> xValues = new ArrayList<>();
+      ArrayList<Entry> yValues = new ArrayList<>();
+      LineDataSet lineDataSet = new LineDataSet(yValues, "WeeklyData");
+      int count = 0;
+      while (startDate <= endDate) {
+        String xValue = AppDateHelper.getInstance().deserializeDateTrends(startDate);
+        xValues.add(xValue);
+        BgAverageGraph bgAverageGraph =
+            realm.where(BgAverageGraph.class).equalTo("date", startDate).findFirst();
+        //TrendsDetailsChart trendsDetailsChart = hashMapTrendsValueLine.get(startDate);
+        if (bgAverageGraph != null && bgAverageGraph.getAverage() > 0) {
+          //Log.d("priya", "daily : " + Math.round(trendsDetailsChart.value * conversionFactor));
+          yValues.add(new Entry(Math.round(bgAverageGraph.getAverage() * conversionFactor), count));
+          avgValue = bgAverageGraph.getAverage();
+        } else {
+          avgValue = 0;
+        }
+        startDate += 86400000;
+        count++;
+      }
+
+      lineDataSet.setDrawValues(false);
+      lineDataSet.setLineWidth(2f);
+      lineDataSet.setCircleRadius(9f);
+      lineDataSet.setCircleColor(mContext.getResources().getColor(color));
+      lineDataSet.setColor(mContext.getResources().getColor(color));
+      lineDataSet.setValueTextSize(9f);
+      lineDataSet.setDrawCircleHole(false);
+      lineDataSet.setDrawCubic(false);
+      lineDataSet.setDrawCircleHole(false);
+      dataSets.add(lineDataSet);
+
+      int oneWeekLine = count;
+      float lowerValue = 70, upperValue = 140;
+      if (conversionFactor != 1) {
+        lowerValue = 4;
+        upperValue = 8;
+      }
+      if (lineDataSet.getEntryCount() > 0 && showBand) {
+        LineDataSet dataSet = getBandDataSet(oneWeekLine, upperValue, lowerValue, mContext);
+        if (dataSet != null) {
+          dataSets.add(dataSet);
+        }
+      }
+
+      LineData data = new LineData(xValues, dataSets);
+      data.setValueFormatter(new CustomValueFormatter(4));
+      return data;
+    } finally {
+      realm.close();
+    }
+  }
+
+  public LineDataSet getBandDataSet(int sizeOfXAxis, float h1Value, float l2Value,
+      Context mContext) {
+    List<Entry> yValues = new ArrayList<>();
+    for (int i = 0; i < sizeOfXAxis; i++) {
+      yValues.add(new Entry(h1Value, i));
+    }
+    LineDataSet lineDataSet = new LineDataSet(yValues, "BandValue");
+    lineDataSet.setDrawCubic(false);
+    lineDataSet.setDrawValues(false);
+    lineDataSet.setDrawCircles(false);
+    lineDataSet.setLineWidth(0F);
+    lineDataSet.setFillColor(mContext.getResources().getColor(R.color.trends_ui_band_fill_color));
+    lineDataSet.setFillFormatter(new CustomizedFillFormatter(l2Value));
+    lineDataSet.setDrawFilled(true);
+    return lineDataSet;
   }
 }

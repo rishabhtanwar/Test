@@ -27,7 +27,7 @@ public class SetTimeSlots {
       timeSlots.slotTypeId = 1;
       timeSlots.sortOrder = 2;
       timeSlots.mealSlot = false;
-      timeSlots.defaultTime = "07:00";
+      timeSlots.defaultTime = "07:00:00";
       timeSlots.description = "After 8 hours of overnight fasting";
       timeSlots.bg = true;
       realm.copyToRealm(timeSlots);
@@ -38,7 +38,7 @@ public class SetTimeSlots {
       timeSlots.slotTypeId = 2;
       timeSlots.sortOrder = 3;
       timeSlots.mealSlot = true;
-      timeSlots.defaultTime = "07:00";
+      timeSlots.defaultTime = "07:00:00";
       timeSlots.bg = false;
       timeSlots.description = "Early Morning Snack";
     /*timeSlots.description = "Early Morning Snack";*/
@@ -50,7 +50,7 @@ public class SetTimeSlots {
       timeSlots.slotTypeId = 3;
       timeSlots.sortOrder = 4;
       timeSlots.mealSlot = false;
-      timeSlots.defaultTime = "07:30";
+      timeSlots.defaultTime = "07:30:00";
       timeSlots.description = "1.5-2.0 hours after Early Morning Snack";
       timeSlots.bg = true;
       realm.copyToRealm(timeSlots);

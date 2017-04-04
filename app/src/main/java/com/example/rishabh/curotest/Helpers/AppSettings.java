@@ -1,5 +1,9 @@
 package com.example.rishabh.curotest.Helpers;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.ContentResolver;
+import android.content.Context;
 import com.example.rishabh.curotest.Utils.Application;
 import com.example.rishabh.curotest.Utils.Constants;
 import android.content.SharedPreferences;
@@ -10,6 +14,12 @@ import android.content.SharedPreferences;
 
 public class AppSettings {
   public static final String SHARED_PREFS_NAME = "CuroPreFile";
+  public static Account account;
+  public static AppSettings ourInstance = new AppSettings();
+
+  public static AppSettings getInstance() {
+    return ourInstance;
+  }
 
   public static void setAuthToken(String authToken) {
     SharedPreferences settings =
@@ -144,5 +154,18 @@ public class AppSettings {
     SharedPreferences.Editor editor = settings.edit();
     editor.putBoolean(Constants.BG_API_STATUS, status);
     editor.commit();
+  }
+
+  public Account CreateSyncAccount() {
+    if (account == null) {
+      account = new Account(Constants.ACCOUNT, Constants.ACCOUNT_TYPE);
+      AccountManager accountManager =
+          (AccountManager) Application.getAppContext().getSystemService(Context.ACCOUNT_SERVICE);
+      accountManager.addAccountExplicitly(account, null, null);
+      ContentResolver.setIsSyncable(account, Constants.AUTHORITY, 1);
+      ContentResolver.setSyncAutomatically(account, Constants.AUTHORITY, true);
+      //    ContentResolver.addPeriodicSync(newAccount, AUTHORITY, new Bundle(), 8640);
+    }
+    return account;
   }
 }

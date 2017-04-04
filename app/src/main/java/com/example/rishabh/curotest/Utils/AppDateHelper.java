@@ -119,4 +119,8 @@ public class AppDateHelper {
     }
     return _date;
   }
+
+  public String deserializeDateTrends(long time) {
+    return (new SimpleDateFormat(Constants.DATE_FORMAT_TRENDS)).format(new Date(time));
+  }
 }

@@ -8,7 +8,8 @@ public class ApiRequest {
   public static final String LOG_STREAK_LATEST = "api/v3/diary/log_streak";
   public static final String SUMMARY = "api/v3/diary/summary";
   public static final String BGLOGGING="api/v3/diary/logging/log_schedule";
-
+  public static final String BGLOGGING_VALUE="api/v3/diary/logging/log_values";
+  public static final String BGGRAPH="api/v3/diary/logging/bg_graph";
   public static class RequestParams {
     public static final String USER = "user";
     public static final String USER_ID = "user_id";

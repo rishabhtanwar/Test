@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CuroTest.iml" filepath="$PROJECT_DIR$/CuroTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/prototype1.iml" filepath="$PROJECT_DIR$/prototype1.iml" />
     </modules>

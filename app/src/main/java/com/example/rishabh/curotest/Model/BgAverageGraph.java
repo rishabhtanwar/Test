@@ -8,7 +8,7 @@ import io.realm.RealmObject;
 
 public class BgAverageGraph extends RealmObject {
   long date;
-  long average;
+  double average;
   int userId;
 
   public long getDate() {
@@ -19,11 +19,11 @@ public class BgAverageGraph extends RealmObject {
     this.date = date;
   }
 
-  public long getAverage() {
+  public double getAverage() {
     return average;
   }
 
-  public void setAverage(long average) {
+  public void setAverage(double average) {
     this.average = average;
   }
 

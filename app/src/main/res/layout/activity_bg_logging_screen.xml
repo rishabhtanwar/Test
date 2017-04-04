@@ -75,13 +75,145 @@
       </RelativeLayout>
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/bg_rv"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          >
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            app:cardCornerRadius="2dp"
+            app:elevation="2dp"
+            >
 
-    </android.support.v7.widget.RecyclerView>
+          <RelativeLayout
+              android:id="@+id/main_layout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                >
+              <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentLeft="true"
+                  android:layout_marginLeft="10dp"
+                  android:orientation="vertical"
+                  >
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Blood Sugar"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14dp"
+                    />
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="3 March"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12dp"
+                    />
+              </LinearLayout>
+              <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentRight="true"
+                  android:layout_marginRight="10dp"
+                  android:orientation="horizontal"
+                  >
+                <TextView
+                    android:id="@+id/text_average_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/string_todays_avg_value"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14dp"
+                    android:visibility="gone"
+                    />
+                <TextView
+                    android:id="@+id/value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    android:visibility="visible"
+                    />
+              </LinearLayout>
+            </RelativeLayout>
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/line_chart"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="30dp"
+                android:visibility="visible"
+                />
+            <LinearLayout
+                android:id="@+id/no_data_layout"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+              <ImageView
+                  android:id="@+id/record_now_image"
+                  android:layout_width="60dp"
+                  android:layout_height="56dp"
+                  android:layout_alignParentRight="true"
+                  android:layout_centerVertical="true"
+                  android:visibility="gone"
+                  />
+              <TextView
+                  android:id="@+id/no_reading_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="No Readings Recorded"
+                  android:textColor="#A4A4A4"
+                  android:textSize="17dp"
+                  />
+
+            </LinearLayout>
+          </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/bg_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+      </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
   </LinearLayout>
 
