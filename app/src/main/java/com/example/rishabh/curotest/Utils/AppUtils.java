@@ -4,6 +4,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.os.Bundle;
 
 /**
  * Created by curo on 4/4/17.
@@ -20,7 +21,7 @@ public class AppUtils {
       accountManager.addAccountExplicitly(account, null, null);
       ContentResolver.setIsSyncable(account, Constants.AUTHORITY, 1);
       ContentResolver.setSyncAutomatically(account, Constants.AUTHORITY, true);
-      //ContentResolver.addPeriodicSync(newAccount, AUTHORITY, new Bundle(), 8640);
+      ContentResolver.addPeriodicSync(account, Constants.AUTHORITY, new Bundle(), 8640);
     }
     return account;
   }
