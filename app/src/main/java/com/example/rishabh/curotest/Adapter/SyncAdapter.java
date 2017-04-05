@@ -64,19 +64,19 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       RealmResults<BgLogs> realmResults =
           realm.where(BgLogs.class).equalTo("isSynced", false).findAll();
       ArrayList<LogValuesData> arrayList = new ArrayList<>();
-      if (realmResults.size()>0) {
+      if (realmResults.size() > 0) {
         for (int i = 0; i < realmResults.size(); i++) {
-          if (i==5){
+          if (i == 5) {
             break;
           }
           LogValuesData logValuesData = new LogValuesData();
           logValuesData.client_id = realmResults.get(i).getClientId();
           if (realmResults.get(i).getServerId() != 0) {
             logValuesData.server_id = realmResults.get(i).getServerId();
-            logValuesData.tasktemplate_id = realmResults.get(i).getServerId();
-          } else {
-            logValuesData.tasktemplate_id = 0;
+            //logValuesData.tasktemplate_id = realmResults.get(i).getServerId();
           }
+          logValuesData.tasktemplate_id = 0;
+
           logValuesData.date_time = realmResults.get(i).getDateTime();
           logValuesData.logged_time = realmResults.get(i).getLoggedTime();
           logValuesData.timeslot_id = realmResults.get(i).getTimeSlotId();
@@ -85,7 +85,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
           arrayList.add(logValuesData);
         }
         SyncBgLogging.postBgValues(arrayList, "bulk", null);
-      }else {
+      } else {
         SyncBgLogging.postBgValues(arrayList, "bulk", null);
       }
     } finally {
@@ -100,21 +100,23 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       JSONObject jsonObject = null;
       RealmResults<BgSchedule> realmResults =
           realm.where(BgSchedule.class).equalTo("isSynced", false).findAll();
-      if (realmResults.size()>0) {
+      if (realmResults.size() > 0) {
         for (int i = 0; i < realmResults.size(); i++) {
-          if (i==5){
+          if (i == 5) {
             break;
           }
           jsonObject = new JSONObject();
           try {
             jsonObject.put("client_id", realmResults.get(i).getClientId());
             jsonObject.put("timeslot_id", realmResults.get(i).getTimeSlotId());
-            jsonObject.put("start_date", AppDateHelper.getStrigDateFromMillis(realmResults.get(i).getStartDate()));
+            jsonObject.put("start_date",
+                AppDateHelper.getStrigDateFromMillis(realmResults.get(i).getStartDate()));
             if (realmResults.get(i).getEndDate() == 0) {
               jsonObject.put("end_date", null);
               jsonObject.put("is_deleted", false);
             } else {
-              jsonObject.put("end_date", AppDateHelper.getStrigDateFromMillis(realmResults.get(i).getEndDate()));
+              jsonObject.put("end_date",
+                  AppDateHelper.getStrigDateFromMillis(realmResults.get(i).getEndDate()));
               jsonObject.put("is_deleted", true);
             }
             if (realmResults.get(i).getServerId() == 0) {
@@ -128,7 +130,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
           }
         }
         SyncBgLogging.postBgSchedule("bulk", jsonArray, "blood_glucose", null);
-      }else {
+      } else {
         SyncBgLogging.postBgSchedule("bulk", jsonArray, "blood_glucose", null);
       }
     } finally {

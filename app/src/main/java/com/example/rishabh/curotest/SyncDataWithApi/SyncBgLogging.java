@@ -2,11 +2,13 @@ package com.example.rishabh.curotest.SyncDataWithApi;
 
 import android.content.ContentResolver;
 import android.os.Bundle;
+import android.util.Log;
 import com.example.rishabh.curotest.API.RestClient;
 import com.example.rishabh.curotest.BodyRequest.LogScheduleJson;
 import com.example.rishabh.curotest.BodyRequest.LogScheduleTimeSlotList;
 import com.example.rishabh.curotest.BodyRequest.LogValuePostData;
 import com.example.rishabh.curotest.BodyRequest.LogValuesData;
+import com.example.rishabh.curotest.DBO.BgDBO;
 import com.example.rishabh.curotest.helpers.AppSettings;
 import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
 import com.example.rishabh.curotest.Model.BgAverageGraph;
@@ -63,19 +65,23 @@ public class SyncBgLogging {
       }
     }
     logSchedulePostData.log_schedule_data = log;
-    if (log.timeslots.size()>0) {
+    if (log.timeslots.size() > 0) {
       Call<LogScheduleData> call = RestClient.getApiService().postBgSchedule(logSchedulePostData);
       call.enqueue(new Callback<LogScheduleData>() {
-        @Override public void onResponse(Call<LogScheduleData> call, Response<LogScheduleData> response) {
+        @Override
+        public void onResponse(Call<LogScheduleData> call, Response<LogScheduleData> response) {
 
           //Log.e(TAG, "onResponse: " + response.body().getLogSchedules().get(0).getId());
           saveBgSchedule(response, logScheduleCallback);
-          if (response.body().getLogSchedules().size() != 0 && uploadType.equalsIgnoreCase("bulk")) {
+          if (response.body().getLogSchedules().size() != 0 && uploadType.equalsIgnoreCase(
+              "bulk")) {
             Bundle bundle = new Bundle();
             bundle.putString(Constants.SYNC_DATA, Constants.BG_SCHEDULE_SYNC);
-            ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(), Constants.AUTHORITY, bundle);
+            ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(),
+                Constants.AUTHORITY, bundle);
           }
-          if (response.body().getLogSchedules().size() == 0 && uploadType.equalsIgnoreCase("bulk")) {
+          if (response.body().getLogSchedules().size() == 0 && uploadType.equalsIgnoreCase(
+              "bulk")) {
             syncListener.onSucess(true);
           }
         }
@@ -84,7 +90,7 @@ public class SyncBgLogging {
           t.printStackTrace();
         }
       });
-    }else {
+    } else {
       syncListener.onSucess(true);
     }
   }
@@ -118,6 +124,7 @@ public class SyncBgLogging {
             .findFirst();
         if (bgSchedule == null) {
           bgSchedule = new BgSchedule();
+          bgSchedule.setClientId(BgDBO.getBgScheduleLastClientId(realm));
         }
         if (logSchedule.getEnddate() == null) {
           bgSchedule.setEndDate(0);
@@ -158,7 +165,7 @@ public class SyncBgLogging {
         bgSchedule.setSynced(true);
         realm.copyToRealm(bgSchedule);
       }
-      if (logScheduleCallback!=null) {
+      if (logScheduleCallback != null) {
         logScheduleCallback.onSuccess(true);
       }
       realm.commitTransaction();
@@ -171,10 +178,14 @@ public class SyncBgLogging {
       final LogScheduleCallback logScheduleCallback) {
     LogValuePostData logValuePostData = new LogValuePostData();
     logValuePostData.sync_data = logValuesDatas;
-    if (logValuesDatas.size()>0) {
+    for (int i = 0; i < logValuePostData.sync_data.size(); i++) {
+      Log.e(TAG, "postBgValues: " + logValuePostData.sync_data.get(i).toString());
+    }
+    if (logValuesDatas.size() > 0) {
       Call<BgLogValuePostResponse> call = RestClient.getApiService().postBgLog(logValuePostData);
       call.enqueue(new Callback<BgLogValuePostResponse>() {
-        @Override public void onResponse(Call<BgLogValuePostResponse> call, Response<BgLogValuePostResponse> response) {
+        @Override public void onResponse(Call<BgLogValuePostResponse> call,
+            Response<BgLogValuePostResponse> response) {
           if (logScheduleCallback != null) {
             logScheduleCallback.onSuccess(true);
           }
@@ -182,7 +193,8 @@ public class SyncBgLogging {
           if (response.body().getResult().size() != 0 && uploadType.equalsIgnoreCase("bulk")) {
             Bundle bundle = new Bundle();
             bundle.putString(Constants.SYNC_DATA, Constants.BG_LOG_SYNC);
-            ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(), Constants.AUTHORITY, bundle);
+            ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(),
+                Constants.AUTHORITY, bundle);
           }
           if (response.body().getResult().size() == 0 && uploadType.equalsIgnoreCase("bulk")) {
             syncListener.onSucess(true);
@@ -193,7 +205,7 @@ public class SyncBgLogging {
           logScheduleCallback.onSuccess(false);
         }
       });
-    }else {
+    } else {
       syncListener.onSucess(true);
     }
   }
@@ -247,6 +259,7 @@ public class SyncBgLogging {
         BgLogs bgLogs = realm.where(BgLogs.class).equalTo("serverId", logValue.getId()).findFirst();
         if (bgLogs == null) {
           bgLogs = new BgLogs();
+          bgLogs.setClientId(BgDBO.getBgValueLastClientId(realm));
         }
         bgLogs.setServerId(logValue.getId());
         bgLogs.setValue(Double.parseDouble(logValue.getValue()));

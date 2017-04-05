@@ -111,7 +111,7 @@ public class BgLoggingScreen extends AppCompatActivity {
         arrayList = BgDBO.getBgLogScreenListByDate(
             AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount));
         bgLogScreenAdapter.swipeCount(swipeCount);
-        bgLogScreenAdapter.notifyDataSetChanged();
+
         startDateLong = AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount - 6);
         endDateLong = AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount);
         setBloodGlucoseData();
@@ -119,6 +119,7 @@ public class BgLoggingScreen extends AppCompatActivity {
           recyclerView.setVisibility(View.GONE);
         } else {
           recyclerView.setVisibility(View.VISIBLE);
+          bgLogScreenAdapter.notifyData(arrayList);
         }
       }
     });
@@ -142,11 +143,11 @@ public class BgLoggingScreen extends AppCompatActivity {
           endDateLong = AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount);
           setBloodGlucoseData();
           bgLogScreenAdapter.swipeCount(swipeCount);
-          bgLogScreenAdapter.notifyDataSetChanged();
           if (arrayList.size() == 0) {
             recyclerView.setVisibility(View.GONE);
           } else {
             recyclerView.setVisibility(View.VISIBLE);
+            bgLogScreenAdapter.notifyData(arrayList);
           }
         }
       }

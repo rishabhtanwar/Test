@@ -42,6 +42,10 @@ public class BgLogScreenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     connectionDetector = new ConnectionDetector(context);
   }
 
+  public void notifyData(ArrayList<BgLogScreenInfo> arrayList){
+    this.arrayList=arrayList;
+    notifyDataSetChanged();
+  }
   public void swipeCount(int swipeCount) {
     this.swipeCount = swipeCount;
   }
@@ -101,7 +105,7 @@ public class BgLogScreenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
           BgDBO.saveBgLog(Integer.parseInt(viewHolder.value.getText().toString()),
               bgLogScreenInfo.getDate(), bgLogScreenInfo.getTimeSlotId(),
               getDateTimeValue(viewHolder.time), getLoggedTimeValue(viewHolder.time),
-              connectionDetector.isConnectingToInternet(), new LogScheduleCallback() {
+              connectionDetector.isNetworkAvailable(), new LogScheduleCallback() {
                 @Override public void onSuccess(boolean check) {
                   ((BgLoggingScreen) context).setGraph();
                 }

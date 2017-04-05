@@ -66,7 +66,7 @@ public class LauncherActivity extends AppCompatActivity {
         }
       }
     });
-    if (connectionDetector.isConnectingToInternet()) {
+    if (connectionDetector.isNetworkAvailable()) {
       Bundle bundle = new Bundle();
       bundle.putString(Constants.SYNC_DATA, Constants.SYNC_ALL);
       ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(),

@@ -341,10 +341,9 @@ public class BgDBO {
     logValuesData.client_id = clientId;
     if (serverId != 0) {
       logValuesData.server_id = serverId;
-      logValuesData.tasktemplate_id = serverId;
-    } else {
-      logValuesData.tasktemplate_id = 0;
+      //logValuesData.tasktemplate_id = serverId;
     }
+    logValuesData.tasktemplate_id = 0;
     logValuesData.date_time = dateTime;
     logValuesData.logged_time = loggedTime;
     logValuesData.timeslot_id = timeslotId;
@@ -354,7 +353,7 @@ public class BgDBO {
     return arrayList;
   }
 
-  private static int getBgValueLastClientId(Realm realm) {
+  public static int getBgValueLastClientId(Realm realm) {
     RealmResults<BgLogs> realmResults = realm.where(BgLogs.class).findAll();
     if (realmResults.size() > 0) {
       return realmResults.get(realmResults.size() - 1).getClientId() + 1;
@@ -363,7 +362,7 @@ public class BgDBO {
     }
   }
 
-  private static int getBgScheduleLastClientId(Realm realm) {
+  public static int getBgScheduleLastClientId(Realm realm) {
     RealmResults<BgSchedule> realmResults = realm.where(BgSchedule.class).findAll();
     if (realmResults.size() > 0) {
       return realmResults.get(realmResults.size() - 1).getClientId() + 1;

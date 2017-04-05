@@ -60,7 +60,7 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
             BgDBO.deleteBgSchedule(entry.getKey());
           }
         }
-        if (connectionDetector.isConnectingToInternet()) {
+        if (connectionDetector.isNetworkAvailable()) {
           progressBar.setVisibility(View.VISIBLE);
           BgDBO.syncBgSchedule(new LogScheduleCallback() {
             @Override public void onSuccess(boolean check) {
