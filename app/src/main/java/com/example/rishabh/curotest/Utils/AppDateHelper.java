@@ -106,7 +106,7 @@ public class AppDateHelper {
     // add  month to current month
     aCalendar.add(Calendar.MONTH, swipeCount);
     aCalendar.set(Calendar.YEAR, aCalendar.get(Calendar.YEAR));
-    return aCalendar.getActualMaximum(Calendar.MONTH);
+    return aCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
   }
 
   public static String getStrigDateFromMillis(long date){

@@ -1,5 +1,7 @@
 package com.example.rishabh.curotest.activities;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -21,6 +23,9 @@ public class BgQuickLog extends AppCompatActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_bg_quick_log);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      getWindow().setStatusBarColor(Color.parseColor("#3595B9"));
+    }
     ButterKnife.bind(this);
   }
 

@@ -9,7 +9,6 @@ public class BgLoggingSettingInfo {
   String mainTitle;
   String subTitle;
   int slotid;
-
   public int getSlotid() {
     return slotid;
   }

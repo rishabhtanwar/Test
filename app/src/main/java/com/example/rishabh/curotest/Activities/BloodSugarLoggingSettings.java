@@ -1,5 +1,7 @@
 package com.example.rishabh.curotest.activities;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,6 +45,9 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_blood_sugar_logging_settings);
     ButterKnife.bind(this);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      getWindow().setStatusBarColor(Color.parseColor("#3595B9"));
+    }
     connectionDetector = new ConnectionDetector(this);
     linearLayoutManager = new LinearLayoutManager(this);
     realm = Realm.getDefaultInstance();

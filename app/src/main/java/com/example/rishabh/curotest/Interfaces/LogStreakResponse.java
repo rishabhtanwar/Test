@@ -6,4 +6,6 @@ package com.example.rishabh.curotest.Interfaces;
 
 public interface LogStreakResponse {
   void onSuccess(boolean status);
+  void longestStreak(int longestStreak);
+  void starsCollected(int starsCollected);
 }

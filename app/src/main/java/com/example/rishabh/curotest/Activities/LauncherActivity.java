@@ -2,6 +2,8 @@ package com.example.rishabh.curotest.activities;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +35,9 @@ public class LauncherActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      getWindow().setStatusBarColor(Color.parseColor("#3595B9"));
+    }
     if (AppSettings.getAuthToken().equalsIgnoreCase("")) {
       AppSettings.setAuthToken("sjmqwz6gmn9chq6h9kcu");
       AppSettings.setCurrentUserId(111);
@@ -57,12 +62,13 @@ public class LauncherActivity extends AppCompatActivity {
     });
     enterButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        if (proceed == 0) {
-          Toast.makeText(LauncherActivity.this, "Sync is going on", Toast.LENGTH_SHORT).show();
-        } else {
+        if (proceed == 2) {
           Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
           startActivity(intent);
           finish();
+        } else {
+          Toast.makeText(LauncherActivity.this, "Sync is going on", Toast.LENGTH_SHORT).show();
+
         }
       }
     });
@@ -72,7 +78,7 @@ public class LauncherActivity extends AppCompatActivity {
       ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(),
           Constants.AUTHORITY, bundle);
     } else {
-      proceed = 1;
+      proceed = 2;
     }
   }
 

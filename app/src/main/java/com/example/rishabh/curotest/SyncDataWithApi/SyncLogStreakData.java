@@ -30,7 +30,7 @@ public class SyncLogStreakData {
     call.enqueue(new Callback<ResponseBody>() {
       @Override public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
         try {
-          if(response!=null&&response.body()!=null) {
+          if (response != null && response.body() != null) {
             updateLogStreak(response.body().string(), logStreakResponse, requestType, month);
           }
         } catch (IOException e) {
@@ -58,19 +58,22 @@ public class SyncLogStreakData {
         //if (requestType.equalsIgnoreCase("history")) {
         //  setMonthStreakData(date, status, month);
         //} else {
-          setLogStreakDB(date, status,month);
+        setLogStreakDB(date, status, month);
         //}
       }
       realm.close();
       if (requestType.equalsIgnoreCase("history")) {
         logStreakResponse.onSuccess(true);
+        JSONObject achievements = jsonObject1.getJSONObject("achievements");
+        logStreakResponse.longestStreak(achievements.getInt("longest_streak"));
+        logStreakResponse.starsCollected(achievements.getInt("stars_collected"));
       }
     } catch (JSONException e) {
       e.printStackTrace();
     }
   }
 
-  private static void setLogStreakDB(long date, String status,String month) {
+  private static void setLogStreakDB(long date, String status, String month) {
     if (realm.isClosed()) {
       realm = Realm.getDefaultInstance();
     }

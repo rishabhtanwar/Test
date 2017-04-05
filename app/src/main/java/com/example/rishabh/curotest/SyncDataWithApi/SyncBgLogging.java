@@ -186,10 +186,8 @@ public class SyncBgLogging {
       call.enqueue(new Callback<BgLogValuePostResponse>() {
         @Override public void onResponse(Call<BgLogValuePostResponse> call,
             Response<BgLogValuePostResponse> response) {
-          if (logScheduleCallback != null) {
-            logScheduleCallback.onSuccess(true);
-          }
-          saveBgPostResponse(response);
+
+          saveBgPostResponse(response,logScheduleCallback);
           if (response.body().getResult().size() != 0 && uploadType.equalsIgnoreCase("bulk")) {
             Bundle bundle = new Bundle();
             bundle.putString(Constants.SYNC_DATA, Constants.BG_LOG_SYNC);
@@ -210,7 +208,7 @@ public class SyncBgLogging {
     }
   }
 
-  private static void saveBgPostResponse(Response<BgLogValuePostResponse> response) {
+  private static void saveBgPostResponse(Response<BgLogValuePostResponse> response,LogScheduleCallback logScheduleCallback) {
     Realm realm = Realm.getDefaultInstance();
     try {
       realm.beginTransaction();
@@ -229,6 +227,9 @@ public class SyncBgLogging {
         realm.copyToRealm(bgLogs);
       }
       realm.commitTransaction();
+      if (logScheduleCallback != null) {
+        logScheduleCallback.onSuccess(true);
+      }
     } finally {
       realm.close();
     }
