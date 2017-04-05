@@ -47,9 +47,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
   }
 
   private void syncOfflineData(String type) {
-    if (type.equalsIgnoreCase(Constants.BG_LOG_SYNC)) {
+    if (type != null && type.equalsIgnoreCase(Constants.BG_LOG_SYNC)) {
       syncBgLog();
-    } else if (type.equalsIgnoreCase(Constants.BG_SCHEDULE_SYNC)) {
+    } else if (type!=null&&type.equalsIgnoreCase(Constants.BG_SCHEDULE_SYNC)) {
       syncBgSchedule();
     } else {
       syncBgLog();

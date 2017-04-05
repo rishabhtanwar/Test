@@ -133,13 +133,13 @@ public class BgLoggingScreen extends AppCompatActivity {
         endDateLong = AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount);
         setBloodGlucoseData();
         if (connectionDetector.isNetworkAvailable()) {
-          noIntenet.setVisibility(View.GONE);
+          //noIntenet.setVisibility(View.GONE);
           getBgLogValueData();
           if (swipeCount % 7 == 0 && swipeCount < 0) {
             getBgGraphData();
           }
         } else {
-          noIntenet.setVisibility(View.VISIBLE);
+          //noIntenet.setVisibility(View.VISIBLE);
           arrayList = BgDBO.getBgLogScreenListByDate(
               AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount));
           if (arrayList.size() == 0) {
@@ -170,13 +170,13 @@ public class BgLoggingScreen extends AppCompatActivity {
           bgLogScreenAdapter.swipeCount(swipeCount);
           setBloodGlucoseData();
           if (connectionDetector.isNetworkAvailable()) {
-            noIntenet.setVisibility(View.GONE);
+            //noIntenet.setVisibility(View.GONE);
             getBgLogValueData();
             if (swipeCount % 7 == 0 && swipeCount < 0) {
               getBgGraphData();
             }
           } else {
-            noIntenet.setVisibility(View.VISIBLE);
+            //noIntenet.setVisibility(View.VISIBLE);
             arrayList = BgDBO.getBgLogScreenListByDate(
                 AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount));
             if (arrayList.size() == 0) {
@@ -198,13 +198,13 @@ public class BgLoggingScreen extends AppCompatActivity {
     mDateIndicator.setText("Today " + indicatordate);
     setAdapter();
     if (AppSettings.getBgApiStatus() && connectionDetector.isNetworkAvailable()) {
-      noIntenet.setVisibility(View.GONE);
+      //noIntenet.setVisibility(View.GONE);
       AppSettings.setBgApiStatus(false);
       getBgScheduleData();
       getBgLogValueData();
       getBgGraphData();
     } else {
-      noIntenet.setVisibility(View.VISIBLE);
+      //noIntenet.setVisibility(View.VISIBLE);
       setAdapter();
     }
 
@@ -302,6 +302,11 @@ public class BgLoggingScreen extends AppCompatActivity {
   }
 
   private void setBloodGlucoseData() {
+    if (connectionDetector.isNetworkAvailable()){
+      noIntenet.setVisibility(View.GONE);
+    }else {
+      noIntenet.setVisibility(View.VISIBLE);
+    }
     if (conversionFactorBG == 1) {
       mTitle.setText(R.string.string_blood_glucose_with_unit);
     } else {
@@ -379,6 +384,7 @@ public class BgLoggingScreen extends AppCompatActivity {
                   @Override public void run() {
                     progressBar.setVisibility(View.GONE);
                     nestedScrollView.scrollTo(0, 0);
+                    getBgGraphData();
                   }
                 });
               }
