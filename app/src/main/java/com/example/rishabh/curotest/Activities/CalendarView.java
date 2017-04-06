@@ -155,7 +155,7 @@ public class CalendarView extends LinearLayout {
         //  FetchMonthDataTask task = new FetchMonthDataTask();
         //  task.execute(new String[] { "" });
         //}
-        isFirstDate=false;
+        isFirstDate = false;
         if (swipeCount > -3 && swipeCount <= 0) {
           previousButtonClick.swipeCount(swipeCount - 1);
         }
@@ -212,7 +212,8 @@ public class CalendarView extends LinearLayout {
     Calendar calendar = (Calendar) currentDate.clone();
     //perfectNoOfDays = TaskDBO.perfectStreakDays();
     //longestStreakNoOfDays = TaskDBO.longestStreakValue();
-
+    perfectDays.setText("" + starCollected);
+    longestStreakDays.setText(longestStreak + " days");
     calendar.set(Calendar.DAY_OF_MONTH, 1);
     int monthBeginningCell = calendar.get(Calendar.DAY_OF_WEEK) - 1;
     calendar.add(Calendar.DAY_OF_MONTH, -monthBeginningCell);

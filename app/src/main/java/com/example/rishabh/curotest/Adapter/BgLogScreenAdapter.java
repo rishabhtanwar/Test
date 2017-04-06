@@ -139,6 +139,9 @@ public class BgLogScreenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                           notifyData(BgDBO.getBgLogScreenListByDate(AppDateHelper.getInstance()
                               .getDateInMillisWithSwipeCount(swipeCount)));
                           ((BgLoggingScreen) context).getBgGraphData();
+                          if (check) {
+                            ((BgLoggingScreen) context).checkUnSyncData();
+                          }
                         }
                       });
                 }

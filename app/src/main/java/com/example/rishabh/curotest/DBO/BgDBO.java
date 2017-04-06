@@ -255,6 +255,8 @@ public class BgDBO {
               arrayList(bgLogs1.getClientId(), bgLogs1.getServerId(), bgLogs1.getValue(),
                   bgLogs1.getTimeSlotId(), bgLogs1.getDateTime(), bgLogs1.getLoggedTime(),bgLogs1.isDeleted()),
               "notBulk", logScheduleCallback);
+        }else {
+          logScheduleCallback.onSuccess(false);
         }
       }
 

@@ -59,7 +59,7 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (viewHolder.checkBox.isChecked()) {
-          arrayList.get(position).setCheck(true);
+          //arrayList.get(position).setCheck(true);
           //if (!timeSlotIdList.contains(bgLoggingSettingInfo.getSlotid())) {
           //  timeSlotIdList.add(bgLoggingSettingInfo.getSlotid());
           //}
@@ -67,7 +67,7 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
           //BgDBO.saveBgSchedule(bgLoggingSettingInfo.getSlotid(),
           //    AppDateHelper.getInstance().getDateInMillisWithSwipeCount(0));
         } else {
-          arrayList.get(position).setCheck(false);
+          //arrayList.get(position).setCheck(false);
           //if (checkBgValueInDb(bgLoggingSettingInfo.getSlotid())){
             hashMap.put(bgLoggingSettingInfo.getSlotid(), "unticked");
           //}
