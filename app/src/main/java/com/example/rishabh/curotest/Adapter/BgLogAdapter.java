@@ -44,7 +44,7 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
     final BgLoggingSettingInfo bgLoggingSettingInfo = arrayList.get(position);
-    final ViewHolder viewHolder = (ViewHolder) holder;
+    ViewHolder viewHolder = (ViewHolder) holder;
     if (bgLoggingSettingInfo.isCheck()) {
       viewHolder.checkBox.setChecked(true);
       if (!hashMap.containsKey(bgLoggingSettingInfo.getSlotid())) {
@@ -58,7 +58,7 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     viewHolder.subTitle.setText(bgLoggingSettingInfo.getSubTitle());
     viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (viewHolder.checkBox.isChecked()) {
+        if (isChecked) {
           arrayList.get(position).setCheck(true);
           //if (!timeSlotIdList.contains(bgLoggingSettingInfo.getSlotid())) {
           //  timeSlotIdList.add(bgLoggingSettingInfo.getSlotid());
