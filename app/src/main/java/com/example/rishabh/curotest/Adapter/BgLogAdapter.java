@@ -74,6 +74,7 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
           //timeSlotIdList.remove(removePosition(bgLoggingSettingInfo.getSlotid()));
           //BgDBO.deleteBgSchedule(bgLoggingSettingInfo.getSlotid());
         }
+        //notifyDataSetChanged();
       }
     });
   }

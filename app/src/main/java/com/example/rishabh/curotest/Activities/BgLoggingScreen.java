@@ -97,6 +97,7 @@ public class BgLoggingScreen extends AppCompatActivity {
     settings_fab_button.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         // Click action
+        idArray.clear();
         ArrayList<BgLogScreenInfo> arrayList=bgLogScreenAdapter.getBgLoggingScreen();
         for (int i=0; i<arrayList.size(); i++){
           idArray.add(arrayList.get(i).getTimeSlotId());
