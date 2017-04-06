@@ -143,6 +143,6 @@ public class GoalsCalendarActivity extends AppCompatActivity {
       }
     }
 
-    cv.updateCalendar(markingList, swipeCount, longestStreaks, starCollected);
+    cv.updateCalendar(markingList, swipeCount, 0, 0);
   }
 }

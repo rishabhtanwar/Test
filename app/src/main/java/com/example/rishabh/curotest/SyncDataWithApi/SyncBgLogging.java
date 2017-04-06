@@ -223,7 +223,7 @@ public class SyncBgLogging {
         bgLogs.setDate(AppDateHelper.getInstance()
             .getMillisFromDate(logValue.getDate(), Constants.DATEFORMAT));
         bgLogs.setServerId(logValue.getId());
-        //bgLogs.setDeleted(logValue.getDeleted());
+        bgLogs.setDeleted(logValue.getDeleted());
         bgLogs.setSynced(true);
         realm.copyToRealm(bgLogs);
       }

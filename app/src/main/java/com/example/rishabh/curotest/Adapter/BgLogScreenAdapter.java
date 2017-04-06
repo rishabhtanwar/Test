@@ -111,11 +111,14 @@ public class BgLogScreenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
               connectionDetector.isNetworkAvailable(), new LogScheduleCallback() {
                 @Override public void onSuccess(boolean check) {
                   if (check) {
-                    ((BgLoggingScreen) context).getBgGraphData();
                     ((BgLoggingScreen) context).checkUnSyncData();
+                    ((BgLoggingScreen) context).getBgGraphData();
+                  }else {
+                    ((BgLoggingScreen) context).setBloodGlucoseData();
                   }
+
                 }
-              },swipeCount);
+              }, swipeCount);
         } else {
           Toast.makeText(context, "Please enter valid value", Toast.LENGTH_SHORT).show();
         }
@@ -221,5 +224,9 @@ public class BgLogScreenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         + editText.getText().toString()
         + " +0530";
     return loggedTime;
+  }
+
+  public ArrayList<BgLogScreenInfo> getBgLoggingScreen() {
+    return arrayList;
   }
 }

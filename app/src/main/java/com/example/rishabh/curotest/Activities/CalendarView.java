@@ -116,7 +116,7 @@ public class CalendarView extends LinearLayout {
     btnNext.setOnClickListener(new OnClickListener() {
       @Override public void onClick(View v) {
         currentDate.add(Calendar.MONTH, 1);
-        //isFirstDate = false;
+        isFirstDate = false;
         //daysInCurrentMonth = currentDate.getActualMaximum(Calendar.DAY_OF_MONTH);
         //currentDate.add(Calendar.MONTH, 1);
         //int currentMonth = currentDate.get(Calendar.MONTH), currentYear =
@@ -155,6 +155,7 @@ public class CalendarView extends LinearLayout {
         //  FetchMonthDataTask task = new FetchMonthDataTask();
         //  task.execute(new String[] { "" });
         //}
+        isFirstDate=false;
         if (swipeCount > -3 && swipeCount <= 0) {
           previousButtonClick.swipeCount(swipeCount - 1);
         }
@@ -286,8 +287,8 @@ public class CalendarView extends LinearLayout {
           case 2:
             textDateImage.setImageResource(R.drawable.empty_circle);
             break;
-          default:
-            textDateImage.setImageResource(R.drawable.empty_circle);
+          case 3:
+            textDateImage.setImageResource(R.drawable.locked_circle);
             break;
         }
       } else {

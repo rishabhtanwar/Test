@@ -81,6 +81,7 @@ public class BgLoggingScreen extends AppCompatActivity {
   @Bind(R.id.nested_scroll) NestedScrollView nestedScrollView;
   long startDateLong, endDateLong;
   LineData lineData;
+  ArrayList<Integer> idArray=new ArrayList<>();
   ConnectionDetector connectionDetector;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +97,12 @@ public class BgLoggingScreen extends AppCompatActivity {
     settings_fab_button.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         // Click action
+        ArrayList<BgLogScreenInfo> arrayList=bgLogScreenAdapter.getBgLoggingScreen();
+        for (int i=0; i<arrayList.size(); i++){
+          idArray.add(arrayList.get(i).getTimeSlotId());
+        }
         Intent intent = new Intent(mContext, BloodSugarLoggingSettings.class);
+        intent.putIntegerArrayListExtra("id_array",idArray);
         startActivity(intent);
         closeFAB();
       }
@@ -303,7 +309,7 @@ public class BgLoggingScreen extends AppCompatActivity {
     }
   }
 
-  private void setBloodGlucoseData() {
+  public void setBloodGlucoseData() {
     if (connectionDetector.isNetworkAvailable()){
       noIntenet.setVisibility(View.GONE);
     }else {

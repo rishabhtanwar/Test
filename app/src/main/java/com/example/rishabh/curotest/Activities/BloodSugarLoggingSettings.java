@@ -39,6 +39,7 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
   HashMap<Integer, String> timeSlotIdList = new HashMap<>();
   long todayDateInMillis;
   @Bind(R.id.done) ImageView done;
+  ArrayList<Integer> idsArray=new ArrayList<>();
   ConnectionDetector connectionDetector;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +53,11 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
     linearLayoutManager = new LinearLayoutManager(this);
     realm = Realm.getDefaultInstance();
     todayDateInMillis = AppDateHelper.getInstance().getDateInMillisWithSwipeCount(0);
-    setData();
+
     AppSettings.setBgApiStatus(true);
     progressBar.setVisibility(View.GONE);
+    idsArray=getIntent().getExtras().getIntegerArrayList("id_array");
+    setData();
     done.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         timeSlotIdList = bgLogAdapter.getTimeSlotIdList();
@@ -86,7 +89,7 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
   }
 
   private void setData() {
-    arrayList = BgDBO.setLoggingTimeSlot(realm, todayDateInMillis);
+    arrayList = BgDBO.setLoggingTimeSlot(realm, todayDateInMillis,idsArray);
     setAdapter();
   }
 

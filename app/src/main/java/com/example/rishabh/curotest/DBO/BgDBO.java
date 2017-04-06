@@ -35,14 +35,14 @@ import org.json.JSONObject;
 public class BgDBO {
   public double avgValue = 0;
 
-  public static ArrayList<BgLoggingSettingInfo> setLoggingTimeSlot(Realm realm, long date) {
+  public static ArrayList<BgLoggingSettingInfo> setLoggingTimeSlot(Realm realm, long date,ArrayList<Integer> integers) {
     ArrayList<BgLoggingSettingInfo> arrayList = new ArrayList<>();
     BgLoggingSettingInfo bgLoggingSettingInfo;
     try {
       RealmResults<TimeSlots> timeSlot = realm.where(TimeSlots.class).equalTo("bg", true).findAll();
       for (TimeSlots timeSlots : timeSlot) {
         bgLoggingSettingInfo = new BgLoggingSettingInfo();
-        if (checkBgSchedule(realm, timeSlots.getId(), date) == true) {
+        if (checkPreviousCheckedValues(integers,timeSlots.getId()) == true) {
           bgLoggingSettingInfo.setCheck(true);
         } else {
           bgLoggingSettingInfo.setCheck(false);
@@ -58,6 +58,15 @@ public class BgDBO {
     return arrayList;
   }
 
+  private static boolean checkPreviousCheckedValues(ArrayList<Integer> integers,int id){
+    for (int i=0; i<integers.size(); i++){
+      if (id==integers.get(i)){
+        return true;
+      }
+    }
+    return false;
+  }
+
   private static boolean checkBgSchedule(Realm realm, int timeSlot, long date) {
     RealmResults<BgSchedule> realmResults1 = realm.where(BgSchedule.class).findAll();
     RealmResults<BgSchedule> realmResults = realm.where(BgSchedule.class)
@@ -65,7 +74,7 @@ public class BgDBO {
         .lessThanOrEqualTo("startDate", date)
         .equalTo("endDate", 0)
         .or()
-        .greaterThan("endDate", date)
+        .greaterThanOrEqualTo("endDate", date)
         .equalTo("isDeleted", false)
         .findAll();
     if (realmResults.size() > 0) {
@@ -215,7 +224,7 @@ public class BgDBO {
       if (bgSchedule != null) {
         bgSchedule.setDeleted(true);
         bgSchedule.setEndDate(
-            AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount - 1));
+            AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount));
         bgSchedule.setSynced(false);
         realm.copyToRealm(bgSchedule);
       }
@@ -234,7 +243,7 @@ public class BgDBO {
       realm.beginTransaction();
       BgLogs bgLogs = realm.where(BgLogs.class)
           .equalTo("timeSlotId", timeSlotId)
-          .equalTo("date", date)
+          .equalTo("isDeleted", false)
           .findFirst();
       if (bgLogs != null) {
         bgLogs.setDeleted(true);
@@ -291,7 +300,7 @@ public class BgDBO {
         .lessThanOrEqualTo("startDate", date)
         .equalTo("endDate", 0)
         .or()
-        .greaterThan("endDate", date)
+        .greaterThanOrEqualTo("endDate", date)
         .equalTo("isDeleted", false)
         .findAll();
     for (BgSchedule bgSchedule : realmResults) {
@@ -348,7 +357,7 @@ public class BgDBO {
           .findFirst();
       if (bgSchedule != null) {
         bgSchedule.setEndDate(
-            AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount - 1));
+            AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount));
         bgSchedule.setSynced(false);
         realm.copyToRealm(bgSchedule);
         if (checkConnection) {

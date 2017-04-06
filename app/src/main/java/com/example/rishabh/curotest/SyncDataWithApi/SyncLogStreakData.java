@@ -86,17 +86,21 @@ public class SyncLogStreakData {
       }
       logStreakPerDay.setDate(date);
       logStreakPerDay.setDateString(dateString);
-      switch (status) {
-        case Constants.EMPTY_STREAK:
-          logStreakPerDay.setStatusFlag(2);
-          break;
-        case Constants.LOGGED_STREAK:
-          logStreakPerDay.setStatusFlag(1);
-          break;
+      if (date>AppDateHelper.getInstance().getDateInMillisWithSwipeCount(0)){
+        logStreakPerDay.setStatusFlag(3);
+      }else {
+        switch (status) {
+          case Constants.EMPTY_STREAK:
+            logStreakPerDay.setStatusFlag(2);
+            break;
+          case Constants.LOGGED_STREAK:
+            logStreakPerDay.setStatusFlag(1);
+            break;
 
-        case Constants.STARRED_STREAK:
-          logStreakPerDay.setStatusFlag(0);
-          break;
+          case Constants.STARRED_STREAK:
+            logStreakPerDay.setStatusFlag(0);
+            break;
+        }
       }
       logStreakPerDay.setMonth(month);
       realm.copyToRealm(logStreakPerDay);
