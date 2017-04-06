@@ -62,7 +62,7 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
           if (entry.getValue().equalsIgnoreCase("ticked")) {
             BgDBO.saveBgSchedule(entry.getKey(), todayDateInMillis);
           } else {
-            BgDBO.deleteBgSchedule(entry.getKey());
+            BgDBO.deleteBgSchedule(entry.getKey(),0);
           }
         }
         if (connectionDetector.isNetworkAvailable()) {

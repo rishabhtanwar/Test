@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import com.example.rishabh.curotest.Interfaces.LogStreakResponse;
 import com.example.rishabh.curotest.Model.LogStreakForMonth;
@@ -64,10 +65,12 @@ public class GoalsCalendarActivity extends AppCompatActivity {
 
             @Override public void longestStreak(int longestStreak) {
               longestStreaks = longestStreak;
+              cv.starCollected(longestStreaks,starCollected);
             }
 
             @Override public void starsCollected(int starsCollected) {
               starCollected = starsCollected;
+              cv.starCollected(longestStreaks,starCollected);
             }
           }, AppDateHelper.monthYearNameBySwipeIndex(swipeCount));
     } else {
@@ -79,7 +82,7 @@ public class GoalsCalendarActivity extends AppCompatActivity {
       @Override public void onDayLongPress(Date date) {
         // show returned day
         DateFormat df = SimpleDateFormat.getDateInstance();
-        //AppUtils.showToast(df.format(date),GoalsCalendarActivity.this,null);
+       Toast.makeText(GoalsCalendarActivity.this,df.format(date),Toast.LENGTH_SHORT).show();
       }
     });
     cv.prevButtonClick(new CalendarView.PreviousButtonClick() {
@@ -97,10 +100,12 @@ public class GoalsCalendarActivity extends AppCompatActivity {
 
                 @Override public void longestStreak(int longestStreak) {
                   longestStreaks = longestStreak;
+                  cv.starCollected(longestStreaks,starCollected);
                 }
 
                 @Override public void starsCollected(int starsCollected) {
                   starCollected = starsCollected;
+                  cv.starCollected(longestStreaks,starCollected);
                 }
               }, AppDateHelper.monthYearNameBySwipeIndex(swipeCount));
         } else {
@@ -125,7 +130,8 @@ public class GoalsCalendarActivity extends AppCompatActivity {
     Realm realm = Realm.getDefaultInstance();
     RealmResults<LogStreakPerDay> realmResults1 = realm.where(LogStreakPerDay.class).findAll();
     RealmResults<LogStreakPerDay> realmResults =
-        realm.where(LogStreakPerDay.class).equalTo("month", month).findAll();
+        realm.where(LogStreakPerDay.class).equalTo("month", month).findAllSorted("date",Sort.ASCENDING);
+    markingList.clear();
     if (realmResults.size() > 0) {
       for (LogStreakPerDay logStreakForMonth : realmResults) {
         markingList.add(logStreakForMonth.getStatusFlag());
@@ -136,6 +142,7 @@ public class GoalsCalendarActivity extends AppCompatActivity {
         markingList.add(2);
       }
     }
+
     cv.updateCalendar(markingList, swipeCount, longestStreaks, starCollected);
   }
 }

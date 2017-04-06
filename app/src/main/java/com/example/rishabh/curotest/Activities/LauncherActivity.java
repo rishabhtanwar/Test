@@ -39,7 +39,7 @@ public class LauncherActivity extends AppCompatActivity {
       getWindow().setStatusBarColor(Color.parseColor("#3595B9"));
     }
     if (AppSettings.getAuthToken().equalsIgnoreCase("")) {
-      AppSettings.setAuthToken("upecqc5qyxjgupuqxt2g");
+      AppSettings.setAuthToken("wrweyjqk2sljzrqldhmb");
       AppSettings.setCurrentUserId(111);
     }
     connectionDetector = new ConnectionDetector(this);

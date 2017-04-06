@@ -43,13 +43,15 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
   @Override public void onPerformSync(Account account, Bundle extras, String authority,
       ContentProviderClient contentProviderClient, SyncResult syncResult) {
     String type = extras.getString(Constants.SYNC_DATA);
-    syncOfflineData(type);
+    if (type != null) {
+      syncOfflineData(type);
+    }
   }
 
   private void syncOfflineData(String type) {
     if (type != null && type.equalsIgnoreCase(Constants.BG_LOG_SYNC)) {
       syncBgLog();
-    } else if (type!=null&&type.equalsIgnoreCase(Constants.BG_SCHEDULE_SYNC)) {
+    } else if (type != null && type.equalsIgnoreCase(Constants.BG_SCHEDULE_SYNC)) {
       syncBgSchedule();
     } else {
       syncBgLog();
@@ -82,6 +84,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
           logValuesData.timeslot_id = realmResults.get(i).getTimeSlotId();
           logValuesData.vitaldataattribute_id = 4;
           logValuesData.value = realmResults.get(i).getValue();
+          if (realmResults.get(i).isDeleted()){
+            logValuesData.is_deleted=true;
+          }
           arrayList.add(logValuesData);
         }
         SyncBgLogging.postBgValues(arrayList, "bulk", null);

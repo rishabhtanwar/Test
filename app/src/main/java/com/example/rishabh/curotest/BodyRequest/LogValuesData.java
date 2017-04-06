@@ -13,4 +13,5 @@ public class LogValuesData {
   public Integer timeslot_id;
   public Integer vitaldataattribute_id;
   public Integer server_id;
+  public boolean is_deleted;
 }

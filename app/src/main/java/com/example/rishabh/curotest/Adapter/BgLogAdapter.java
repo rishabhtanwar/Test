@@ -66,9 +66,9 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
           //BgDBO.saveBgSchedule(bgLoggingSettingInfo.getSlotid(),
           //    AppDateHelper.getInstance().getDateInMillisWithSwipeCount(0));
         } else {
-          if (checkBgValueInDb(bgLoggingSettingInfo.getSlotid())){
+          //if (checkBgValueInDb(bgLoggingSettingInfo.getSlotid())){
             hashMap.put(bgLoggingSettingInfo.getSlotid(), "unticked");
-          }
+          //}
           //timeSlotIdList.remove(removePosition(bgLoggingSettingInfo.getSlotid()));
           //BgDBO.deleteBgSchedule(bgLoggingSettingInfo.getSlotid());
         }

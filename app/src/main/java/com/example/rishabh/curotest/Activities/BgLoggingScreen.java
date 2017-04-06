@@ -124,6 +124,7 @@ public class BgLoggingScreen extends AppCompatActivity {
     setBloodGlucoseData();
     leftArrow.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
+        fab_button.setVisibility(View.GONE);
         swipeCount = swipeCount - 1;
         indicatordate = AppDateHelper.getInstance()
             .getDateWithWeekDays(Constants.DATEFORMAT_LOGGING_SCREEN, swipeCount);
@@ -157,6 +158,7 @@ public class BgLoggingScreen extends AppCompatActivity {
         if (swipeCount < 0) {
           swipeCount = swipeCount + 1;
           if (swipeCount == 0) {
+            fab_button.setVisibility(View.VISIBLE);
             indicatordate = AppDateHelper.getInstance()
                 .getDateWithWeekDays(Constants.DATEFORMAT_LOGGING_SCREEN, swipeCount);
             mDateIndicator.setText("Today " + indicatordate);

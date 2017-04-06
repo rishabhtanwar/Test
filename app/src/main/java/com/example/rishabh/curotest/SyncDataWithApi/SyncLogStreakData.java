@@ -58,7 +58,7 @@ public class SyncLogStreakData {
         //if (requestType.equalsIgnoreCase("history")) {
         //  setMonthStreakData(date, status, month);
         //} else {
-        setLogStreakDB(date, status, month);
+        setLogStreakDB(date, status, month,key);
         //}
       }
       realm.close();
@@ -73,7 +73,7 @@ public class SyncLogStreakData {
     }
   }
 
-  private static void setLogStreakDB(long date, String status, String month) {
+  private static void setLogStreakDB(long date, String status, String month,String dateString) {
     if (realm.isClosed()) {
       realm = Realm.getDefaultInstance();
     }
@@ -85,6 +85,7 @@ public class SyncLogStreakData {
         logStreakPerDay = new LogStreakPerDay();
       }
       logStreakPerDay.setDate(date);
+      logStreakPerDay.setDateString(dateString);
       switch (status) {
         case Constants.EMPTY_STREAK:
           logStreakPerDay.setStatusFlag(2);

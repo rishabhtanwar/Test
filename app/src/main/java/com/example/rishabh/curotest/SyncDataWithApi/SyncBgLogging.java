@@ -187,7 +187,7 @@ public class SyncBgLogging {
         @Override public void onResponse(Call<BgLogValuePostResponse> call,
             Response<BgLogValuePostResponse> response) {
 
-          saveBgPostResponse(response,logScheduleCallback);
+          saveBgPostResponse(response, logScheduleCallback);
           if (response.body().getResult().size() != 0 && uploadType.equalsIgnoreCase("bulk")) {
             Bundle bundle = new Bundle();
             bundle.putString(Constants.SYNC_DATA, Constants.BG_LOG_SYNC);
@@ -208,7 +208,8 @@ public class SyncBgLogging {
     }
   }
 
-  private static void saveBgPostResponse(Response<BgLogValuePostResponse> response,LogScheduleCallback logScheduleCallback) {
+  private static void saveBgPostResponse(Response<BgLogValuePostResponse> response,
+      LogScheduleCallback logScheduleCallback) {
     Realm realm = Realm.getDefaultInstance();
     try {
       realm.beginTransaction();
@@ -222,7 +223,7 @@ public class SyncBgLogging {
         bgLogs.setDate(AppDateHelper.getInstance()
             .getMillisFromDate(logValue.getDate(), Constants.DATEFORMAT));
         bgLogs.setServerId(logValue.getId());
-        bgLogs.setDeleted(logValue.getDeleted());
+        //bgLogs.setDeleted(logValue.getDeleted());
         bgLogs.setSynced(true);
         realm.copyToRealm(bgLogs);
       }
@@ -257,19 +258,22 @@ public class SyncBgLogging {
     try {
       realm.beginTransaction();
       for (BgLogValueGetResponse.LogValue logValue : response.body().getLogValues()) {
-        BgLogs bgLogs = realm.where(BgLogs.class).equalTo("serverId", logValue.getId()).findFirst();
-        if (bgLogs == null) {
-          bgLogs = new BgLogs();
-          bgLogs.setClientId(BgDBO.getBgValueLastClientId(realm));
+        if (Double.parseDouble(logValue.getValue()) > 0) {
+          BgLogs bgLogs =
+              realm.where(BgLogs.class).equalTo("serverId", logValue.getId()).findFirst();
+          if (bgLogs == null) {
+            bgLogs = new BgLogs();
+            bgLogs.setClientId(BgDBO.getBgValueLastClientId(realm));
+          }
+          bgLogs.setServerId(logValue.getId());
+          bgLogs.setValue(Double.parseDouble(logValue.getValue()));
+          bgLogs.setTimeSlotId(logValue.getTimeslotId());
+          bgLogs.setLoggedTime(logValue.getLoggedTime());
+          bgLogs.setDateTime(logValue.getDateTime());
+          bgLogs.setDate(AppDateHelper.getInstance()
+              .getMillisFromDate(logValue.getDate(), Constants.DATEFORMAT));
+          realm.copyToRealm(bgLogs);
         }
-        bgLogs.setServerId(logValue.getId());
-        bgLogs.setValue(Double.parseDouble(logValue.getValue()));
-        bgLogs.setTimeSlotId(logValue.getTimeslotId());
-        bgLogs.setLoggedTime(logValue.getLoggedTime());
-        bgLogs.setDateTime(logValue.getDateTime());
-        bgLogs.setDate(AppDateHelper.getInstance()
-            .getMillisFromDate(logValue.getDate(), Constants.DATEFORMAT));
-        realm.copyToRealm(bgLogs);
       }
       realm.commitTransaction();
       logScheduleCallback.onSuccess(true);

@@ -12,6 +12,15 @@ public class LogStreakPerDay extends RealmObject {
   int id;
   int userId;
 
+  public String getDateString() {
+    return dateString;
+  }
+
+  public void setDateString(String dateString) {
+    this.dateString = dateString;
+  }
+
+  String dateString;
   public String getMonth() {
     return month;
   }

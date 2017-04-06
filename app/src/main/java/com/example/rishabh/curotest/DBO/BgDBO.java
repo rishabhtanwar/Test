@@ -62,6 +62,10 @@ public class BgDBO {
     RealmResults<BgSchedule> realmResults1 = realm.where(BgSchedule.class).findAll();
     RealmResults<BgSchedule> realmResults = realm.where(BgSchedule.class)
         .equalTo("slotTypeId", timeSlot)
+        .lessThanOrEqualTo("startDate", date)
+        .equalTo("endDate", 0)
+        .or()
+        .greaterThan("endDate", date)
         .equalTo("isDeleted", false)
         .findAll();
     if (realmResults.size() > 0) {
@@ -106,20 +110,20 @@ public class BgDBO {
   public static void saveBgSchedule(int slotId, long date) {
     Realm realm = Realm.getDefaultInstance();
     try {
-      if (checkBgScheduleForId(slotId, realm)) {
-        realm.beginTransaction();
-        BgSchedule bgSchedule = new BgSchedule();
-        bgSchedule.setDeleted(false);
-        bgSchedule.setEndDate(0);
-        bgSchedule.setSetById(0);
-        bgSchedule.setStartDate(date);
-        bgSchedule.setSynced(false);
-        bgSchedule.setTimeSlotId(slotId);
-        bgSchedule.setUserId(AppSettings.getCurrentUserId());
-        bgSchedule.setClientId(getBgScheduleLastClientId(realm));
-        realm.copyToRealm(bgSchedule);
-        realm.commitTransaction();
-      }
+      //if (checkBgScheduleForId(slotId, realm)) {
+      realm.beginTransaction();
+      BgSchedule bgSchedule = new BgSchedule();
+      bgSchedule.setDeleted(false);
+      bgSchedule.setEndDate(0);
+      bgSchedule.setSetById(0);
+      bgSchedule.setStartDate(date);
+      bgSchedule.setSynced(false);
+      bgSchedule.setTimeSlotId(slotId);
+      bgSchedule.setUserId(AppSettings.getCurrentUserId());
+      bgSchedule.setClientId(getBgScheduleLastClientId(realm));
+      realm.copyToRealm(bgSchedule);
+      realm.commitTransaction();
+      //}
     } finally {
       realm.close();
     }
@@ -200,7 +204,7 @@ public class BgDBO {
     return jsonArray;
   }
 
-  public static void deleteBgSchedule(int timeSlotId) {
+  public static void deleteBgSchedule(int timeSlotId, int swipeCount) {
     Realm realm = Realm.getDefaultInstance();
     try {
       realm.beginTransaction();
@@ -210,19 +214,22 @@ public class BgDBO {
           .findFirst();
       if (bgSchedule != null) {
         bgSchedule.setDeleted(true);
-        bgSchedule.setEndDate(AppDateHelper.getInstance().getDateInMillisWithSwipeCount(-1));
+        bgSchedule.setEndDate(
+            AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount - 1));
         bgSchedule.setSynced(false);
+        realm.copyToRealm(bgSchedule);
       }
-      realm.copyToRealm(bgSchedule);
+
       realm.commitTransaction();
     } finally {
       realm.close();
     }
   }
 
-  public static void deleteBgLog(int timeSlotId, long date,Context context,LogScheduleCallback logScheduleCallback) {
+  public static void deleteBgLog(int timeSlotId, long date, Context context,
+      LogScheduleCallback logScheduleCallback) {
     Realm realm = Realm.getDefaultInstance();
-    ConnectionDetector connectionDetector=new ConnectionDetector(context);
+    ConnectionDetector connectionDetector = new ConnectionDetector(context);
     try {
       realm.beginTransaction();
       BgLogs bgLogs = realm.where(BgLogs.class)
@@ -232,15 +239,16 @@ public class BgDBO {
       if (bgLogs != null) {
         bgLogs.setDeleted(true);
         bgLogs.setSynced(false);
-        bgLogs.setValue(0);
+        //bgLogs.setValue(0);
+        BgLogs bgLogs1 = realm.copyToRealm(bgLogs);
+        if (connectionDetector.isNetworkAvailable()) {
+          SyncBgLogging.postBgValues(
+              arrayList(bgLogs1.getClientId(), bgLogs1.getServerId(), bgLogs1.getValue(),
+                  bgLogs1.getTimeSlotId(), bgLogs1.getDateTime(), bgLogs1.getLoggedTime(),bgLogs1.isDeleted()),
+              "notBulk", logScheduleCallback);
+        }
       }
-      BgLogs bgLogs1 = realm.copyToRealm(bgLogs);
-      if (connectionDetector.isNetworkAvailable()) {
-        SyncBgLogging.postBgValues(
-            arrayList(bgLogs1.getClientId(), bgLogs1.getServerId(), bgLogs1.getValue(),
-                bgLogs1.getTimeSlotId(), bgLogs1.getDateTime(), bgLogs1.getLoggedTime()), "notBulk",
-            logScheduleCallback);
-      }
+
       realm.commitTransaction();
     } finally {
       realm.close();
@@ -251,8 +259,14 @@ public class BgDBO {
     ArrayList<BgLogScreenInfo> arrayList = new ArrayList<>();
     Realm realm = Realm.getDefaultInstance();
     try {
-      RealmResults<BgLogs> realmResults =
-          realm.where(BgLogs.class).equalTo("date", date).equalTo("isDeleted", false).findAll();
+      RealmResults<BgLogs> realmResults1 = realm.where(BgLogs.class)
+          .findAll();
+
+      RealmResults<BgLogs> realmResults = realm.where(BgLogs.class)
+          .equalTo("date", date)
+          .equalTo("isDeleted", false)
+          .greaterThan("value", 0.0)
+          .findAll();
 
       for (BgLogs bgLogs : realmResults) {
         BgLogScreenInfo bgLogScreenInfo = new BgLogScreenInfo();
@@ -317,14 +331,30 @@ public class BgDBO {
   }
 
   public static void saveBgLog(int value, long date, int timeSlotId, String dateTime,
-      String loggedTime, boolean checkConnection, LogScheduleCallback logScheduleCallback) {
+      String loggedTime, boolean checkConnection, LogScheduleCallback logScheduleCallback,
+      int swipeCount) {
     Realm realm = Realm.getDefaultInstance();
     try {
       realm.beginTransaction();
       BgLogs bgLogs = realm.where(BgLogs.class)
           .equalTo("date", date)
+          .equalTo("isDeleted", false)
           .equalTo("timeSlotId", timeSlotId)
           .findFirst();
+      BgSchedule bgSchedule = realm.where(BgSchedule.class)
+          .equalTo("startDate", date)
+          .equalTo("slotTypeId", timeSlotId)
+          .equalTo("isDeleted", false)
+          .findFirst();
+      if (bgSchedule != null) {
+        bgSchedule.setEndDate(
+            AppDateHelper.getInstance().getDateInMillisWithSwipeCount(swipeCount - 1));
+        bgSchedule.setSynced(false);
+        realm.copyToRealm(bgSchedule);
+        if (checkConnection) {
+          BgDBO.syncBgSchedule(null);
+        }
+      }
       if (bgLogs == null) {
         bgLogs = new BgLogs();
         bgLogs.setClientId(getBgValueLastClientId(realm));
@@ -341,9 +371,9 @@ public class BgDBO {
       if (checkConnection) {
         SyncBgLogging.postBgValues(
             arrayList(bgLogs1.getClientId(), bgLogs1.getServerId(), bgLogs1.getValue(),
-                bgLogs1.getTimeSlotId(), bgLogs1.getDateTime(), bgLogs1.getLoggedTime()), "notBulk",
+                bgLogs1.getTimeSlotId(), bgLogs1.getDateTime(), bgLogs1.getLoggedTime(),bgLogs1.isDeleted()), "notBulk",
             logScheduleCallback);
-      }else {
+      } else {
         logScheduleCallback.onSuccess(false);
       }
       realm.commitTransaction();
@@ -353,7 +383,7 @@ public class BgDBO {
   }
 
   private static ArrayList<LogValuesData> arrayList(int clientId, int serverId, double value,
-      int timeslotId, String dateTime, String loggedTime) {
+      int timeslotId, String dateTime, String loggedTime,boolean delete) {
     ArrayList<LogValuesData> arrayList = new ArrayList<>();
     LogValuesData logValuesData = new LogValuesData();
     logValuesData.client_id = clientId;
@@ -367,6 +397,9 @@ public class BgDBO {
     logValuesData.timeslot_id = timeslotId;
     logValuesData.vitaldataattribute_id = 4;
     logValuesData.value = value;
+    if (delete) {
+      logValuesData.is_deleted = delete;
+    }
     arrayList.add(logValuesData);
     return arrayList;
   }
@@ -469,6 +502,4 @@ public class BgDBO {
     lineDataSet.setDrawFilled(true);
     return lineDataSet;
   }
-
-
 }

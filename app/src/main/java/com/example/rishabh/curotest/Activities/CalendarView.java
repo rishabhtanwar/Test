@@ -115,6 +115,7 @@ public class CalendarView extends LinearLayout {
     // add one month and refresh UI
     btnNext.setOnClickListener(new OnClickListener() {
       @Override public void onClick(View v) {
+        currentDate.add(Calendar.MONTH, 1);
         //isFirstDate = false;
         //daysInCurrentMonth = currentDate.getActualMaximum(Calendar.DAY_OF_MONTH);
         //currentDate.add(Calendar.MONTH, 1);
@@ -139,7 +140,7 @@ public class CalendarView extends LinearLayout {
         //  btnNext.setImageResource((R.drawable.chevron_right));
         //}
         if (swipeCount < 0) {
-          previousButtonClick.swipeCount(swipeCount++);
+          previousButtonClick.swipeCount(swipeCount + 1);
         }
       }
     });
@@ -147,6 +148,7 @@ public class CalendarView extends LinearLayout {
     // subtract one month and refresh UI
     btnPrev.setOnClickListener(new OnClickListener() {
       @Override public void onClick(View v) {
+        currentDate.add(Calendar.MONTH, -1);
         //int latestMonth = currentDate.get(Calendar.MONTH), latestYear =
         //    currentDate.get(Calendar.YEAR);
         //if (releaseYear < latestYear || (releaseYear == latestYear && releaseMonth < latestMonth)) {
@@ -154,7 +156,7 @@ public class CalendarView extends LinearLayout {
         //  task.execute(new String[] { "" });
         //}
         if (swipeCount > -3 && swipeCount <= 0) {
-          previousButtonClick.swipeCount(swipeCount-1);
+          previousButtonClick.swipeCount(swipeCount - 1);
         }
       }
     });
@@ -197,7 +199,13 @@ public class CalendarView extends LinearLayout {
     }
   }
 
-  public void updateCalendar(List<Integer> events, int swipeCount,int longestStreak,int starCollected) {
+  public void starCollected(int longestStreak, int starCollected) {
+    perfectDays.setText("" + starCollected);
+    longestStreakDays.setText(longestStreak + " days");
+  }
+
+  public void updateCalendar(List<Integer> events, int swipeCount, int longestStreak,
+      int starCollected) {
     ArrayList<Date> cells = new ArrayList<>();
     this.swipeCount = swipeCount;
     Calendar calendar = (Calendar) currentDate.clone();
@@ -215,8 +223,6 @@ public class CalendarView extends LinearLayout {
     grid.setAdapter(new CalendarAdapter(getContext(), cells, events));
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
     txtDate.setText(AppDateHelper.monthYearNameBySwipeIndex(swipeCount));
-    perfectDays.setText(""+starCollected);
-    longestStreakDays.setText(longestStreak + " days");
 
     int tempMonth = currentDate.get(Calendar.MONTH), tempYear = currentDate.get(Calendar.YEAR);
     int latestMonth = currentMonthDate.get(Calendar.MONTH), latestYear =
@@ -281,6 +287,7 @@ public class CalendarView extends LinearLayout {
             textDateImage.setImageResource(R.drawable.empty_circle);
             break;
           default:
+            textDateImage.setImageResource(R.drawable.empty_circle);
             break;
         }
       } else {
