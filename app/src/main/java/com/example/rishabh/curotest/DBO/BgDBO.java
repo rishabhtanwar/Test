@@ -119,7 +119,7 @@ public class BgDBO {
   public static void saveBgSchedule(int slotId, long date) {
     Realm realm = Realm.getDefaultInstance();
     try {
-      //if (checkBgScheduleForId(slotId, realm)) {
+      if (checkBgScheduleForId(slotId, realm,date)) {
       realm.beginTransaction();
       BgSchedule bgSchedule = new BgSchedule();
       bgSchedule.setDeleted(false);
@@ -132,15 +132,15 @@ public class BgDBO {
       bgSchedule.setClientId(getBgScheduleLastClientId(realm));
       realm.copyToRealm(bgSchedule);
       realm.commitTransaction();
-      //}
+      }
     } finally {
       realm.close();
     }
   }
 
-  private static boolean checkBgScheduleForId(int id, Realm realm) {
+  private static boolean checkBgScheduleForId(int id, Realm realm,long date) {
     RealmResults<BgSchedule> realmResults =
-        realm.where(BgSchedule.class).equalTo("slotTypeId", id).findAll();
+        realm.where(BgSchedule.class).equalTo("slotTypeId", id).equalTo("startDate",date).findAll();
     for (BgSchedule bgSchedule : realmResults) {
       if (bgSchedule.isDeleted() == false) {
         return false;
