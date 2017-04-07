@@ -19,16 +19,36 @@
         android:layout_height="@dimen/toolbar_height"
         android:layout_gravity="right"
         android:background="?attr/colorPrimary"
-        android:gravity="right"
         android:orientation="horizontal"
         android:titleTextColor="@android:color/white"
+        android:weightSum="100"
         >
+
+      <ImageView
+          android:id="@+id/back"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_weight="10"
+          android:src="@drawable/back"
+          />
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_weight="80"
+          android:text="Blood Glucose Logging Type"
+          android:textColor="#fff"
+          android:textSize="18sp"
+          />
+
       <ImageView
           android:id="@+id/done"
-          android:layout_width="wrap_content"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
           android:layout_marginRight="10dp"
+          android:layout_weight="10"
           android:padding="10dp"
           android:src="@drawable/check"
           />

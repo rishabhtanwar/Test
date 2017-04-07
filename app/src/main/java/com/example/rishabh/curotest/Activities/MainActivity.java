@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     toolbar = (Toolbar) findViewById(R.id.toolbar);
     toolbar.setTitle("Lifeincontrol");
     toolbar.setNavigationIcon(R.drawable.menu);
-
+    toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
     swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
     swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.goals_ui_red,
         R.color.trends_ui_band_fill_color, R.color.spinner_floatinglabel_color);

@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,6 +27,7 @@ import butterknife.ButterKnife;
 import com.example.rishabh.curotest.Adapter.BgLogScreenAdapter;
 import com.example.rishabh.curotest.DBO.BgDBO;
 import com.example.rishabh.curotest.Model.BgLogs;
+import com.example.rishabh.curotest.Model.BgSchedule;
 import com.example.rishabh.curotest.Network.ConnectionDetector;
 import com.example.rishabh.curotest.helpers.AppSettings;
 import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
@@ -55,6 +57,7 @@ public class BgLoggingScreen extends AppCompatActivity {
   @Bind(R.id.click_blocker) View mClickBlocker;
   @Bind(R.id.layout_left_arrow) RelativeLayout leftArrow;
   @Bind(R.id.layout_right_arrow) RelativeLayout rightArrow;
+  @Bind(R.id.toolbar) Toolbar toolbar;
   double conversionFactorBG = 1;
   private Boolean isFabOpen = false;
   @Bind(R.id.bg_rv) RecyclerView recyclerView;
@@ -81,7 +84,7 @@ public class BgLoggingScreen extends AppCompatActivity {
   @Bind(R.id.nested_scroll) NestedScrollView nestedScrollView;
   long startDateLong, endDateLong;
   LineData lineData;
-  ArrayList<Integer> idArray=new ArrayList<>();
+  ArrayList<Integer> idArray = new ArrayList<>();
   ConnectionDetector connectionDetector;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -93,21 +96,46 @@ public class BgLoggingScreen extends AppCompatActivity {
       getWindow().setStatusBarColor(Color.parseColor("#3595B9"));
     }
     setUpAnimation();
+    toolbar.setTitle("Blood Glucose");
+    toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+    setSupportActionBar(toolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
+    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        finish();
+      }
+    });
+    nestedScrollView.scrollTo(0, 0);
     linearLayoutManager = new LinearLayoutManager(this);
     settings_fab_button.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         // Click action
         idArray.clear();
-        ArrayList<BgLogScreenInfo> arrayList=bgLogScreenAdapter.getBgLoggingScreen();
-        for (int i=0; i<arrayList.size(); i++){
+        ArrayList<BgLogScreenInfo> arrayList = bgLogScreenAdapter.getBgLoggingScreen();
+        for (int i = 0; i < arrayList.size(); i++) {
           idArray.add(arrayList.get(i).getTimeSlotId());
         }
         Intent intent = new Intent(mContext, BloodSugarLoggingSettings.class);
-        intent.putIntegerArrayListExtra("id_array",idArray);
+        intent.putIntegerArrayListExtra("id_array", idArray);
         startActivity(intent);
         closeFAB();
       }
     });
+    logs_fab_button.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        idArray.clear();
+        ArrayList<BgLogScreenInfo> arrayList = bgLogScreenAdapter.getBgLoggingScreen();
+        for (int i = 0; i < arrayList.size(); i++) {
+          idArray.add(arrayList.get(i).getTimeSlotId());
+        }
+        Intent intent = new Intent(mContext, BgQuickLog.class);
+        intent.putIntegerArrayListExtra("id_array", idArray);
+        startActivity(intent);
+        closeFAB();
+      }
+    });
+
     connectionDetector = new ConnectionDetector(this);
     mClickBlocker.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
@@ -206,8 +234,10 @@ public class BgLoggingScreen extends AppCompatActivity {
         .getDateWithWeekDays(Constants.DATEFORMAT_LOGGING_SCREEN, swipeCount);
     mDateIndicator.setText("Today " + indicatordate);
     setAdapter();
+    nestedScrollView.scrollTo(0, 0);
     if (AppSettings.getBgApiStatus() && connectionDetector.isNetworkAvailable()) {
       //noIntenet.setVisibility(View.GONE);
+      checkUnSyncData();
       AppSettings.setBgApiStatus(false);
       getBgScheduleData();
       getBgLogValueData();
@@ -232,11 +262,13 @@ public class BgLoggingScreen extends AppCompatActivity {
   }
 
   private void getBgLogValueData() {
+    showProgressBar();
     SyncBgLogging.getBgLogValues(
         AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, swipeCount),
         AppDateHelper.getInstance().getDateWithWeekDays(Constants.DATEFORMAT, swipeCount),
         new LogScheduleCallback() {
           @Override public void onSuccess(boolean check) {
+            hideProgressBar();
             setAdapter();
           }
         });
@@ -311,9 +343,9 @@ public class BgLoggingScreen extends AppCompatActivity {
   }
 
   public void setBloodGlucoseData() {
-    if (connectionDetector.isNetworkAvailable()){
+    if (connectionDetector.isNetworkAvailable()) {
       noIntenet.setVisibility(View.GONE);
-    }else {
+    } else {
       noIntenet.setVisibility(View.VISIBLE);
     }
     if (conversionFactorBG == 1) {
@@ -348,6 +380,14 @@ public class BgLoggingScreen extends AppCompatActivity {
     }
   }
 
+  public void showProgressBar() {
+    progressBar.setVisibility(View.VISIBLE);
+  }
+
+  public void hideProgressBar() {
+    progressBar.setVisibility(View.GONE);
+  }
+
   private void setLineChart(LineChart mLineChart, boolean shouldScroll) {
     mLineChart.invalidate();
     mLineChart.setDescription("");
@@ -376,32 +416,45 @@ public class BgLoggingScreen extends AppCompatActivity {
   public void checkUnSyncData() {
     Realm realm = Realm.getDefaultInstance();
     try {
-      RealmResults<BgLogs> realmResults =
+      final RealmResults<BgLogs> realmResults =
           realm.where(BgLogs.class).equalTo("isSynced", false).findAll();
-      if (realmResults.size() > 0 && connectionDetector.isNetworkAvailable()) {
+
+      final RealmResults<BgSchedule> realmResults1 =
+          realm.where(BgSchedule.class).equalTo("isSynced", false).findAll();
+      realm.where(BgLogs.class).equalTo("isSynced", false).findAll();
+      if ((realmResults.size() > 0 || realmResults1.size() > 0)
+          && connectionDetector.isNetworkAvailable()) {
         final Snackbar snackbar =
             Snackbar.make(coordinatorLayout, "There are some unsync data please sync",
                 Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction("SYNC", new View.OnClickListener() {
           @Override public void onClick(View view) {
-            progressBar.setVisibility(View.VISIBLE);
+            showProgressBar();
             SyncBgLogging syncBgLogging = new SyncBgLogging();
             syncBgLogging.setSyncListener(new SyncBgLogging.SyncListener() {
               @Override public void onSucess(boolean check) {
                 snackbar.dismiss();
                 runOnUiThread(new Runnable() {
                   @Override public void run() {
-                    progressBar.setVisibility(View.GONE);
+                    hideProgressBar();
                     nestedScrollView.scrollTo(0, 0);
                     getBgGraphData();
                   }
                 });
               }
             });
-            Bundle bundle = new Bundle();
-            bundle.putString(Constants.SYNC_DATA, Constants.BG_LOG_SYNC);
-            ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(),
-                Constants.AUTHORITY, bundle);
+            if (realmResults.size() > 0) {
+              Bundle bundle = new Bundle();
+              bundle.putString(Constants.SYNC_DATA, Constants.BG_LOG_SYNC);
+              ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(),
+                  Constants.AUTHORITY, bundle);
+            }
+            if (realmResults1.size() > 0) {
+              Bundle bundle = new Bundle();
+              bundle.putString(Constants.SYNC_DATA, Constants.BG_SCHEDULE_SYNC);
+              ContentResolver.requestSync(AppSettings.getInstance().CreateSyncAccount(),
+                  Constants.AUTHORITY, bundle);
+            }
           }
         });
 

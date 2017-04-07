@@ -42,7 +42,8 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
   HashMap<Integer, String> timeSlotIdList = new HashMap<>();
   long todayDateInMillis;
   @Bind(R.id.done) ImageView done;
-  ArrayList<Integer> idsArray=new ArrayList<>();
+  @Bind(R.id.back) ImageView back;
+  ArrayList<Integer> idsArray = new ArrayList<>();
   ConnectionDetector connectionDetector;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
 
     AppSettings.setBgApiStatus(true);
     progressBar.setVisibility(View.GONE);
-    idsArray=getIntent().getExtras().getIntegerArrayList("id_array");
+    idsArray = getIntent().getExtras().getIntegerArrayList("id_array");
     setData();
     done.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -68,7 +69,7 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
           if (entry.getValue().equalsIgnoreCase("ticked")) {
             BgDBO.saveBgSchedule(entry.getKey(), todayDateInMillis);
           } else {
-            BgDBO.deleteBgSchedule(entry.getKey(),0);
+            BgDBO.deleteBgSchedule(entry.getKey(), 0);
           }
         }
         if (connectionDetector.isNetworkAvailable()) {
@@ -84,22 +85,27 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
               finish();
             }
           });
-        }else {
+        } else {
           finish();
         }
+      }
+    });
+    back.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        finish();
       }
     });
   }
 
   private void setData() {
-    arrayList = BgDBO.setLoggingTimeSlot(realm, todayDateInMillis,idsArray);
+    arrayList = BgDBO.setLoggingTimeSlot(realm, todayDateInMillis, idsArray);
     setAdapter();
   }
 
   private void setAdapter() {
     recyclerView.setLayoutManager(linearLayoutManager);
     //bgLogAdapter = new BgLogAdapter(BloodSugarLoggingSettings.this, arrayList);
-    bgLogAdapter =new BgLogAdapter(BloodSugarLoggingSettings.this,arrayList);
+    bgLogAdapter = new BgLogAdapter(BloodSugarLoggingSettings.this, arrayList);
     recyclerView.setAdapter(bgLogAdapter);
   }
 
