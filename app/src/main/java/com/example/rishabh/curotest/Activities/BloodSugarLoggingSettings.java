@@ -11,10 +11,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.example.rishabh.curotest.Adapter.BgLogAdapter;
+import com.example.rishabh.curotest.Adapter.BgLogListAdapter;
 import com.example.rishabh.curotest.DBO.BgDBO;
 import com.example.rishabh.curotest.helpers.AppSettings;
 import com.example.rishabh.curotest.Interfaces.LogScheduleCallback;
@@ -35,6 +37,7 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
   LinearLayoutManager linearLayoutManager;
   ArrayList<BgLoggingSettingInfo> arrayList = new ArrayList<>();
   BgLogAdapter bgLogAdapter;
+  BgLogListAdapter bgLogListAdapter;
   Realm realm;
   HashMap<Integer, String> timeSlotIdList = new HashMap<>();
   long todayDateInMillis;
@@ -95,7 +98,8 @@ public class BloodSugarLoggingSettings extends AppCompatActivity {
 
   private void setAdapter() {
     recyclerView.setLayoutManager(linearLayoutManager);
-    bgLogAdapter = new BgLogAdapter(BloodSugarLoggingSettings.this, arrayList);
+    //bgLogAdapter = new BgLogAdapter(BloodSugarLoggingSettings.this, arrayList);
+    bgLogAdapter =new BgLogAdapter(BloodSugarLoggingSettings.this,arrayList);
     recyclerView.setAdapter(bgLogAdapter);
   }
 

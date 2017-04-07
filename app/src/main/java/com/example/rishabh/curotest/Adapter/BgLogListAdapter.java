@@ -5,46 +5,58 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.example.rishabh.curotest.DBO.BgDBO;
 import com.example.rishabh.curotest.Model.BgLoggingSettingInfo;
-import com.example.rishabh.curotest.Model.BgSchedule;
 import com.example.rishabh.curotest.R;
-import com.example.rishabh.curotest.Utils.AppDateHelper;
-import io.realm.Realm;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by rishabh on 27/03/2017.
+ * Created by rishabh on 07/04/2017.
  */
 
-public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class BgLogListAdapter extends BaseAdapter {
   Context context;
   ArrayList<BgLoggingSettingInfo> arrayList = new ArrayList<>();
   ArrayList<Integer> timeSlotIdListTicked = new ArrayList<>();
   ArrayList<Integer> timeSlotIdListUnTicked = new ArrayList<>();
   HashMap<Integer, String> hashMap = new HashMap<>();
 
-  public BgLogAdapter(Context context, ArrayList<BgLoggingSettingInfo> arrayList) {
+  public BgLogListAdapter(Context context, ArrayList<BgLoggingSettingInfo> arrayList) {
     this.context = context;
     this.arrayList = arrayList;
   }
 
-  @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View view =
-        LayoutInflater.from(context).inflate(R.layout.bg_logging_setting_layout, parent, false);
-    ViewHolder viewHolder = new ViewHolder(view);
-    return viewHolder;
+  @Override public int getCount() {
+    return arrayList.size();
   }
 
-  @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+  @Override public Object getItem(int position) {
+    return arrayList.get(position);
+  }
+
+  @Override public long getItemId(int position) {
+    return position;
+  }
+
+  @Override public View getView(final int position, View convertView, ViewGroup parent) {
+    View view = convertView;
+    ViewHolder viewHolder;
+    if (convertView == null) {
+      LayoutInflater layoutInflater =
+          (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+      view = layoutInflater.inflate(R.layout.bg_logging_setting_layout, null);
+      viewHolder = new ViewHolder(view);
+      view.setTag(viewHolder);
+    } else {
+      viewHolder = (ViewHolder) view.getTag();
+    }
     final BgLoggingSettingInfo bgLoggingSettingInfo = arrayList.get(position);
-    ViewHolder viewHolder = (ViewHolder) holder;
 
     viewHolder.mainTitle.setText(bgLoggingSettingInfo.getMainTitle());
     viewHolder.subTitle.setText(bgLoggingSettingInfo.getSubTitle());
@@ -69,7 +81,6 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         //notifyDataSetChanged();
       }
     });
-
     if (bgLoggingSettingInfo.isCheck()) {
       viewHolder.checkBox.setChecked(true);
       if (!hashMap.containsKey(bgLoggingSettingInfo.getSlotid())) {
@@ -79,10 +90,8 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     } else {
       viewHolder.checkBox.setChecked(false);
     }
-  }
 
-  @Override public int getItemCount() {
-    return arrayList.size();
+    return view;
   }
 
   class ViewHolder extends RecyclerView.ViewHolder {
@@ -98,30 +107,5 @@ public class BgLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   public HashMap<Integer,String> getTimeSlotIdList() {
     return hashMap;
-  }
-
-  private int removePosition(int slotId) {
-    for (int i = 0; i < timeSlotIdListTicked.size(); i++) {
-      if (timeSlotIdListTicked.get(i) == slotId) {
-        return i;
-      }
-    }
-    return 0; // this should never occur
-  }
-
-  private boolean checkBgValueInDb(int id) {
-    Realm realm = Realm.getDefaultInstance();
-    try {
-      BgSchedule bgSchedule = realm.where(BgSchedule.class)
-          .equalTo("slotTypeId", id)
-          .equalTo("isDeleted", false)
-          .findFirst();
-      if (bgSchedule != null) {
-        return true;
-      }
-    } finally {
-      realm.close();
-    }
-    return false;
   }
 }
